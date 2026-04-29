@@ -1,0 +1,354 @@
+{
+  "data_source": "local_recovery_store",
+  "generated_at": "2026-04-23T21:00:42.345Z",
+  "records": [
+    {
+      "runtimeId": "mission-control-shell",
+      "label": "Mission Control shell",
+      "port": 4300,
+      "path": "/Users/baileyeubanks/Downloads/root-os-_-mission-control",
+      "command": "PORT=4300 npm run dev",
+      "health": "http://127.0.0.1:4300/api/health",
+      "proofStatus": "health_ok",
+      "blocker": null,
+      "lastCheckedAt": "2026-04-28T20:47:55.045208+00:00",
+      "install": {
+        "status": "passed",
+        "detail": "node_modules present.",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "build": {
+        "status": "passed",
+        "detail": "Production build passed.",
+        "command": "npm run build",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "boot": {
+        "status": "passed",
+        "detail": "Listening on port 4300.",
+        "command": "PORT=4300 npm run dev",
+        "checkedAt": "2026-04-28T20:47:55.045208+00:00"
+      },
+      "healthCheck": {
+        "status": "passed",
+        "detail": "Health returned HTTP 200. Gemini CLI configured.",
+        "command": "GET http://127.0.0.1:4300/api/health",
+        "checkedAt": "2026-04-28T20:47:55.045208+00:00"
+      }
+    },
+    {
+      "runtimeId": "acs-module-demo",
+      "label": "ACS module/demo",
+      "port": 4301,
+      "path": "/Users/baileyeubanks/Downloads/mission-control---acs-admin",
+      "command": "PORT=4301 npm run dev",
+      "health": "http://127.0.0.1:4301/api/adminDashboard",
+      "proofStatus": "health_ok",
+      "blocker": null,
+      "lastCheckedAt": "2026-04-28T20:47:55.045208+00:00",
+      "install": {
+        "status": "passed",
+        "detail": "node_modules present.",
+        "command": "npm install",
+        "checkedAt": "2026-04-28T20:47:55.045208+00:00"
+      },
+      "build": {
+        "status": "passed",
+        "detail": "Production build passed.",
+        "command": "npm run build",
+        "checkedAt": "2026-04-28T20:47:55.045208+00:00"
+      },
+      "boot": {
+        "status": "passed",
+        "detail": "Listening on port 4301.",
+        "command": "PORT=4301 npm run dev",
+        "checkedAt": "2026-04-28T20:47:55.045208+00:00"
+      },
+      "healthCheck": {
+        "status": "passed",
+        "detail": "Health returned HTTP 200.",
+        "command": "GET http://127.0.0.1:4301/api/adminDashboard",
+        "checkedAt": "2026-04-28T20:47:55.045208+00:00"
+      }
+    },
+    {
+      "runtimeId": "cross-business-root-2-donor",
+      "label": "root-2 cross-business donor",
+      "port": 4302,
+      "path": "/Users/baileyeubanks/Downloads/root-2",
+      "command": "PORT=4302 npm run dev",
+      "health": "http://127.0.0.1:4302/api/health",
+      "proofStatus": "blocked",
+      "blocker": "node_modules missing; dependency install approval required before build/boot proof.",
+      "lastCheckedAt": "2026-04-23T21:00:42.345Z",
+      "install": {
+        "status": "blocked",
+        "detail": "node_modules missing; dependency install approval required before build/boot proof.",
+        "command": "npm install",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "build": {
+        "status": "blocked",
+        "detail": "Build blocked until dependencies are installed.",
+        "command": "npm run build",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "boot": {
+        "status": "blocked",
+        "detail": "Boot proof blocked by install/build state.",
+        "command": "PORT=4302 npm run dev",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "healthCheck": {
+        "status": "blocked",
+        "detail": "Runtime is not listening, so health check was not attempted.",
+        "command": "GET http://127.0.0.1:4302/api/health",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      }
+    },
+    {
+      "runtimeId": "co-produce",
+      "label": "Co-Produce donor",
+      "port": 4303,
+      "path": "/Users/baileyeubanks/Downloads/co-produce",
+      "command": "PORT=4303 npm run dev",
+      "health": "http://127.0.0.1:4303",
+      "proofStatus": "blocked",
+      "blocker": "node_modules missing; dependency install approval required before build/boot proof.",
+      "lastCheckedAt": "2026-04-23T21:00:42.345Z",
+      "install": {
+        "status": "blocked",
+        "detail": "node_modules missing; dependency install approval required before build/boot proof.",
+        "command": "npm install",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "build": {
+        "status": "blocked",
+        "detail": "Build blocked until dependencies are installed.",
+        "command": "npm run build",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "boot": {
+        "status": "blocked",
+        "detail": "Boot proof blocked by install/build state.",
+        "command": "PORT=4303 npm run dev",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "healthCheck": {
+        "status": "blocked",
+        "detail": "Runtime is not listening, so health check was not attempted.",
+        "command": "GET http://127.0.0.1:4303",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      }
+    },
+    {
+      "runtimeId": "co-produce-intelligence",
+      "label": "Co-Produce intelligence donor",
+      "port": 4303,
+      "path": "/Users/baileyeubanks/Downloads/co-produce-2",
+      "command": "PORT=4303 npm run dev",
+      "health": "http://127.0.0.1:4303",
+      "proofStatus": "blocked",
+      "blocker": "node_modules missing; dependency install approval required before build/boot proof.",
+      "lastCheckedAt": "2026-04-23T21:00:42.345Z",
+      "install": {
+        "status": "blocked",
+        "detail": "node_modules missing; dependency install approval required before build/boot proof.",
+        "command": "npm install",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "build": {
+        "status": "blocked",
+        "detail": "Build blocked until dependencies are installed.",
+        "command": "npm run build",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "boot": {
+        "status": "blocked",
+        "detail": "Boot proof blocked by install/build state.",
+        "command": "PORT=4303 npm run dev",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "healthCheck": {
+        "status": "blocked",
+        "detail": "Runtime is not listening, so health check was not attempted.",
+        "command": "GET http://127.0.0.1:4303",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      }
+    },
+    {
+      "runtimeId": "co-deliver-branded",
+      "label": "Co-Deliver branded donor",
+      "port": 4304,
+      "path": "/Users/baileyeubanks/Downloads/co-deliver",
+      "command": "PORT=4304 npm run dev",
+      "health": "http://127.0.0.1:4304",
+      "proofStatus": "blocked",
+      "blocker": "node_modules missing; dependency install approval required before build/boot proof.",
+      "lastCheckedAt": "2026-04-23T21:00:42.345Z",
+      "install": {
+        "status": "blocked",
+        "detail": "node_modules missing; dependency install approval required before build/boot proof.",
+        "command": "npm install",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "build": {
+        "status": "blocked",
+        "detail": "Build blocked until dependencies are installed.",
+        "command": "npm run build",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "boot": {
+        "status": "blocked",
+        "detail": "Boot proof blocked by install/build state.",
+        "command": "PORT=4304 npm run dev",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "healthCheck": {
+        "status": "blocked",
+        "detail": "Runtime is not listening, so health check was not attempted.",
+        "command": "GET http://127.0.0.1:4304",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      }
+    },
+    {
+      "runtimeId": "co-deliver-backend",
+      "label": "Co-Deliver video review backend donor",
+      "port": 4304,
+      "path": "/Users/baileyeubanks/Downloads/video-review-platform-5",
+      "command": "PORT=4304 npm run dev",
+      "health": "http://127.0.0.1:4304",
+      "proofStatus": "blocked",
+      "blocker": "node_modules missing; dependency install approval required before build/boot proof.",
+      "lastCheckedAt": "2026-04-23T21:00:42.345Z",
+      "install": {
+        "status": "blocked",
+        "detail": "node_modules missing; dependency install approval required before build/boot proof.",
+        "command": "npm install",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "build": {
+        "status": "blocked",
+        "detail": "Build blocked until dependencies are installed.",
+        "command": "npm run build",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "boot": {
+        "status": "blocked",
+        "detail": "Boot proof blocked by install/build state.",
+        "command": "PORT=4304 npm run dev",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "healthCheck": {
+        "status": "blocked",
+        "detail": "Runtime is not listening, so health check was not attempted.",
+        "command": "GET http://127.0.0.1:4304",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      }
+    },
+    {
+      "runtimeId": "acs-onboarding",
+      "label": "ACS onboarding",
+      "port": 4305,
+      "path": "/Users/baileyeubanks/Downloads/astro-cleaning-onboarding",
+      "command": "PORT=4305 npm run dev",
+      "health": "http://127.0.0.1:4305",
+      "proofStatus": "blocked",
+      "blocker": "node_modules missing; dependency install approval required before build/boot proof.",
+      "lastCheckedAt": "2026-04-23T21:00:42.345Z",
+      "install": {
+        "status": "blocked",
+        "detail": "node_modules missing; dependency install approval required before build/boot proof.",
+        "command": "npm install",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "build": {
+        "status": "blocked",
+        "detail": "Build blocked until dependencies are installed.",
+        "command": "npm run build",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "boot": {
+        "status": "blocked",
+        "detail": "Boot proof blocked by install/build state.",
+        "command": "PORT=4305 npm run dev",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "healthCheck": {
+        "status": "blocked",
+        "detail": "Runtime is not listening, so health check was not attempted.",
+        "command": "GET http://127.0.0.1:4305",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      }
+    },
+    {
+      "runtimeId": "hermes-concierge",
+      "label": "Hermes Concierge/widget",
+      "port": 4306,
+      "path": "/Users/baileyeubanks/Downloads/hermes-concierge",
+      "command": "PORT=4306 npm run dev",
+      "health": "http://127.0.0.1:4306/api/health",
+      "proofStatus": "blocked",
+      "blocker": "node_modules missing; dependency install approval required before build/boot proof.",
+      "lastCheckedAt": "2026-04-23T21:00:42.345Z",
+      "install": {
+        "status": "blocked",
+        "detail": "node_modules missing; dependency install approval required before build/boot proof.",
+        "command": "npm install",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "build": {
+        "status": "blocked",
+        "detail": "Build blocked until dependencies are installed.",
+        "command": "npm run build",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "boot": {
+        "status": "blocked",
+        "detail": "Boot proof blocked by install/build state.",
+        "command": "PORT=4306 npm run dev",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "healthCheck": {
+        "status": "blocked",
+        "detail": "Runtime is not listening, so health check was not attempted.",
+        "command": "GET http://127.0.0.1:4306/api/health",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      }
+    },
+    {
+      "runtimeId": "platform-relief",
+      "label": "Platform Relief",
+      "port": 4317,
+      "path": "/Users/baileyeubanks/Downloads/platform-relief",
+      "command": "PORT=4317 npm run dev",
+      "health": "http://127.0.0.1:4317/api/health",
+      "proofStatus": "blocked",
+      "blocker": "Runtime is not listening, so health check was not attempted.",
+      "lastCheckedAt": "2026-04-23T21:00:42.345Z",
+      "install": {
+        "status": "passed",
+        "detail": "node_modules present.",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "build": {
+        "status": "passed",
+        "detail": "Production build passed.",
+        "command": "npm run build",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "boot": {
+        "status": "not_checked",
+        "detail": "Runtime is not currently listening; boot command not launched by proof script.",
+        "command": "PORT=4317 npm run dev",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      },
+      "healthCheck": {
+        "status": "blocked",
+        "detail": "Runtime is not listening, so health check was not attempted.",
+        "command": "GET http://127.0.0.1:4317/api/health",
+        "checkedAt": "2026-04-23T21:00:42.345Z"
+      }
+    }
+  ]
+}

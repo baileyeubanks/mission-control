@@ -1,0 +1,125 @@
+[
+  {
+    "id": "handoff-acs-quote-1777067652974",
+    "source": "Root local quote intake",
+    "company_account": "astro-cleaning-services",
+    "handoff_type": "acs_quote_intake",
+    "source_entity_id": "acs-quote-local-1777067652974",
+    "contact": {
+      "name": "Codex Audit Test",
+      "email": "codex-audit@example.com",
+      "phone": "+15555550123",
+      "company": null
+    },
+    "summary": "Browser verification quote handoff for Plans 13-15.",
+    "status": "blocked",
+    "next_action": "Job candidate created locally; resolve onboarding readiness before assignment.",
+    "created_at": "2026-04-24T21:54:12.987Z",
+    "updated_at": "2026-04-24T21:54:30.157Z",
+    "data_source": "local_recovery_store",
+    "details": {
+      "service_address": "Local recovery address",
+      "estimated_total_cents": 12345,
+      "intake_mode": "local_root_recovery"
+    },
+    "readiness": {
+      "status": "blocked",
+      "summary": "Crew readiness must be confirmed before assignment.",
+      "blockers": [
+        "ACS onboarding readiness adapter not yet promoted."
+      ]
+    },
+    "converted_artifacts": {
+      "task_id": "task-acs-quote-local-1777067652974",
+      "job_candidate_id": "job-acs-quote-local-1777067652974"
+    }
+  },
+  {
+    "id": "handoff-acs-quote-001",
+    "source": "astrocleanings.com quote engine",
+    "company_account": "astro-cleaning-services",
+    "handoff_type": "acs_quote_intake",
+    "source_entity_id": "acs-quote-local-001",
+    "contact": {
+      "name": "Maya Thompson",
+      "email": "maya@example.com",
+      "phone": "+15125550140",
+      "company": null
+    },
+    "summary": "Move-out clean request for a three-bedroom apartment with pet hair, fridge, and oven add-ons.",
+    "status": "blocked",
+    "next_action": "Job candidate created locally; resolve onboarding readiness before assignment.",
+    "created_at": "2026-04-23T15:00:00.000Z",
+    "updated_at": "2026-04-23T20:45:51.954Z",
+    "data_source": "local_recovery_store",
+    "details": {
+      "property_type": "Apartment",
+      "service_address": "North Austin, TX",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "requested_window": "Tomorrow morning",
+      "estimated_total_cents": 38500,
+      "quote_sections": [
+        "Base move-out clean",
+        "Fridge",
+        "Oven",
+        "Pet hair"
+      ]
+    },
+    "readiness": {
+      "status": "blocked",
+      "summary": "Deep-clean certified crew required before dispatch.",
+      "blockers": [
+        "Crew readiness signal pending from ACS onboarding donor."
+      ]
+    },
+    "converted_artifacts": {
+      "task_id": "task-acs-quote-local-001",
+      "job_candidate_id": "job-acs-quote-local-001"
+    }
+  },
+  {
+    "id": "handoff-cco-brief-001",
+    "source": "contentco-op.com creative brief",
+    "company_account": "content-co-op",
+    "handoff_type": "cco_creative_brief",
+    "source_entity_id": "cco-brief-local-001",
+    "contact": {
+      "name": "Jordan Avery",
+      "email": "jordan@northstar.example",
+      "phone": null,
+      "company": "Northstar Logistics"
+    },
+    "summary": "Creative brief for recruiting and sales positioning video with strategy, script, and delivery review needs.",
+    "status": "converted",
+    "next_action": "Project candidate created locally; launch Co-Produce planning and Co-Deliver approval rollup.",
+    "created_at": "2026-04-23T15:05:00.000Z",
+    "updated_at": "2026-04-23T20:18:44.142Z",
+    "data_source": "local_recovery_store",
+    "details": {
+      "project_type": "Brand strategy video",
+      "desired_deliverables": [
+        "Strategy brief",
+        "Script",
+        "Hero video",
+        "Cutdowns"
+      ],
+      "timeline": "Two-week sprint",
+      "budget_signal": "Retainer candidate",
+      "launch_links": {
+        "co_produce": "/admin/files",
+        "co_deliver": "/admin/approvals"
+      }
+    },
+    "readiness": {
+      "status": "not_required",
+      "summary": "Specialized CCO apps remain launch surfaces; Mission Control owns project rollup.",
+      "blockers": []
+    },
+    "converted_artifacts": {
+      "task_id": "task-cco-brief-local-001",
+      "project_candidate_id": "project-cco-brief-local-001",
+      "approval_id": "approval-cco-brief-local-001"
+    }
+  }
+]

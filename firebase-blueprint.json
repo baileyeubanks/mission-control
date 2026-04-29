@@ -1,0 +1,161 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "An operator or admin in ROOT OS.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "operator"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "Contact": {
+      "title": "Contact",
+      "description": "A B2B or B2C contact/account.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["B2B", "B2C"] },
+        "status": { "type": "string", "enum": ["Active", "Inactive", "Lead"] },
+        "ownerId": { "type": "string", "description": "User UID of the owner" },
+        "ownerName": { "type": "string" },
+        "lastContactAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "type", "status", "createdAt"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "A work order or job.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "contactId": { "type": "string" },
+        "contactName": { "type": "string" },
+        "status": { "type": "string", "enum": ["Draft", "Scheduled", "In Progress", "Review", "Completed"] },
+        "assigneeId": { "type": "string" },
+        "assigneeName": { "type": "string" },
+        "dueDate": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "status", "createdAt"]
+    },
+    "Invoice": {
+      "title": "Invoice",
+      "description": "A financial invoice.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "contactId": { "type": "string" },
+        "contactName": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["Draft", "Sent", "Paid", "Overdue"] },
+        "issueDate": { "type": "string", "format": "date-time" },
+        "dueDate": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["amount", "status", "createdAt"]
+    },
+    "Thread": {
+      "title": "Thread",
+      "description": "A communication thread.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "contactId": { "type": "string" },
+        "contactName": { "type": "string" },
+        "subject": { "type": "string" },
+        "lastMessageAt": { "type": "string", "format": "date-time" },
+        "unread": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["subject", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "A message within a thread.",
+      "type": "object",
+      "properties": {
+        "threadId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "content": { "type": "string" },
+        "isInternal": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["threadId", "content", "isInternal", "createdAt"]
+    },
+    "Approval": {
+      "title": "Approval",
+      "description": "An approval request.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["Quote Approval", "Discount Request", "Expense", "Contract Review"] },
+        "entityName": { "type": "string" },
+        "amount": { "type": "string" },
+        "requesterId": { "type": "string" },
+        "requesterName": { "type": "string" },
+        "status": { "type": "string", "enum": ["Pending", "Approved", "Rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "entityName", "status", "createdAt"]
+    },
+    "File": {
+      "title": "File",
+      "description": "A document or file.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["pdf", "sheet", "doc", "archive", "image", "folder"] },
+        "size": { "type": "number", "description": "Size in bytes" },
+        "ownerId": { "type": "string" },
+        "ownerName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "type", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Operator accounts."
+    },
+    "/contacts/{contactId}": {
+      "schema": { "$ref": "#/entities/Contact" },
+      "description": "B2B/B2C contacts."
+    },
+    "/jobs/{jobId}": {
+      "schema": { "$ref": "#/entities/Job" },
+      "description": "Work orders."
+    },
+    "/invoices/{invoiceId}": {
+      "schema": { "$ref": "#/entities/Invoice" },
+      "description": "Financial invoices."
+    },
+    "/threads/{threadId}": {
+      "schema": { "$ref": "#/entities/Thread" },
+      "description": "Communication threads."
+    },
+    "/threads/{threadId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Messages in a thread."
+    },
+    "/approvals/{approvalId}": {
+      "schema": { "$ref": "#/entities/Approval" },
+      "description": "Approval requests."
+    },
+    "/files/{fileId}": {
+      "schema": { "$ref": "#/entities/File" },
+      "description": "Documents and files."
+    }
+  }
+}
