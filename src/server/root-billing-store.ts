@@ -3,6 +3,7 @@ import path from "node:path";
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 import type { CompanyAccountId } from "../lib/mission-control";
+import { sbSelect, sbSelectOne, sbUpsert, sbDelete } from "./data-adapter";
 import {
   calculateDocumentTotal,
   formatCents,
@@ -64,7 +65,30 @@ function ensureStoreFile(recoveryStoreDir?: string): void {
   }
 }
 
+let supabaseHydrated = false;
+
+async function hydrateFromSupabase(recoveryStoreDir?: string): Promise<void> {
+  if (supabaseHydrated) return;
+  const quotesRes = await sbSelect<{ data: unknown }>("root_quotes");
+  const invoicesRes = await sbSelect<{ data: unknown }>("root_invoices");
+  const eventsRes = await sbSelect<{ data: unknown }>("root_billing_events");
+  if (quotesRes.ok && invoicesRes.ok && eventsRes.ok) {
+    const state: PersistedRootBillingState = {
+      quotes: (quotesRes.data?.map((r) => r.data) as RootQuoteRecord[]) ?? [],
+      invoices: (invoicesRes.data?.map((r) => r.data) as RootInvoiceRecord[]) ?? [],
+      events: (eventsRes.data?.map((r) => r.data) as RootBillingEvent[]) ?? [],
+    };
+    writeState(state, recoveryStoreDir);
+  }
+  supabaseHydrated = true;
+}
+
 function readState(recoveryStoreDir?: string): PersistedRootBillingState {
+  // Hydrate from Supabase on first read (async fire-and-forget)
+  if (!supabaseHydrated) {
+    hydrateFromSupabase(recoveryStoreDir).catch(() => { /* silent fail, use JSON */ });
+  }
+
   ensureStoreFile(recoveryStoreDir);
   const parsed = JSON.parse(fs.readFileSync(storePath(recoveryStoreDir), "utf8")) as Partial<PersistedRootBillingState>;
   return {
@@ -77,6 +101,39 @@ function readState(recoveryStoreDir?: string): PersistedRootBillingState {
 function writeState(state: PersistedRootBillingState, recoveryStoreDir?: string): void {
   fs.mkdirSync(recoveryDir(recoveryStoreDir), { recursive: true });
   fs.writeFileSync(storePath(recoveryStoreDir), `${JSON.stringify(state, null, 2)}\n`);
+  // Fire-and-forget sync to Supabase
+  for (const q of state.quotes) syncQuoteToSupabase(q);
+  for (const inv of state.invoices) syncInvoiceToSupabase(inv);
+  for (const e of state.events) syncEventToSupabase(e);
+}
+
+function syncQuoteToSupabase(q: RootQuoteRecord): void {
+  sbUpsert("root_quotes", {
+    id: q.id,
+    company_account_id: q.companyAccount,
+    data: q as unknown as Record<string, unknown>,
+    created_at: q.createdAt,
+    updated_at: q.updatedAt,
+  }).catch(() => { /* silent */ });
+}
+function syncInvoiceToSupabase(inv: RootInvoiceRecord): void {
+  sbUpsert("root_invoices", {
+    id: inv.id,
+    company_account_id: inv.companyAccount,
+    data: inv as unknown as Record<string, unknown>,
+    created_at: inv.createdAt,
+    updated_at: inv.updatedAt,
+  }).catch(() => { /* silent */ });
+}
+function syncEventToSupabase(e: RootBillingEvent): void {
+  sbUpsert("root_billing_events", {
+    id: e.id,
+    company_account_id: e.companyAccount,
+    entity_type: e.entityType,
+    entity_id: e.entityId,
+    data: e as unknown as Record<string, unknown>,
+    created_at: e.createdAt,
+  }).catch(() => { /* silent */ });
 }
 
 function history(eventType: string, summary: string, actor = "local-operator", metadata?: Record<string, unknown>): RootDocumentHistoryEntry {

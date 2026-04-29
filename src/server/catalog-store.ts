@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { CompanyAccountId } from "../lib/mission-control";
+import { sbSelect, sbUpsert, sbDelete } from "./data-adapter";
 
 export interface CatalogItem {
   id: string;
@@ -132,7 +133,24 @@ function catalogFile(storeDir?: string): string {
   return path.join(dir, "catalog.json");
 }
 
+let catalogHydrated = false;
+
+async function hydrateCatalogFromSupabase(storeDir?: string): Promise<void> {
+  if (catalogHydrated) return;
+  const res = await sbSelect<{ data: unknown }>("catalog_items");
+  if (res.ok && res.data && res.data.length > 0) {
+    const state: CatalogState = {
+      items: res.data.map((r) => r.data) as CatalogItem[],
+    };
+    writeState(state, storeDir);
+  }
+  catalogHydrated = true;
+}
+
 function readState(storeDir?: string): CatalogState {
+  if (!catalogHydrated) {
+    hydrateCatalogFromSupabase(storeDir).catch(() => { /* silent */ });
+  }
   const file = catalogFile(storeDir);
   if (!fs.existsSync(file)) return { items: [...DEFAULT_ITEMS] };
   try {
@@ -143,10 +161,21 @@ function readState(storeDir?: string): CatalogState {
   }
 }
 
+function syncCatalogItemToSupabase(item: CatalogItem): void {
+  sbUpsert("catalog_items", {
+    id: item.id,
+    company_account_id: item.companyAccount,
+    data: item as unknown as Record<string, unknown>,
+    created_at: item.createdAt,
+    updated_at: item.updatedAt,
+  }).catch(() => { /* silent */ });
+}
+
 function writeState(state: CatalogState, storeDir?: string): void {
   const file = catalogFile(storeDir);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, JSON.stringify(state, null, 2));
+  for (const item of state.items) syncCatalogItemToSupabase(item);
 }
 
 function stableId(prefix: string): string {

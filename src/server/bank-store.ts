@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { CompanyAccountId } from "../lib/mission-control";
+import { sbSelect, sbUpsert, sbDelete } from "./data-adapter";
 
 export interface BankTransaction {
   id: string;
@@ -37,7 +38,26 @@ function bankFile(storeDir?: string): string {
   return path.join(dir, "bank.json");
 }
 
+let bankHydrated = false;
+
+async function hydrateBankFromSupabase(storeDir?: string): Promise<void> {
+  if (bankHydrated) return;
+  const stmtRes = await sbSelect<{ data: unknown }>("bank_statements");
+  const txnRes = await sbSelect<{ data: unknown }>("bank_transactions");
+  if (stmtRes.ok && txnRes.ok) {
+    const state: BankState = {
+      statements: (stmtRes.data?.map((r) => r.data) as BankStatement[]) ?? [],
+      transactions: (txnRes.data?.map((r) => r.data) as BankTransaction[]) ?? [],
+    };
+    writeState(state, storeDir);
+  }
+  bankHydrated = true;
+}
+
 function readState(storeDir?: string): BankState {
+  if (!bankHydrated) {
+    hydrateBankFromSupabase(storeDir).catch(() => { /* silent */ });
+  }
   const file = bankFile(storeDir);
   if (!fs.existsSync(file)) return { statements: [], transactions: [] };
   try {
@@ -48,10 +68,29 @@ function readState(storeDir?: string): BankState {
   }
 }
 
+function syncStatementToSupabase(s: BankStatement): void {
+  sbUpsert("bank_statements", {
+    id: s.id,
+    company_account_id: s.companyAccount,
+    data: s as unknown as Record<string, unknown>,
+    created_at: s.createdAt,
+  }).catch(() => { /* silent */ });
+}
+function syncTransactionToSupabase(t: BankTransaction): void {
+  sbUpsert("bank_transactions", {
+    id: t.id,
+    statement_id: t.statementId,
+    data: t as unknown as Record<string, unknown>,
+    created_at: t.createdAt,
+  }).catch(() => { /* silent */ });
+}
+
 function writeState(state: BankState, storeDir?: string): void {
   const file = bankFile(storeDir);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, JSON.stringify(state, null, 2));
+  for (const s of state.statements) syncStatementToSupabase(s);
+  for (const t of state.transactions) syncTransactionToSupabase(t);
 }
 
 function stableId(prefix: string): string {

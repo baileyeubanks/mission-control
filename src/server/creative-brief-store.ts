@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { PacketModelClient } from "./model-client";
+import { sbSelect, sbUpsert } from "./data-adapter";
 
 export type BriefStatus =
   | "draft_started"
@@ -191,7 +192,24 @@ function briefFile(storeDir?: string): string {
   return path.join(dir, "creative-briefs.json");
 }
 
+let briefsHydrated = false;
+
+async function hydrateBriefsFromSupabase(storeDir?: string): Promise<void> {
+  if (briefsHydrated) return;
+  const res = await sbSelect<{ data: unknown }>("creative_briefs");
+  if (res.ok && res.data && res.data.length > 0) {
+    const state: BriefState = {
+      sessions: res.data.map((r) => r.data) as CreativeBriefSession[],
+    };
+    writeState(state, storeDir);
+  }
+  briefsHydrated = true;
+}
+
 function readState(storeDir?: string): BriefState {
+  if (!briefsHydrated) {
+    hydrateBriefsFromSupabase(storeDir).catch(() => { /* silent */ });
+  }
   const file = briefFile(storeDir);
   if (!fs.existsSync(file)) return { sessions: [] };
   try {
@@ -201,10 +219,21 @@ function readState(storeDir?: string): BriefState {
   }
 }
 
+function syncBriefToSupabase(b: CreativeBriefSession): void {
+  sbUpsert("creative_briefs", {
+    id: b.id,
+    company_account_id: "content-co-op",
+    data: b as unknown as Record<string, unknown>,
+    created_at: b.createdAt,
+    updated_at: b.updatedAt,
+  }).catch(() => { /* silent */ });
+}
+
 function writeState(state: BriefState, storeDir?: string): void {
   const file = briefFile(storeDir);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, JSON.stringify(state, null, 2));
+  for (const b of state.sessions) syncBriefToSupabase(b);
 }
 
 function stableId(prefix: string): string {
