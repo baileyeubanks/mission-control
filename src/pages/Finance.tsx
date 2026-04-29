@@ -100,7 +100,7 @@ export function Finance() {
           <Button
             variant="outline"
             size="sm"
-            className="h-9 font-mono uppercase text-[10px] border-white/10"
+            className="h-9 font-mono uppercase text-[10px] border-slate-200"
             aria-label="Export financial data"
             onClick={exportInvoices}
           >
@@ -120,7 +120,7 @@ export function Finance() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
-        <Card className="glass border-white/5">
+        <Card className="border-slate-200">
           <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">Outstanding_Balance</CardTitle>
             <TrendingUp className="h-3.5 w-3.5 text-primary/50" />
@@ -130,7 +130,7 @@ export function Finance() {
             <p className="text-[10px] font-mono text-muted-foreground mt-1 uppercase">Across {invoices.filter(i => i.status !== "Paid").length} Active_Invoices</p>
           </CardContent>
         </Card>
-        <Card className="glass border-white/5">
+        <Card className="border-slate-200">
           <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">Overdue_Risk</CardTitle>
             <AlertCircle className="h-3.5 w-3.5 text-destructive/50" />
@@ -140,7 +140,7 @@ export function Finance() {
             <p className="text-[10px] font-mono text-muted-foreground mt-1 uppercase">{invoices.filter(i => i.status === "Overdue").length} Critical_Delays</p>
           </CardContent>
         </Card>
-        <Card className="glass border-white/5">
+        <Card className="border-slate-200">
           <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">Collected_30D</CardTitle>
             <CheckCircle2 className="h-3.5 w-3.5 text-success/50" />
@@ -152,13 +152,13 @@ export function Finance() {
         </Card>
       </div>
 
-      <Card className="flex-1 flex flex-col overflow-hidden glass border-white/5">
-        <div className="p-4 border-b border-white/5 flex items-center gap-4 bg-black/20">
+      <Card className="flex-1 flex flex-col overflow-hidden border-slate-200">
+        <div className="p-4 border-b border-slate-200 flex items-center gap-4 bg-slate-100">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <Input 
               placeholder="SEARCH_BY_CLIENT_OR_ID..." 
-              className="pl-10 bg-black/20 border-white/5 font-mono text-[10px] uppercase tracking-wider h-9"
+              className="pl-10 bg-slate-100 border-slate-200 font-mono text-[10px] uppercase tracking-wider h-9"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Search invoices"
@@ -167,7 +167,7 @@ export function Finance() {
           <Button
             variant="outline"
             size="sm"
-            className="h-9 font-mono uppercase text-[10px] border-white/10"
+            className="h-9 font-mono uppercase text-[10px] border-slate-200"
             aria-label="Filter invoices"
             disabled
             title="Advanced invoice filters are not wired yet. Search is active."
@@ -178,8 +178,8 @@ export function Finance() {
         </div>
         <div className="flex-1 overflow-auto">
           <Table>
-            <TableHeader className="bg-black/40 sticky top-0 z-10">
-              <TableRow className="hover:bg-transparent border-white/5">
+            <TableHeader className="bg-slate-100 sticky top-0 z-10">
+              <TableRow className="hover:bg-transparent border-slate-200">
                 <TableHead className="w-[140px] font-mono text-[10px] uppercase tracking-widest">Invoice_ID</TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">Client_Entity</TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">Amount</TableHead>
@@ -198,7 +198,7 @@ export function Finance() {
                   <TableCell colSpan={6} className="text-center py-12 text-muted-foreground font-mono text-xs uppercase tracking-widest">No_Records_Found</TableCell>
                 </TableRow>
               ) : filteredInvoices.map((inv) => (
-                <TableRow key={inv.id} className="group hover:bg-white/5 border-white/5 transition-colors">
+                <TableRow key={inv.id} className="group hover:bg-slate-50 border-slate-200 transition-colors">
                   <TableCell className="font-mono text-[10px] text-muted-foreground/60">{inv.id}</TableCell>
                   <TableCell className="font-medium text-sm">{inv.client_name}</TableCell>
                   <TableCell className="font-mono text-sm">{formatCurrency(inv.amount)}</TableCell>

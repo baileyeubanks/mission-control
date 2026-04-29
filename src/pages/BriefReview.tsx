@@ -60,7 +60,7 @@ function formatCents(cents: number): string {
 
 function statusBadge(status: string) {
   const map: Record<string, string> = {
-    draft_started: "bg-zinc-800 text-zinc-400",
+    draft_started: "bg-slate-200 text-slate-500",
     contact_captured: "bg-blue-900/30 text-blue-400",
     discovery_in_progress: "bg-amber-900/30 text-amber-400",
     brief_submitted: "bg-emerald-900/30 text-emerald-400",
@@ -71,7 +71,7 @@ function statusBadge(status: string) {
     client_approved: "bg-green-900/30 text-green-400",
     closed_lost: "bg-red-900/30 text-red-400",
   };
-  return map[status] || "bg-zinc-800 text-zinc-400";
+  return map[status] || "bg-slate-200 text-slate-500";
 }
 
 function complexityBand(score: number): { label: string; color: string } {
@@ -115,21 +115,21 @@ export function BriefReviewList() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-emerald-500" />
+      <div className="min-h-screen bg-slate-50 text-slate-900 flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-emerald-600" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 p-6">
+    <div className="min-h-screen bg-slate-50 text-slate-900 p-6">
       <div className="mx-auto max-w-5xl">
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold text-white">Creative Briefs</h1>
-            <p className="mt-1 text-sm text-zinc-400">Review, score, and convert intake submissions.</p>
+            <h1 className="text-2xl font-semibold text-slate-900">Creative Briefs</h1>
+            <p className="mt-1 text-sm text-slate-500">Review, score, and convert intake submissions.</p>
           </div>
-          <div className="flex items-center gap-2 text-sm text-zinc-500">
+          <div className="flex items-center gap-2 text-sm text-slate-400">
             <BarChart3 className="h-4 w-4" />
             {briefs.length} total
           </div>
@@ -139,7 +139,7 @@ export function BriefReviewList() {
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           placeholder="Search by company, name, status..."
-          className="mb-4 w-full rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="mb-4 w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-emerald-600 focus:outline-none"
         />
 
         <div className="space-y-2">
@@ -149,39 +149,39 @@ export function BriefReviewList() {
               <button
                 key={brief.id}
                 onClick={() => navigate(`/admin/briefs/${brief.id}`)}
-                className="w-full text-left rounded-xl border border-zinc-800 bg-zinc-900/40 p-4 hover:border-zinc-700 transition-colors"
+                className="w-full text-left rounded-xl border border-slate-200 bg-white p-4 hover:border-slate-300 transition-colors"
               >
                 <div className="flex items-center justify-between gap-4">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-white">{brief.contact?.company || "Unknown company"}</span>
+                      <span className="text-sm font-medium text-slate-900">{brief.contact?.company || "Unknown company"}</span>
                       <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium uppercase", statusBadge(brief.status))}>
                         {brief.status.replace(/_/g, " ")}
                       </span>
                       {brief.aiEnrichment && (
-                        <span className="flex items-center gap-1 text-[10px] text-purple-400">
+                        <span className="flex items-center gap-1 text-[10px] text-purple-700">
                           <Sparkles className="h-3 w-3" />
                           AI enriched
                         </span>
                       )}
                     </div>
-                    <p className="mt-0.5 text-xs text-zinc-500">
+                    <p className="mt-0.5 text-xs text-slate-400">
                       {brief.contact?.firstName} {brief.contact?.lastName} · {brief.contact?.email} · {new Date(brief.createdAt).toLocaleDateString()}
                     </p>
                   </div>
                   <div className="flex items-center gap-4 shrink-0">
                     <div className="text-right">
                       <div className={cn("text-xs font-semibold", band.color)}>{band.label}</div>
-                      <div className="text-[10px] text-zinc-500">Complexity {brief.complexityScore}</div>
+                      <div className="text-[10px] text-slate-400">Complexity {brief.complexityScore}</div>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-zinc-600" />
+                    <ChevronRight className="h-4 w-4 text-slate-400" />
                   </div>
                 </div>
               </button>
             );
           })}
           {filtered.length === 0 && (
-            <div className="py-12 text-center text-sm text-zinc-500">No briefs found.</div>
+            <div className="py-12 text-center text-sm text-slate-400">No briefs found.</div>
           )}
         </div>
       </div>
@@ -274,16 +274,16 @@ export function BriefReviewDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-emerald-500" />
+      <div className="min-h-screen bg-slate-50 text-slate-900 flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-emerald-600" />
       </div>
     );
   }
 
   if (!brief) {
     return (
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center">
-        <p className="text-zinc-400">Brief not found.</p>
+      <div className="min-h-screen bg-slate-50 text-slate-900 flex items-center justify-center">
+        <p className="text-slate-500">Brief not found.</p>
       </div>
     );
   }
@@ -293,9 +293,9 @@ export function BriefReviewDetail() {
   const band = complexityBand(brief.complexityScore);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 p-6">
+    <div className="min-h-screen bg-slate-50 text-slate-900 p-6">
       <div className="mx-auto max-w-4xl">
-        <button onClick={() => navigate("/admin/briefs")} className="mb-4 flex items-center gap-1 text-sm text-zinc-400 hover:text-white transition-colors">
+        <button onClick={() => navigate("/admin/briefs")} className="mb-4 flex items-center gap-1 text-sm text-slate-500 hover:text-slate-900 transition-colors">
           <ArrowLeft className="h-4 w-4" />
           Back to briefs
         </button>
@@ -304,18 +304,18 @@ export function BriefReviewDetail() {
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-semibold text-white">{brief.contact?.company || "Unknown"}</h1>
+              <h1 className="text-2xl font-semibold text-slate-900">{brief.contact?.company || "Unknown"}</h1>
               <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium uppercase", statusBadge(brief.status))}>
                 {brief.status.replace(/_/g, " ")}
               </span>
             </div>
-            <p className="mt-1 text-sm text-zinc-400">
+            <p className="mt-1 text-sm text-slate-500">
               {brief.contact?.firstName} {brief.contact?.lastName} · {brief.contact?.email} · {brief.contact?.phone}
             </p>
           </div>
           <div className="text-right shrink-0">
             <div className={cn("text-sm font-bold", band.color)}>{band.label}</div>
-            <div className="text-[10px] text-zinc-500">Score {brief.complexityScore} · Readiness {brief.proposalReadiness}%</div>
+            <div className="text-[10px] text-slate-400">Score {brief.complexityScore} · Readiness {brief.proposalReadiness}%</div>
           </div>
         </div>
 
@@ -337,33 +337,33 @@ export function BriefReviewDetail() {
                   <InfoRow label="Business Objective" value={ai.businessObjective} />
                   <InfoRow label="Audience" value={ai.audience} />
                   <div>
-                    <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-500">Detected Needs</span>
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">Detected Needs</span>
                     <div className="mt-1 flex flex-wrap gap-1.5">
                       {ai.detectedNeeds.map((n) => (
-                        <span key={n} className="rounded-full bg-zinc-800 px-2 py-0.5 text-[10px] text-zinc-300">{n}</span>
+                        <span key={n} className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-600">{n}</span>
                       ))}
                     </div>
                   </div>
                   {ai.riskFlags.length > 0 && (
                     <div className="rounded-lg border border-amber-500/20 bg-amber-950/10 p-3">
-                      <div className="flex items-center gap-1.5 text-xs font-medium text-amber-400 mb-1">
+                      <div className="flex items-center gap-1.5 text-xs font-medium text-amber-700 mb-1">
                         <AlertTriangle className="h-3 w-3" />
                         Risk Flags
                       </div>
-                      <ul className="space-y-0.5 text-xs text-zinc-300">
+                      <ul className="space-y-0.5 text-xs text-slate-600">
                         {ai.riskFlags.map((r) => <li key={r}>• {r}</li>)}
                       </ul>
                     </div>
                   )}
                   {ai.missingFields.length > 0 && (
                     <div>
-                      <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-500">Missing Info</span>
-                      <p className="text-xs text-zinc-400">{ai.missingFields.join(", ")}</p>
+                      <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">Missing Info</span>
+                      <p className="text-xs text-slate-500">{ai.missingFields.join(", ")}</p>
                     </div>
                   )}
-                  <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
-                    <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-500">Producer Note</span>
-                    <p className="mt-1 text-xs text-zinc-300 italic">{ai.internalProducerNote}</p>
+                  <div className="rounded-lg border border-slate-200 bg-white p-3">
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">Producer Note</span>
+                    <p className="mt-1 text-xs text-slate-600 italic">{ai.internalProducerNote}</p>
                   </div>
                 </div>
               </div>
@@ -402,7 +402,7 @@ export function BriefReviewDetail() {
                     brief.phases.deliverables.bRoll && "B-roll",
                     brief.phases.deliverables.photography && "Photography",
                   ].filter(Boolean).map((tag) => (
-                    <span key={tag} className="rounded-full bg-zinc-800 px-2 py-0.5 text-[10px] text-zinc-300">{tag}</span>
+                    <span key={tag} className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-600">{tag}</span>
                   ))}
                 </div>
               </PhaseCard>
@@ -419,7 +419,7 @@ export function BriefReviewDetail() {
                     brief.phases.production.facilityAccess && "Facility Access",
                     brief.phases.production.safetyRequirements && "Safety",
                   ].filter(Boolean).map((tag) => (
-                    <span key={tag} className="rounded-full bg-zinc-800 px-2 py-0.5 text-[10px] text-zinc-300">{tag}</span>
+                    <span key={tag} className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-600">{tag}</span>
                   ))}
                 </div>
               </PhaseCard>
@@ -445,29 +445,29 @@ export function BriefReviewDetail() {
           <div className="space-y-4">
             {/* Estimate */}
             {estimate && (
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
-                <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-zinc-500">Estimate</h3>
+              <div className="rounded-xl border border-slate-200 bg-white p-4">
+                <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-slate-400">Estimate</h3>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-zinc-400">Essential</span>
-                    <span className="text-zinc-200">{formatCents(estimate.minimalCents)}</span>
+                    <span className="text-slate-500">Essential</span>
+                    <span className="text-slate-800">{formatCents(estimate.minimalCents)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-zinc-400">Recommended</span>
-                    <span className="text-emerald-400 font-medium">{formatCents(estimate.recommendedCents)}</span>
+                    <span className="text-slate-500">Recommended</span>
+                    <span className="text-emerald-700 font-medium">{formatCents(estimate.recommendedCents)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-zinc-400">Premium</span>
-                    <span className="text-zinc-200">{formatCents(estimate.premiumCents)}</span>
+                    <span className="text-slate-500">Premium</span>
+                    <span className="text-slate-800">{formatCents(estimate.premiumCents)}</span>
                   </div>
                 </div>
-                <p className="mt-2 text-[10px] text-zinc-500">{estimate.explanation}</p>
+                <p className="mt-2 text-[10px] text-slate-400">{estimate.explanation}</p>
               </div>
             )}
 
             {/* Actions */}
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4 space-y-2">
-              <h3 className="mb-2 text-xs font-medium uppercase tracking-wider text-zinc-500">Actions</h3>
+            <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-2">
+              <h3 className="mb-2 text-xs font-medium uppercase tracking-wider text-slate-400">Actions</h3>
               {!brief.relatedQuoteId && (
                 <button
                   onClick={convertToProposal}
@@ -481,7 +481,7 @@ export function BriefReviewDetail() {
               {brief.relatedQuoteId && (
                 <button
                   onClick={() => navigate(`/quotes?id=${brief.relatedQuoteId}`)}
-                  className="w-full flex items-center justify-center gap-2 rounded-lg border border-emerald-500/30 px-3 py-2 text-sm font-medium text-emerald-400 hover:bg-emerald-950/20 transition-colors"
+                  className="w-full flex items-center justify-center gap-2 rounded-lg border border-emerald-500/30 px-3 py-2 text-sm font-medium text-emerald-700 hover:bg-emerald-50 transition-colors"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5" />
                   View Proposal
@@ -490,26 +490,26 @@ export function BriefReviewDetail() {
             </div>
 
             {/* Admin Notes */}
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
-              <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-zinc-500">Admin Notes</h3>
+            <div className="rounded-xl border border-slate-200 bg-white p-4">
+              <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-slate-400">Admin Notes</h3>
               <div className="space-y-2 mb-3">
                 {brief.adminNotes.map((note) => (
-                  <div key={note.id} className="rounded-lg bg-zinc-900/60 p-2.5">
-                    <p className="text-xs text-zinc-300">{note.text}</p>
-                    <p className="mt-1 text-[10px] text-zinc-600">{note.author} · {new Date(note.createdAt).toLocaleDateString()}</p>
+                  <div key={note.id} className="rounded-lg bg-slate-100 p-2.5">
+                    <p className="text-xs text-slate-600">{note.text}</p>
+                    <p className="mt-1 text-[10px] text-slate-400">{note.author} · {new Date(note.createdAt).toLocaleDateString()}</p>
                   </div>
                 ))}
-                {brief.adminNotes.length === 0 && <p className="text-xs text-zinc-600 italic">No notes yet.</p>}
+                {brief.adminNotes.length === 0 && <p className="text-xs text-slate-400 italic">No notes yet.</p>}
               </div>
               <div className="flex gap-2">
                 <input
                   value={noteText}
                   onChange={(e) => setNoteText(e.target.value)}
                   placeholder="Add a note..."
-                  className="flex-1 rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 py-1.5 text-xs text-zinc-100 placeholder-zinc-700 focus:border-emerald-500 focus:outline-none"
+                  className="flex-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:border-emerald-600 focus:outline-none"
                   onKeyDown={(e) => e.key === "Enter" && addNote()}
                 />
-                <button onClick={addNote} className="rounded-lg bg-zinc-800 px-2.5 py-1.5 text-xs text-zinc-300 hover:bg-zinc-700 transition-colors">
+                <button onClick={addNote} className="rounded-lg bg-slate-100 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-zinc-700 transition-colors">
                   <Plus className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -523,9 +523,9 @@ export function BriefReviewDetail() {
 
 function PhaseCard({ icon: Icon, title, children }: { icon: React.ElementType; title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
-      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-white">
-        <Icon className="h-4 w-4 text-zinc-500" />
+    <div className="rounded-xl border border-slate-200 bg-white p-5">
+      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
+        <Icon className="h-4 w-4 text-slate-400" />
         {title}
       </h3>
       <div className="space-y-2">{children}</div>
@@ -537,8 +537,8 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   if (!value) return null;
   return (
     <div className="flex flex-col sm:flex-row sm:items-start gap-0.5 sm:gap-3">
-      <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-500 w-28 shrink-0">{label}</span>
-      <span className="text-xs text-zinc-300">{value}</span>
+      <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400 w-28 shrink-0">{label}</span>
+      <span className="text-xs text-slate-600">{value}</span>
     </div>
   );
 }

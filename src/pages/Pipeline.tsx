@@ -241,28 +241,28 @@ export function Pipeline() {
   return (
     <div className="space-y-5 h-full flex flex-col">
       {/* Header */}
-      <section className="glass-panel p-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between shrink-0">
+      <section className="p-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between shrink-0">
         <div>
           <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-brand-accent-glow" />
             <h1 className="text-2xl font-display tracking-[0.06em]">Pipeline</h1>
           </div>
-          <p className="mt-1 text-xs text-white/40 font-mono uppercase tracking-widest">
+          <p className="mt-1 text-xs text-slate-500 font-mono uppercase tracking-widest">
             Quote-to-project funnel · CCO sales velocity
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <div className="relative">
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/20" />
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
             <input
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               placeholder="Filter deals..."
-              className="h-9 rounded-md border border-white/10 bg-black/30 pl-9 pr-3 text-xs text-white outline-none focus:border-brand-accent-glow/50 placeholder:text-white/20 w-48"
+              className="h-9 rounded-md border border-slate-200 bg-slate-100 pl-9 pr-3 text-xs text-slate-900 outline-none focus:border-brand-accent-glow/50 placeholder:text-slate-400 w-48"
             />
           </div>
           <Button variant="ghost" size="icon" onClick={() => void refresh()} className="hover:bg-white/[0.04]">
-            <RefreshCcw className="h-4 w-4 text-white/30" />
+            <RefreshCcw className="h-4 w-4 text-slate-400" />
           </Button>
         </div>
       </section>
@@ -276,9 +276,9 @@ export function Pipeline() {
           { label: "Active Deals", value: String(stats.dealCount), icon: Briefcase },
           { label: "Win Rate", value: `${stats.winRate}%`, icon: TrendingUp },
         ].map((s) => (
-          <div key={s.label} className="glass-panel p-4 flex items-center justify-between">
+          <div key={s.label} className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-mono uppercase tracking-widest text-white/30">{s.label}</p>
+              <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400">{s.label}</p>
               <p className="mt-1 text-xl font-display">{s.value}</p>
             </div>
             <s.icon className="h-4 w-4 text-brand-accent-glow" />
@@ -307,13 +307,13 @@ export function Pipeline() {
               return (
                 <div key={col.id} className="flex w-64 flex-col gap-2">
                   {/* Column Header */}
-                  <div className="flex items-center justify-between glass-panel p-2.5">
+                  <div className="flex items-center justify-between p-2.5">
                     <div className="flex items-center gap-2">
                       <col.icon className={`h-3.5 w-3.5 ${col.tone.split(" ")[0]}`} />
-                      <span className="text-xs font-medium text-white/70">{col.label}</span>
+                      <span className="text-xs font-medium text-slate-700">{col.label}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-mono text-white/30">{formatCents(colValue)}</span>
+                      <span className="text-[10px] font-mono text-slate-400">{formatCents(colValue)}</span>
                       <Badge variant="outline" className={`text-[8px] uppercase ${col.tone}`}>
                         {items.length}
                       </Badge>
@@ -327,13 +327,13 @@ export function Pipeline() {
                         key={card.id}
                         type="button"
                         onClick={() => setSelectedCard(card)}
-                        className="w-full glass-panel p-3 text-left transition-colors hover:border-white/10 hover:bg-white/[0.04]"
+                        className="w-full p-3 text-left transition-colors hover:border-slate-200 hover:bg-white/[0.04]"
                       >
-                        <p className="text-xs font-medium text-white/80 truncate">{card.title}</p>
-                        <p className="text-[10px] font-mono text-white/30 mt-0.5 truncate">{card.clientName}</p>
+                        <p className="text-xs font-medium text-slate-800 truncate">{card.title}</p>
+                        <p className="text-[10px] font-mono text-slate-400 mt-0.5 truncate">{card.clientName}</p>
                         <div className="flex items-center justify-between mt-2">
                           <span className="text-sm font-display text-brand-accent-glow">{formatCents(card.valueCents)}</span>
-                          <span className="text-[9px] font-mono text-white/20">{card.daysInStage}d</span>
+                          <span className="text-[9px] font-mono text-slate-400">{card.daysInStage}d</span>
                         </div>
                         {card.invoiceStatus && (
                           <Badge variant="outline" className="mt-2 text-[7px] uppercase text-success border-success/20">
@@ -343,8 +343,8 @@ export function Pipeline() {
                       </button>
                     ))}
                     {items.length === 0 && (
-                      <div className="glass-panel p-3 text-center">
-                        <p className="text-[10px] font-mono text-white/15 uppercase">Empty</p>
+                      <div className="p-3 text-center">
+                        <p className="text-[10px] font-mono text-slate-400 uppercase">Empty</p>
                       </div>
                     )}
                   </div>
@@ -358,36 +358,36 @@ export function Pipeline() {
       {/* Detail Panel */}
       {selectedCard && selectedQuote && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg glass-panel p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+          <div className="w-full max-w-lg p-6 space-y-4 max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-display tracking-[0.06em]">Deal Detail</h2>
               <Button variant="ghost" size="icon" onClick={() => setSelectedCard(null)} className="hover:bg-white/[0.04]">
-                <XCircle className="h-4 w-4 text-white/30" />
+                <XCircle className="h-4 w-4 text-slate-400" />
               </Button>
             </div>
 
             <div className="space-y-1">
-              <p className="text-[10px] font-mono uppercase text-white/30">{selectedQuote.documentNumber}</p>
+              <p className="text-[10px] font-mono uppercase text-slate-400">{selectedQuote.documentNumber}</p>
               <p className="text-lg font-medium">{selectedQuote.title}</p>
-              <p className="text-sm text-white/40">{selectedQuote.client.name} · {selectedQuote.client.email}</p>
+              <p className="text-sm text-slate-500">{selectedQuote.client.name} · {selectedQuote.client.email}</p>
             </div>
 
             <div className="grid grid-cols-3 gap-2">
-              <div className="glass-panel p-2.5 text-center">
-                <p className="text-[9px] font-mono uppercase text-white/30">Value</p>
+              <div className="p-2.5 text-center">
+                <p className="text-[9px] font-mono uppercase text-slate-400">Value</p>
                 <p className="text-sm font-display text-brand-accent-glow">{formatCents(selectedQuote.totalCents)}</p>
               </div>
-              <div className="glass-panel p-2.5 text-center">
-                <p className="text-[9px] font-mono uppercase text-white/30">Status</p>
+              <div className="p-2.5 text-center">
+                <p className="text-[9px] font-mono uppercase text-slate-400">Status</p>
                 <p className="text-sm font-display">{selectedQuote.status.replace(/_/g, " ")}</p>
               </div>
-              <div className="glass-panel p-2.5 text-center">
-                <p className="text-[9px] font-mono uppercase text-white/30">Age</p>
+              <div className="p-2.5 text-center">
+                <p className="text-[9px] font-mono uppercase text-slate-400">Age</p>
                 <p className="text-sm font-display">{daysSince(selectedQuote.createdAt)}d</p>
               </div>
             </div>
 
-            <p className="text-xs text-white/40">{selectedQuote.scopeSummary}</p>
+            <p className="text-xs text-slate-500">{selectedQuote.scopeSummary}</p>
 
             {/* Actions */}
             <div className="flex flex-wrap gap-2 pt-2">
@@ -399,12 +399,12 @@ export function Pipeline() {
               {(selectedQuote.status === "accepted" || selectedQuote.status === "ready_to_invoice") && (
                 <>
                   {!productionIds.has(selectedQuote.id) ? (
-                    <Button size="sm" variant="outline" onClick={() => moveToProduction(selectedQuote.id)} className="border-white/10 text-xs hover:bg-white/[0.04]">
+                    <Button size="sm" variant="outline" onClick={() => moveToProduction(selectedQuote.id)} className="border-slate-200 text-xs hover:bg-white/[0.04]">
                       <Target className="mr-2 h-3.5 w-3.5" />
                       Mark In Production
                     </Button>
                   ) : (
-                    <Button size="sm" variant="outline" onClick={() => removeFromProduction(selectedQuote.id)} className="border-white/10 text-xs hover:bg-white/[0.04]">
+                    <Button size="sm" variant="outline" onClick={() => removeFromProduction(selectedQuote.id)} className="border-slate-200 text-xs hover:bg-white/[0.04]">
                       <CheckCircle2 className="mr-2 h-3.5 w-3.5" />
                       Production Complete
                     </Button>

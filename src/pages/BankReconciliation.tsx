@@ -152,13 +152,13 @@ export function BankReconciliation() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 p-6">
+    <div className="min-h-screen bg-slate-50 text-slate-900 p-6">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-white">Bank Reconciliation</h1>
-            <p className="mt-1 text-sm text-zinc-400">Match bank transactions to invoices and reconcile payments.</p>
+            <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Bank Reconciliation</h1>
+            <p className="mt-1 text-sm text-slate-500">Match bank transactions to invoices and reconcile payments.</p>
           </div>
         </div>
 
@@ -166,32 +166,32 @@ export function BankReconciliation() {
         {stats && (
           <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
             {[
-              { label: "Transactions", value: stats.totalTransactions, icon: BarChart3, color: "text-zinc-300" },
-              { label: "Unmatched", value: stats.unmatchedCount, icon: Circle, color: "text-amber-500" },
-              { label: "Matched", value: stats.matchedCount, icon: Link2, color: "text-blue-400" },
-              { label: "Reconciled", value: stats.reconciledCount, icon: CheckCircle2, color: "text-emerald-500" },
-              { label: "Credits", value: formatCents(stats.totalCreditsCents), icon: ArrowUpRight, color: "text-emerald-400" },
-              { label: "Debits", value: formatCents(stats.totalDebitsCents), icon: ArrowDownRight, color: "text-red-400" },
+              { label: "Transactions", value: stats.totalTransactions, icon: BarChart3, color: "text-slate-600" },
+              { label: "Unmatched", value: stats.unmatchedCount, icon: Circle, color: "text-amber-600" },
+              { label: "Matched", value: stats.matchedCount, icon: Link2, color: "text-blue-600" },
+              { label: "Reconciled", value: stats.reconciledCount, icon: CheckCircle2, color: "text-emerald-600" },
+              { label: "Credits", value: formatCents(stats.totalCreditsCents), icon: ArrowUpRight, color: "text-emerald-600" },
+              { label: "Debits", value: formatCents(stats.totalDebitsCents), icon: ArrowDownRight, color: "text-red-600" },
             ].map((stat) => (
-              <div key={stat.label} className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3">
+              <div key={stat.label} className="rounded-xl border border-slate-200 bg-white p-3">
                 <div className="flex items-center gap-2">
                   <stat.icon className={cn("h-3.5 w-3.5", stat.color)} />
-                  <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-500">{stat.label}</span>
+                  <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">{stat.label}</span>
                 </div>
-                <div className="mt-1 text-lg font-semibold text-white">{stat.value}</div>
+                <div className="mt-1 text-lg font-semibold text-slate-900">{stat.value}</div>
               </div>
             ))}
           </div>
         )}
 
         {/* Upload */}
-        <div className="mb-6 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
-          <h3 className="mb-3 text-sm font-semibold text-white">Upload Statement (CSV)</h3>
+        <div className="mb-6 rounded-xl border border-slate-200 bg-white p-4">
+          <h3 className="mb-3 text-sm font-semibold text-slate-900">Upload Statement (CSV)</h3>
           <div className="flex flex-col gap-3 sm:flex-row">
             <select
               value={uploadCompany}
               onChange={(e) => setUploadCompany(e.target.value)}
-              className="rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+              className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-emerald-600 focus:outline-none"
             >
               <option value="astro-cleaning-services">Astro Cleaning Services</option>
               <option value="content-co-op">Content Co-op</option>
@@ -201,12 +201,12 @@ export function BankReconciliation() {
               onChange={(e) => setCsvText(e.target.value)}
               placeholder={`Date,Description,Amount\n2024-01-15,Client Payment ABC,1500.00\n2024-01-16,Vendor Expense,-250.00`}
               rows={3}
-              className="flex-1 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs font-mono text-zinc-100 placeholder-zinc-700 focus:border-emerald-500 focus:outline-none"
+              className="flex-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-mono text-slate-900 placeholder-slate-400 focus:border-emerald-600 focus:outline-none"
             />
             <button
               onClick={handleUpload}
               disabled={uploading || !csvText.trim()}
-              className="flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 transition-colors disabled:opacity-50"
+              className="flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 transition-colors disabled:opacity-50"
             >
               <Upload className="h-4 w-4" />
               {uploading ? "Uploading..." : "Upload"}
@@ -217,18 +217,18 @@ export function BankReconciliation() {
         {/* Filters */}
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search transactions..."
-              className="w-full rounded-lg border border-zinc-800 bg-zinc-900 py-2 pl-10 pr-4 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+              className="w-full rounded-lg border border-slate-200 bg-white py-2 pl-10 pr-4 text-sm text-slate-900 placeholder-slate-400 focus:border-emerald-600 focus:outline-none"
             />
           </div>
           <select
             value={accountFilter}
             onChange={(e) => setAccountFilter(e.target.value)}
-            className="rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 focus:border-emerald-600 focus:outline-none"
           >
             {COMPANY_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -237,7 +237,7 @@ export function BankReconciliation() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as BankTransaction["status"] | "")}
-            className="rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 focus:border-emerald-600 focus:outline-none"
           >
             <option value="">All Statuses</option>
             <option value="unmatched">Unmatched</option>
@@ -248,16 +248,16 @@ export function BankReconciliation() {
 
         {/* Match Modal */}
         {matchTxn && (
-          <div className="mb-6 rounded-xl border border-amber-500/30 bg-amber-950/20 p-4">
-            <h3 className="mb-3 text-sm font-semibold text-amber-400">Match Transaction to Invoice</h3>
-            <p className="mb-3 text-xs text-zinc-400">
+          <div className="mb-6 rounded-xl border border-amber-300 bg-amber-50 p-4">
+            <h3 className="mb-3 text-sm font-semibold text-amber-800">Match Transaction to Invoice</h3>
+            <p className="mb-3 text-xs text-slate-600">
               {matchTxn.description} — {formatCents(matchTxn.amountCents)} ({matchTxn.type})
             </p>
             <div className="flex gap-2">
               <select
                 value={selectedInvoiceId}
                 onChange={(e) => setSelectedInvoiceId(e.target.value)}
-                className="flex-1 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+                className="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-emerald-600 focus:outline-none"
               >
                 <option value="">Select invoice...</option>
                 {invoices.map((inv) => (
@@ -266,10 +266,10 @@ export function BankReconciliation() {
                   </option>
                 ))}
               </select>
-              <button onClick={handleMatch} disabled={!selectedInvoiceId} className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 transition-colors disabled:opacity-50">
+              <button onClick={handleMatch} disabled={!selectedInvoiceId} className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 transition-colors disabled:opacity-50">
                 Match
               </button>
-              <button onClick={() => setMatchTxn(null)} className="rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 hover:bg-zinc-800 transition-colors">
+              <button onClick={() => setMatchTxn(null)} className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 transition-colors">
                 Cancel
               </button>
             </div>
@@ -278,36 +278,36 @@ export function BankReconciliation() {
 
         {/* Transactions Table */}
         {loading ? (
-          <div className="py-20 text-center text-sm text-zinc-500">Loading transactions...</div>
+          <div className="py-20 text-center text-sm text-slate-400">Loading transactions...</div>
         ) : filtered.length === 0 ? (
-          <div className="py-20 text-center text-sm text-zinc-500">No transactions found.</div>
+          <div className="py-20 text-center text-sm text-slate-400">No transactions found.</div>
         ) : (
-          <div className="overflow-hidden rounded-xl border border-zinc-800">
+          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 bg-zinc-900/60">
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500">Date</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500">Description</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-zinc-500">Amount</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500">Status</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500">Invoice</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-zinc-500">Actions</th>
+                <tr className="border-b border-slate-200 bg-slate-50">
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Date</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Description</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-slate-500">Amount</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">Invoice</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-slate-500">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800/50">
+              <tbody className="divide-y divide-slate-100">
                 {filtered.map((txn) => (
-                  <tr key={txn.id} className="hover:bg-zinc-900/30 transition-colors">
-                    <td className="px-4 py-3 text-zinc-300">{txn.date}</td>
-                    <td className="px-4 py-3 text-zinc-200">{txn.description}</td>
-                    <td className={cn("px-4 py-3 text-right font-medium", txn.type === "credit" ? "text-emerald-400" : "text-red-400")}>
+                  <tr key={txn.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-3 text-slate-700">{txn.date}</td>
+                    <td className="px-4 py-3 text-slate-800">{txn.description}</td>
+                    <td className={cn("px-4 py-3 text-right font-medium", txn.type === "credit" ? "text-emerald-600" : "text-red-600")}>
                       {txn.type === "credit" ? "+" : "-"}{formatCents(txn.amountCents)}
                     </td>
                     <td className="px-4 py-3">
                       <span className={cn(
                         "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider",
-                        txn.status === "reconciled" ? "bg-emerald-500/10 text-emerald-400" :
-                        txn.status === "matched" ? "bg-blue-500/10 text-blue-400" :
-                        "bg-amber-500/10 text-amber-400"
+                        txn.status === "reconciled" ? "bg-emerald-50 text-emerald-700" :
+                        txn.status === "matched" ? "bg-blue-50 text-blue-700" :
+                        "bg-amber-50 text-amber-700"
                       )}>
                         {txn.status === "reconciled" ? <CheckCircle2 className="h-3 w-3" /> :
                          txn.status === "matched" ? <Link2 className="h-3 w-3" /> :
@@ -317,12 +317,12 @@ export function BankReconciliation() {
                     </td>
                     <td className="px-4 py-3">
                       {txn.matchedInvoiceNumber ? (
-                        <span className="flex items-center gap-1 text-xs text-zinc-300">
-                          <FileText className="h-3 w-3 text-zinc-500" />
+                        <span className="flex items-center gap-1 text-xs text-slate-700">
+                          <FileText className="h-3 w-3 text-slate-400" />
                           {txn.matchedInvoiceNumber}
                         </span>
                       ) : (
-                        <span className="text-xs text-zinc-600">—</span>
+                        <span className="text-xs text-slate-400">—</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-right">
@@ -330,7 +330,7 @@ export function BankReconciliation() {
                         {txn.status === "unmatched" && (
                           <button
                             onClick={() => { setMatchTxn(txn); setSelectedInvoiceId(""); }}
-                            className="rounded px-2 py-1 text-xs font-medium text-amber-400 hover:bg-amber-950/30 transition-colors"
+                            className="rounded px-2 py-1 text-xs font-medium text-amber-700 hover:bg-amber-50 transition-colors"
                           >
                             Match
                           </button>
@@ -338,7 +338,7 @@ export function BankReconciliation() {
                         {txn.status === "matched" && (
                           <button
                             onClick={() => handleReconcile(txn.id)}
-                            className="rounded px-2 py-1 text-xs font-medium text-emerald-400 hover:bg-emerald-950/30 transition-colors"
+                            className="rounded px-2 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-50 transition-colors"
                           >
                             Reconcile
                           </button>
@@ -355,18 +355,18 @@ export function BankReconciliation() {
         {/* Statements */}
         {statements.length > 0 && (
           <div className="mt-8">
-            <h3 className="mb-3 text-sm font-semibold text-white">Uploaded Statements</h3>
+            <h3 className="mb-3 text-sm font-semibold text-slate-900">Uploaded Statements</h3>
             <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
               {statements.map((stmt) => (
-                <div key={stmt.id} className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
+                <div key={stmt.id} className="rounded-lg border border-slate-200 bg-white p-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-zinc-300">{stmt.fileName}</span>
-                    <span className="text-[10px] text-zinc-500">{new Date(stmt.uploadDate).toLocaleDateString()}</span>
+                    <span className="text-xs font-medium text-slate-700">{stmt.fileName}</span>
+                    <span className="text-[10px] text-slate-400">{new Date(stmt.uploadDate).toLocaleDateString()}</span>
                   </div>
-                  <div className="mt-2 flex items-center gap-3 text-[10px] text-zinc-500">
+                  <div className="mt-2 flex items-center gap-3 text-[10px] text-slate-500">
                     <span>{stmt.transactionCount} txns</span>
-                    <span className="text-emerald-500">+{formatCents(stmt.totalCreditsCents)}</span>
-                    <span className="text-red-500">-{formatCents(stmt.totalDebitsCents)}</span>
+                    <span className="text-emerald-600">+{formatCents(stmt.totalCreditsCents)}</span>
+                    <span className="text-red-600">-{formatCents(stmt.totalDebitsCents)}</span>
                   </div>
                 </div>
               ))}

@@ -534,22 +534,22 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
     : "Pick one invoice, check issue/payment state, then move it forward.";
 
   return (
-    <div className="flex flex-col gap-4">
-      <section className="glass-panel p-4">
+    <div className="flex flex-col gap-4 bg-slate-50 text-slate-900 min-h-screen">
+      <section className="p-4">
         <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
           <div>
             <div className="flex items-center gap-2">
               <FileText className="h-4 w-4 text-brand-accent-glow" />
               <h1 className="text-2xl font-display tracking-[0.06em]">{title}</h1>
             </div>
-            <p className="mt-1 text-xs text-white/40">{subtitle}</p>
+            <p className="mt-1 text-xs text-slate-500">{subtitle}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button size="sm" onClick={openNewBuilder} className="h-8 text-xs btn-mission">
               <Plus className="mr-2 h-3.5 w-3.5" />
               {mode === "quotes" ? "New quote" : "New invoice"}
             </Button>
-            <Button size="sm" variant="outline" onClick={() => void load()} className="h-8 border-white/10 text-xs hover:bg-white/[0.04]">
+            <Button size="sm" variant="outline" onClick={() => void load()} className="h-8 border-slate-200 text-xs hover:bg-white/[0.04]">
               <RefreshCw className="mr-2 h-3.5 w-3.5" />
               Refresh
             </Button>
@@ -572,7 +572,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
       )}
 
       {builderOpen && (
-        <Card className="glass border-white/5">
+        <Card className="border-slate-200">
           <CardHeader className="py-4">
             <CardTitle className="text-sm">{editingId ? "Edit document" : "Build document"}</CardTitle>
           </CardHeader>
@@ -634,7 +634,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
 
               <div className="grid gap-2">
                 {draft.lineItems.map((item, index) => (
-                  <div key={`${item.id ?? "line"}-${index}`} className="grid gap-2 rounded-sm border border-white/5 bg-black/20 p-2 lg:grid-cols-[1.2fr_1.5fr_0.45fr_0.65fr_0.7fr_auto]">
+                  <div key={`${item.id ?? "line"}-${index}`} className="grid gap-2 rounded-sm border border-slate-200 bg-slate-100 p-2 lg:grid-cols-[1.2fr_1.5fr_0.45fr_0.65fr_0.7fr_auto]">
                     <Input placeholder="Item" value={item.name} onChange={(event) => updateLineItem(index, { name: event.target.value })} required />
                     <Input placeholder="Description" value={item.description} onChange={(event) => updateLineItem(index, { description: event.target.value })} />
                     <Input placeholder="Qty" value={item.quantity} onChange={(event) => updateLineItem(index, { quantity: event.target.value })} required />
@@ -646,7 +646,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
                       variant="outline"
                       disabled={draft.lineItems.length === 1}
                       onClick={() => setDraft((current) => ({ ...current, lineItems: current.lineItems.filter((_, itemIndex) => itemIndex !== index) }))}
-                      className="h-9 border-white/10 text-xs"
+                      className="h-9 border-slate-200 text-xs"
                     >
                       Remove
                     </Button>
@@ -657,7 +657,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
                   size="sm"
                   variant="outline"
                   onClick={() => setDraft((current) => ({ ...current, lineItems: [...current.lineItems, { ...emptyLineItem }] }))}
-                  className="w-fit border-white/10 text-xs"
+                  className="w-fit border-slate-200 text-xs"
                 >
                   <Plus className="mr-2 h-3.5 w-3.5" />
                   Line item
@@ -695,7 +695,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
                   {busy === "saving" ? <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" /> : <ShieldCheck className="mr-2 h-3.5 w-3.5" />}
                   Save
                 </Button>
-                <Button type="button" variant="outline" onClick={() => setBuilderOpen(false)} className="h-9 border-white/10 text-xs">
+                <Button type="button" variant="outline" onClick={() => setBuilderOpen(false)} className="h-9 border-slate-200 text-xs">
                   Cancel
                 </Button>
               </div>
@@ -705,7 +705,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
       )}
 
       <div className="grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
-        <Card className="min-w-0 border-white/5 glass">
+        <Card className="min-w-0 border-slate-200 ">
           <CardHeader className="space-y-3 py-4">
             <CardTitle className="text-sm">{mode === "quotes" ? "Quote queue" : "Invoice queue"}</CardTitle>
             <div className="relative">
@@ -714,13 +714,13 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
                 value={queueQuery}
                 onChange={(event) => setQueueQuery(event.target.value)}
                 placeholder={mode === "quotes" ? "Search quotes" : "Search invoices"}
-                className="h-8 border-white/10 bg-black/20 pl-9 text-xs"
+                className="h-8 border-slate-200 bg-slate-100 pl-9 text-xs"
               />
             </div>
           </CardHeader>
           <CardContent className="grid gap-2 p-3 pt-0">
             {(mode === "quotes" ? filteredQuotes : filteredInvoices).length === 0 ? (
-              <div className="rounded-sm border border-white/5 bg-black/20 p-4 text-sm text-muted-foreground">
+              <div className="rounded-sm border border-slate-200 bg-slate-100 p-4 text-sm text-muted-foreground">
                 {queueQuery ? "No matching records." : mode === "quotes" ? "No quotes yet." : "No invoices yet."}
               </div>
             ) : mode === "quotes" ? (
@@ -729,7 +729,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
                   key={quote.id}
                   type="button"
                   onClick={() => setSelectedQuoteId(quote.id)}
-                  className={`rounded-sm border p-3 text-left transition ${selectedQuote?.id === quote.id ? "border-primary/40 bg-primary/10" : "border-white/5 bg-black/20 hover:border-white/15"}`}
+                  className={`rounded-sm border p-3 text-left transition ${selectedQuote?.id === quote.id ? "border-primary/40 bg-primary/10" : "border-slate-200 bg-white hover:border-slate-300"}`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
@@ -750,7 +750,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
                   key={invoice.id}
                   type="button"
                   onClick={() => setSelectedInvoiceId(invoice.id)}
-                  className={`rounded-sm border p-3 text-left transition ${selectedInvoice?.id === invoice.id ? "border-primary/40 bg-primary/10" : "border-white/5 bg-black/20 hover:border-white/15"}`}
+                  className={`rounded-sm border p-3 text-left transition ${selectedInvoice?.id === invoice.id ? "border-primary/40 bg-primary/10" : "border-slate-200 bg-white hover:border-slate-300"}`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
@@ -770,7 +770,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
         </Card>
 
         <div className="grid min-w-0 gap-4 2xl:grid-cols-[minmax(360px,0.82fr)_minmax(440px,1.18fr)]">
-          <Card className="min-w-0 glass border-white/5">
+          <Card className="min-w-0 border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm">Detail</CardTitle>
             </CardHeader>
@@ -797,14 +797,14 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
 	                    <Metric label="Version" value={`v${selectedQuote.documentVersion}`} />
 	                  </div>
 	                  <SecondaryActions title="Other actions">
-	                    <Button size="sm" variant="outline" onClick={openEditBuilder} className="border-white/10 text-xs">Edit</Button>
+	                    <Button size="sm" variant="outline" onClick={openEditBuilder} className="border-slate-200 text-xs">Edit</Button>
 	                    {quoteNextAction(selectedQuote).id !== "export_pdf" && (
 	                      <Button size="sm" variant="outline" onClick={() => void runAction("export_pdf", async () => {
 	                        const result = await exportRootQuotePdf(selectedQuote.id);
 	                        replaceQuote(result.quote);
 	                        window.open(`/api/root/quotes/${selectedQuote.id}/pdf`, "_blank", "noopener,noreferrer");
 	                        setNotice("PDF artifact created.");
-	                      })} className="border-white/10 text-xs">
+	                      })} className="border-slate-200 text-xs">
 	                        <Download className="mr-2 h-3.5 w-3.5" />
 	                        PDF
 	                      </Button>
@@ -819,7 +819,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
 	                          replaceInvoice(result.invoice);
 	                          setNotice(`${result.invoice.invoiceNumber} created.`);
 	                        })}
-	                        className="border-white/10 text-xs"
+	                        className="border-slate-200 text-xs"
 	                      >
 	                        Convert
 	                      </Button>
@@ -852,30 +852,30 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
                     <Metric label="Due" value={selectedInvoice.dueDate ?? "Not set"} />
                   </div>
                   <SecondaryActions title="Other actions">
-                    <Button size="sm" variant="outline" onClick={openEditBuilder} disabled={selectedInvoice.issueStatus === "issued" || selectedInvoice.issueStatus === "voided"} className="border-white/10 text-xs">Edit draft</Button>
+                    <Button size="sm" variant="outline" onClick={openEditBuilder} disabled={selectedInvoice.issueStatus === "issued" || selectedInvoice.issueStatus === "voided"} className="border-slate-200 text-xs">Edit draft</Button>
                     {invoiceNextAction(selectedInvoice).id !== "finalize_pdf" && (
                       <Button size="sm" variant="outline" onClick={() => void runAction("finalize_pdf", async () => {
                       const result = await finalizeRootInvoiceArtifacts(selectedInvoice.id);
                       replaceInvoice(result.invoice);
                       window.open(`/api/root/invoices/${selectedInvoice.id}/pdf`, "_blank", "noopener,noreferrer");
                       setNotice("Final PDF artifact created.");
-                    })} className="border-white/10 text-xs">
+                    })} className="border-slate-200 text-xs">
                       <Download className="mr-2 h-3.5 w-3.5" />
                       PDF
                     </Button>
                     )}
-                    <Button size="sm" variant="outline" onClick={() => void runAction("reminder", async () => replaceInvoice(await createRootInvoiceReminderDraft(selectedInvoice.id)))} className="border-white/10 text-xs">
+                    <Button size="sm" variant="outline" onClick={() => void runAction("reminder", async () => replaceInvoice(await createRootInvoiceReminderDraft(selectedInvoice.id)))} className="border-slate-200 text-xs">
                       Reminder
                     </Button>
-                    <Button size="sm" variant="outline" onClick={() => void runAction("revising", async () => replaceInvoice(await reviseRootInvoiceDocument(selectedInvoice.id)))} className="border-white/10 text-xs">
+                    <Button size="sm" variant="outline" onClick={() => void runAction("revising", async () => replaceInvoice(await reviseRootInvoiceDocument(selectedInvoice.id)))} className="border-slate-200 text-xs">
                       Revise
                     </Button>
-                    <Button size="sm" variant="outline" onClick={() => void runAction("voiding", async () => replaceInvoice(await voidRootInvoiceDocument(selectedInvoice.id, "Voided from Root commercial workspace.")))} className="border-white/10 text-xs">
+                    <Button size="sm" variant="outline" onClick={() => void runAction("voiding", async () => replaceInvoice(await voidRootInvoiceDocument(selectedInvoice.id, "Voided from Root commercial workspace.")))} className="border-slate-200 text-xs">
                       Void
                     </Button>
                   </SecondaryActions>
                   {invoiceNextAction(selectedInvoice).id === "record_payment" && (
-                  <div className="grid gap-2 rounded-sm border border-white/5 bg-black/20 p-3 sm:grid-cols-[1fr_auto]">
+                  <div className="grid gap-2 rounded-sm border border-slate-200 bg-slate-100 p-3 sm:grid-cols-[1fr_auto]">
                     <Input placeholder="Manual payment" value={paymentAmount} onChange={(event) => setPaymentAmount(event.target.value)} />
                     <Button
                       size="sm"
@@ -898,7 +898,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
             </CardContent>
           </Card>
 
-          <Card className="min-w-0 glass border-white/5">
+          <Card className="min-w-0 border-slate-200">
             <CardHeader className="flex flex-row items-center justify-between py-4">
               <CardTitle className="text-sm">Preview</CardTitle>
               <Badge variant="outline" className="text-[8px] uppercase text-muted-foreground">
@@ -910,10 +910,10 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
                 <iframe
                   title="Document preview"
                   srcDoc={selectedDocument.previewHtml}
-                  className="h-[680px] w-full rounded-sm border border-white/10 bg-white"
+                  className="h-[680px] w-full rounded-sm border border-slate-200 bg-white"
                 />
               ) : (
-                <div className="flex h-[400px] items-center justify-center rounded-sm border border-white/5 bg-black/20 text-sm text-muted-foreground">
+                <div className="flex h-[400px] items-center justify-center rounded-sm border border-slate-200 bg-slate-100 text-sm text-muted-foreground">
                   No preview available.
                 </div>
               )}
@@ -927,7 +927,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+    <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
       <p className="text-[9px] uppercase text-muted-foreground">{label}</p>
       <p className="mt-1 break-words text-sm font-medium">{value}</p>
     </div>
@@ -936,7 +936,7 @@ function Metric({ label, value }: { label: string; value: string }) {
 
 function WorkflowRail({ stages }: { stages: Array<{ label: string; status: "active" | "complete" | "blocked" | "idle" }> }) {
   return (
-    <div className="grid grid-cols-5 gap-1 rounded-sm border border-white/5 bg-black/20 p-2">
+    <div className="grid grid-cols-5 gap-1 rounded-sm border border-slate-200 bg-slate-100 p-2">
       {stages.map((stage) => (
         <div key={stage.label} className="min-w-0 text-center">
           <div
@@ -950,7 +950,7 @@ function WorkflowRail({ stages }: { stages: Array<{ label: string; status: "acti
                     : "bg-white/10"
             }`}
           />
-          <p className={`mt-2 truncate text-[9px] uppercase ${stage.status === "idle" ? "text-muted-foreground" : "text-white"}`}>{stage.label}</p>
+          <p className={`mt-2 truncate text-[9px] uppercase ${stage.status === "idle" ? "text-muted-foreground" : "text-slate-900"}`}>{stage.label}</p>
         </div>
       ))}
     </div>
@@ -1013,7 +1013,7 @@ function PrimaryActionIcon({ actionId }: { actionId: PrimaryActionId }) {
 
 function SecondaryActions({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+    <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
       <p className="text-[9px] uppercase text-muted-foreground">{title}</p>
       <div className="mt-3 flex flex-wrap gap-2">{children}</div>
     </div>
@@ -1022,7 +1022,7 @@ function SecondaryActions({ title, children }: { title: string; children: React.
 
 function History({ entries }: { entries: string[] }) {
   return (
-    <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+    <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
       <p className="text-[9px] uppercase text-muted-foreground">History</p>
       <div className="mt-2 grid max-h-48 gap-2 overflow-auto text-xs text-muted-foreground">
         {entries.slice(0, 8).map((entry) => (
