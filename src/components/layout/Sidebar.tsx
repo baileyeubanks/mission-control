@@ -93,11 +93,22 @@ const navSections = [
   })),
 }));
 
-export function Sidebar() {
+interface SidebarProps {
+  mobileOpen?: boolean;
+  onNavigate?: () => void;
+}
+
+export function Sidebar({ mobileOpen = false, onNavigate }: SidebarProps) {
   const { user } = useAuth();
 
   return (
-    <div className="flex h-full w-16 shrink-0 flex-col glass border-r border-white/5 md:w-64">
+    <div
+      className={cn(
+        "flex h-full flex-col glass border-r border-white/5 transition-transform duration-300 ease-in-out",
+        "fixed left-0 top-7 z-50 w-64 md:static md:w-16 md:translate-x-0 lg:w-64",
+        mobileOpen ? "translate-x-0" : "-translate-x-full"
+      )}
+    >
       {/* Brand */}
       <div className="flex h-20 items-center justify-center border-b border-white/5 px-3 md:justify-start md:px-6">
         <div className="flex items-center gap-3">
@@ -123,9 +134,10 @@ export function Sidebar() {
                   key={item.name}
                   to={item.href}
                   end={item.href === "/admin"}
+                  onClick={onNavigate}
                   className={({ isActive }) =>
                     cn(
-                      "flex items-center justify-center gap-3 rounded-md px-3 py-2 text-xs font-medium transition-all duration-200 md:justify-start",
+                      "flex items-center gap-3 rounded-md px-3 py-2 text-xs font-medium transition-all duration-200 md:justify-start",
                       isActive
                         ? "bg-brand-accent-glow/10 text-brand-accent-glow border-l-2 border-brand-accent-glow"
                         : "text-white/40 hover:bg-white/[0.04] hover:text-white/70"
@@ -134,7 +146,7 @@ export function Sidebar() {
                   title={item.name}
                 >
                   <item.icon className="h-3.5 w-3.5 shrink-0" />
-                  <span className="hidden font-mono text-[11px] md:inline">{item.name}</span>
+                  <span className="font-mono text-[11px]">{item.name}</span>
                 </NavLink>
               ))}
             </nav>

@@ -4,8 +4,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, Filter, Download, Database, TrendingUp, AlertCircle, CheckCircle2 } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { Plus, Search, Filter, Download, Database, TrendingUp, AlertCircle, CheckCircle2, X } from "lucide-react";
+import { authFetch } from "@/lib/auth-fetch";
 import { useAuth } from "@/components/AuthProvider";
 
 interface Invoice {
@@ -17,42 +17,68 @@ interface Invoice {
   due_date?: string;
 }
 
+function mapRootInvoiceToUI(inv: Record<string, unknown>): Invoice {
+  const client = (inv.client as Record<string, unknown>) || {};
+  const totalCents = typeof inv.totalCents === "number" ? inv.totalCents : 0;
+  const paymentStatus = String(inv.paymentStatus || "");
+  const issueStatus = String(inv.issueStatus || "");
+
+  let status = "Draft";
+  if (paymentStatus === "paid") status = "Paid";
+  else if (paymentStatus === "overdue") status = "Overdue";
+  else if (paymentStatus === "void") status = "Voided";
+  else if (issueStatus === "issued" && (paymentStatus === "unpaid" || paymentStatus === "partially_paid")) status = "Sent";
+  else if (issueStatus === "approved_to_issue") status = "Ready";
+
+  return {
+    id: String(inv.id || ""),
+    client_name: String(client.name || "Unknown"),
+    amount: totalCents / 100,
+    status,
+    issue_date: inv.createdAt ? String(inv.createdAt) : undefined,
+    due_date: inv.dueDate ? String(inv.dueDate) : undefined,
+  };
+}
+
 export function Finance() {
   const { isAuthReady, user } = useAuth();
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [form, setForm] = useState({ clientName: "", title: "", amount: "" });
+
+  async function fetchInvoices() {
+    setLoading(true);
+    try {
+      const res = await authFetch("/api/root/invoices?account=content_coop");
+      const json = await res.json();
+      if (json.ok && Array.isArray(json.data)) {
+        setInvoices(json.data.map(mapRootInvoiceToUI));
+      } else {
+        setInvoices([]);
+      }
+    } catch (error) {
+      console.error("Error fetching invoices:", error);
+      setInvoices([]);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     if (!isAuthReady || !user) return;
-
-    async function fetchInvoices() {
-      setLoading(true);
-      try {
-        const { data, error } = await supabase
-          .from('invoices')
-          .select('*')
-          .order('created_at', { ascending: false });
-
-        if (error) throw error;
-        setInvoices(data || []);
-      } catch (error) {
-        console.error("Error fetching invoices from Supabase:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
     fetchInvoices();
   }, [isAuthReady, user]);
 
-  const filteredInvoices = invoices.filter(inv => 
+  const filteredInvoices = invoices.filter(inv =>
     inv.client_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     inv.id.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const totalOutstanding = invoices
-    .filter(inv => inv.status !== "Paid")
+    .filter(inv => inv.status !== "Paid" && inv.status !== "Voided")
     .reduce((sum, inv) => sum + inv.amount, 0);
 
   const totalOverdue = invoices
@@ -70,7 +96,7 @@ export function Finance() {
   const exportInvoices = () => {
     const payload = JSON.stringify(
       {
-        data_source: "supabase_invoice_read_model",
+        data_source: "root_billing_invoice_authority",
         generated_at: new Date().toISOString(),
         invoices: filteredInvoices,
       },
@@ -93,7 +119,7 @@ export function Finance() {
           <h1 className="text-2xl font-semibold tracking-tight">Finance Visibility</h1>
           <div className="flex items-center gap-2 text-[10px] font-mono text-muted-foreground uppercase">
             <Database className="h-3 w-3 text-success" />
-            Authority: Supabase_Truth
+            Authority: Root_Document_Engine
           </div>
         </div>
         <div className="flex gap-2">
@@ -110,14 +136,60 @@ export function Finance() {
           <Button
             size="sm"
             className="h-9 font-mono uppercase text-[10px] tracking-wider"
-            disabled
-            title="Invoice creation is locked until the Stripe-backed write path is connected."
+            onClick={() => setShowForm(true)}
           >
             <Plus className="mr-2 h-3.5 w-3.5" />
-            Invoice locked
+            Add Invoice
           </Button>
         </div>
       </div>
+
+      {showForm && (
+        <Card className="p-4 border-slate-200">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-medium">New Invoice</h3>
+            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setShowForm(false)}>
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+          <form onSubmit={async (e) => {
+            e.preventDefault();
+            if (!form.clientName || !form.title || !form.amount) return;
+            setCreating(true);
+            try {
+              const res = await authFetch("/api/root/invoices", {
+                method: "POST",
+                body: JSON.stringify({
+                  companyAccount: "content_coop",
+                  client: { name: form.clientName },
+                  title: form.title,
+                  lineItems: [{ name: form.title, description: form.title, quantity: 1, unitPriceCents: Math.round(parseFloat(form.amount) * 100) }],
+                }),
+              });
+              const json = await res.json();
+              if (json.ok) {
+                setForm({ clientName: "", title: "", amount: "" });
+                setShowForm(false);
+                await fetchInvoices();
+              } else {
+                alert("Failed to create invoice: " + (json.error?.message || "Unknown error"));
+              }
+            } catch (err) {
+              alert("Failed to create invoice.");
+            } finally {
+              setCreating(false);
+            }
+          }} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <Input placeholder="Client name *" value={form.clientName} onChange={(e) => setForm(f => ({ ...f, clientName: e.target.value }))} required />
+            <Input placeholder="Invoice title *" value={form.title} onChange={(e) => setForm(f => ({ ...f, title: e.target.value }))} required />
+            <Input placeholder="Amount (USD) *" type="number" step="0.01" value={form.amount} onChange={(e) => setForm(f => ({ ...f, amount: e.target.value }))} required />
+            <div className="sm:col-span-3 flex justify-end gap-2">
+              <Button type="button" variant="outline" size="sm" onClick={() => setShowForm(false)}>Cancel</Button>
+              <Button type="submit" size="sm" disabled={creating}>{creating ? "Saving..." : "Save Invoice"}</Button>
+            </div>
+          </form>
+        </Card>
+      )}
 
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="border-slate-200">
@@ -127,7 +199,7 @@ export function Finance() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-mono font-bold">{formatCurrency(totalOutstanding)}</div>
-            <p className="text-[10px] font-mono text-muted-foreground mt-1 uppercase">Across {invoices.filter(i => i.status !== "Paid").length} Active_Invoices</p>
+            <p className="text-[10px] font-mono text-muted-foreground mt-1 uppercase">Across {invoices.filter(i => i.status !== "Paid" && i.status !== "Voided").length} Active_Invoices</p>
           </CardContent>
         </Card>
         <Card className="border-slate-200">
@@ -156,8 +228,8 @@ export function Finance() {
         <div className="p-4 border-b border-slate-200 flex items-center gap-4 bg-slate-100">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-            <Input 
-              placeholder="SEARCH_BY_CLIENT_OR_ID..." 
+            <Input
+              placeholder="SEARCH_BY_CLIENT_OR_ID..."
               className="pl-10 bg-slate-100 border-slate-200 font-mono text-[10px] uppercase tracking-wider h-9"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -203,14 +275,15 @@ export function Finance() {
                   <TableCell className="font-medium text-sm">{inv.client_name}</TableCell>
                   <TableCell className="font-mono text-sm">{formatCurrency(inv.amount)}</TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-2">
-                      <div className={`h-1.5 w-1.5 rounded-full ${
-                        inv.status === "Paid" ? "bg-success" : 
-                        inv.status === "Overdue" ? "bg-destructive" : 
-                        inv.status === "Sent" ? "bg-primary" : "bg-muted"
-                      }`} />
-                      <span className="text-[10px] font-mono uppercase tracking-wider">{inv.status}</span>
-                    </div>
+                    <Badge variant="outline" className={`text-[9px] uppercase tracking-tighter bg-white/5 border-white/10 ${
+                      inv.status === "Paid" ? "text-success border-success/20" :
+                      inv.status === "Overdue" ? "text-destructive border-destructive/20" :
+                      inv.status === "Sent" ? "text-primary border-primary/20" :
+                      inv.status === "Ready" ? "text-blue-400 border-blue-400/20" :
+                      "text-muted-foreground"
+                    }`}>
+                      {inv.status}
+                    </Badge>
                   </TableCell>
                   <TableCell className="text-[10px] font-mono text-muted-foreground uppercase">
                     {inv.issue_date ? new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(inv.issue_date)) : '-'}

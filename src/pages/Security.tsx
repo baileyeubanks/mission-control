@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Shield, ShieldAlert, ShieldCheck, Database, Lock, UserCheck } from "lucide-react";
+import { Shield, ShieldAlert, ShieldCheck, Database, Lock, UserCheck, Download } from "lucide-react";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 import { useAuth } from "@/components/AuthProvider";
 
@@ -109,20 +109,35 @@ export function Security() {
             variant="outline"
             size="sm"
             className="h-7 font-mono text-[9px] uppercase border-white/10"
-            disabled
-            title="Audit-log export is disabled until the security log backend is connected."
+            onClick={() => {
+              const payload = JSON.stringify({
+                data_source: "security_audit_logs",
+                generated_at: new Date().toISOString(),
+                logs,
+              }, null, 2);
+              const blob = new Blob([payload], { type: "application/json" });
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = `security-audit-${new Date().toISOString().slice(0, 10)}.json`;
+              link.click();
+              URL.revokeObjectURL(url);
+            }}
+            disabled={logs.length === 0}
+            title={logs.length === 0 ? "No audit logs to export." : "Export audit logs as JSON."}
           >
-            Export locked
+            <Download className="mr-1.5 h-3 w-3" />
+            Export
           </Button>
         </div>
         <div className="flex-1 overflow-auto">
           <Table>
             <TableHeader className="bg-black/40 sticky top-0 z-10">
               <TableRow className="hover:bg-transparent border-white/5">
-                <TableHead className="w-[180px] font-mono text-[10px] uppercase tracking-widest">Timestamp</TableHead>
+                <TableHead className="hidden md:table-cell w-[160px] md:w-[180px] font-mono text-[10px] uppercase tracking-widest">Timestamp</TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">Action</TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">Actor</TableHead>
-                <TableHead className="font-mono text-[10px] uppercase tracking-widest">Resource</TableHead>
+                <TableHead className="hidden sm:table-cell font-mono text-[10px] uppercase tracking-widest">Resource</TableHead>
                 <TableHead className="text-right font-mono text-[10px] uppercase tracking-widest">Severity</TableHead>
               </TableRow>
             </TableHeader>
@@ -137,12 +152,12 @@ export function Security() {
                 </TableRow>
               ) : logs.map((log) => (
                 <TableRow key={log.id} className="group hover:bg-white/5 border-white/5 transition-colors">
-                  <TableCell className="font-mono text-[10px] text-muted-foreground/60">
+                  <TableCell className="hidden md:table-cell font-mono text-[10px] text-muted-foreground/60">
                     {new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(log.created_at))}
                   </TableCell>
                   <TableCell className="font-mono text-[10px] uppercase tracking-wider">{log.action}</TableCell>
                   <TableCell className="font-mono text-[10px] text-muted-foreground uppercase">{log.actor_name}</TableCell>
-                  <TableCell className="font-mono text-[10px] text-muted-foreground uppercase">{log.resource}</TableCell>
+                  <TableCell className="hidden sm:table-cell font-mono text-[10px] text-muted-foreground uppercase">{log.resource}</TableCell>
                   <TableCell className="text-right">
                     <Badge variant="outline" className={`text-[8px] uppercase tracking-tighter ${
                       log.severity === 'critical' ? 'bg-destructive/20 border-destructive/30 text-destructive' :

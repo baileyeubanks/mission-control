@@ -179,6 +179,7 @@ export interface CreativeBriefSession {
   adminNotes: AdminNote[];
   source: "website" | "internal" | "admin" | "referral";
   relatedQuoteId: string | null;
+  userId: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -223,6 +224,7 @@ function syncBriefToSupabase(b: CreativeBriefSession): void {
   sbUpsert("creative_briefs", {
     id: b.id,
     company_account_id: "content-co-op",
+    user_id: b.userId,
     data: b as unknown as Record<string, unknown>,
     created_at: b.createdAt,
     updated_at: b.updatedAt,
@@ -244,15 +246,19 @@ function nowIso(): string {
   return new Date().toISOString();
 }
 
-export function listBriefSessions(storeDir?: string): CreativeBriefSession[] {
-  return readState(storeDir).sessions;
+export function listBriefSessions(storeDir?: string, filterUserId?: string): CreativeBriefSession[] {
+  const sessions = readState(storeDir).sessions;
+  if (filterUserId) {
+    return sessions.filter((s) => s.userId === filterUserId);
+  }
+  return sessions;
 }
 
 export function getBriefSession(id: string, storeDir?: string): CreativeBriefSession | null {
   return readState(storeDir).sessions.find((s) => s.id === id) ?? null;
 }
 
-export function createBriefSession(source: CreativeBriefSession["source"] = "website", storeDir?: string): CreativeBriefSession {
+export function createBriefSession(source: CreativeBriefSession["source"] = "website", userId?: string | null, storeDir?: string): CreativeBriefSession {
   const state = readState(storeDir);
   const session: CreativeBriefSession = {
     id: stableId("brief"),
@@ -268,6 +274,7 @@ export function createBriefSession(source: CreativeBriefSession["source"] = "web
     adminNotes: [],
     source,
     relatedQuoteId: null,
+    userId: userId ?? null,
     createdAt: nowIso(),
     updatedAt: nowIso(),
   };

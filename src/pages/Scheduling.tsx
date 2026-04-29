@@ -40,6 +40,7 @@ export function Scheduling() {
   const [loading, setLoading] = useState(true);
   const [optimizing, setOptimizing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [displayDate, setDisplayDate] = useState(() => new Date());
 
   const fetchSchedule = async () => {
     setLoading(true);
@@ -154,20 +155,28 @@ export function Scheduling() {
               variant="outline"
               size="icon"
               className="h-9 w-9 border-white/10"
-              aria-label="Previous week"
-              disabled
-              title="Calendar paging is disabled until date-window queries are connected."
+              aria-label="Previous month"
+              onClick={() => setDisplayDate(d => {
+                const nd = new Date(d);
+                nd.setMonth(nd.getMonth() - 1);
+                return nd;
+              })}
+              title="Previous month"
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <span className="text-xs min-w-[140px] text-center">April 2026</span>
+            <span className="text-xs min-w-[140px] text-center">{displayDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
             <Button
               variant="outline"
               size="icon"
               className="h-9 w-9 border-white/10"
-              aria-label="Next week"
-              disabled
-              title="Calendar paging is disabled until date-window queries are connected."
+              aria-label="Next month"
+              onClick={() => setDisplayDate(d => {
+                const nd = new Date(d);
+                nd.setMonth(nd.getMonth() + 1);
+                return nd;
+              })}
+              title="Next month"
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
@@ -177,11 +186,11 @@ export function Scheduling() {
             size="sm"
             className="h-9 font-mono uppercase text-[10px] border-white/10"
             aria-label="Go to today"
-            disabled
-            title="Today jump is disabled until schedule date-window state is wired."
+            onClick={() => setDisplayDate(new Date())}
+            title="Jump to current month"
           >
             <CalendarIcon className="mr-2 h-3.5 w-3.5" />
-            Today locked
+            Today
           </Button>
           <Button
             size="sm"

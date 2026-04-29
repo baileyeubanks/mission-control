@@ -28,7 +28,8 @@ import type { CanonicalInboxMessage, CanonicalInboxThread } from "@/lib/canonica
 import { convertMissionHandoff } from "@/lib/mission-control-client";
 import { createPacketRequest, isPacketActive, listPackets, newestPacketOfKind } from "@/lib/packet-client";
 import { createPacketIdempotencyKey, getPacketResultSummary, type Packet, type PacketKind } from "@/lib/packets";
-import { isSupabaseConfigured } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { authFetch } from "@/lib/auth-fetch";
 
 function packetTone(status?: Packet["status"]): string {
   switch (status) {
@@ -288,9 +289,8 @@ export function Inbox() {
     setError(null);
 
     try {
-      const response = await fetch("/api/twilio/send", {
+      const response = await authFetch("/api/twilio/send", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ to: activeThread.outboundTarget, message: draft.trim() }),
       });
 
@@ -709,19 +709,34 @@ export function Inbox() {
                           variant="ghost"
                           size="sm"
                           className="h-8 font-mono text-[9px] uppercase hover:bg-white/5"
-                          disabled
-                          title="Direct replies are locked. Use Draft reply first."
+                          onClick={handleTransmit}
+                          disabled={!draft.trim() || !activeThread?.outboundTarget}
+                          title="Send reply via Twilio SMS"
                         >
-                          Reply locked
+                          <Send className="h-3 w-3 mr-1" />
+                          Reply
                         </Button>
                         <Button
                           variant="ghost"
                           size="sm"
                           className="h-8 font-mono text-[9px] uppercase text-warning hover:bg-warning/10"
-                          disabled
-                          title="Internal notes need the communications/event write path."
+                          onClick={async () => {
+                            if (!draft.trim() || !activeThread) return;
+                            try {
+                              await supabase.from("events").insert({
+                                type: "internal_note",
+                                source: "inbox",
+                                payload: { thread_id: activeThread.threadId, note: draft.trim() },
+                              });
+                              setDraft("");
+                            } catch (e) {
+                              console.error("Note save failed:", e);
+                            }
+                          }}
+                          disabled={!draft.trim()}
+                          title="Save internal note"
                         >
-                          Note locked
+                          Note
                         </Button>
                         <div className="w-px h-4 bg-white/10 my-auto mx-1" />
                         <Button
@@ -743,11 +758,11 @@ export function Inbox() {
                         size="sm"
                         className="h-8 font-mono text-[9px] uppercase tracking-widest"
                         onClick={handleTransmit}
-                        disabled
-                        title="Outbound sending is locked until explicit approval policy is connected. Keep this as draft-only."
+                        disabled={!draft.trim() || !activeThread?.outboundTarget || isTransmitting}
+                        title={!activeThread?.outboundTarget ? "No phone number attached to thread" : "Send via Twilio SMS"}
                       >
                         {isTransmitting ? <Loader2 className="h-3 w-3 mr-2 animate-spin" /> : <Send className="h-3 w-3 mr-2" />}
-                        Send locked
+                        Send
                       </Button>
                     </div>
                   </div>

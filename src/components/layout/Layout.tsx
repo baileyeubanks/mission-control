@@ -4,9 +4,11 @@ import { Topbar } from "./Topbar";
 import { useAuth } from "../AuthProvider";
 import { Button } from "../ui/button";
 import { Activity, Zap } from "lucide-react";
+import { useState } from "react";
 
 export function Layout() {
   const { user, isAuthReady, signInWithGoogle } = useAuth();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   if (!isAuthReady) {
     return (
@@ -24,12 +26,12 @@ export function Layout() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(61,125,216,0.08)_0%,transparent_60%)]" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle_at_top_right,rgba(61,125,216,0.04)_0%,transparent_50%)]" />
 
-        <div className="relative z-10 text-center space-y-8 max-w-sm p-12 glass-panel">
+        <div className="relative z-10 text-center space-y-8 max-w-sm p-6 md:p-12 glass-panel">
           <div className="space-y-3">
             <div className="flex items-center justify-center gap-3 mb-2">
               <Zap className="h-8 w-8 text-brand-accent-glow" />
             </div>
-            <h1 className="text-4xl font-display tracking-[0.1em]">MISSION CONTROL</h1>
+            <h1 className="text-3xl md:text-4xl font-display tracking-[0.1em]">MISSION CONTROL</h1>
             <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.3em]">
               ACS Operations — CCO OS
             </p>
@@ -62,13 +64,20 @@ export function Layout() {
         </span>
       </div>
 
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar />
+      <div className="flex flex-1 overflow-hidden relative">
+        {/* Mobile overlay */}
+        {mobileMenuOpen && (
+          <div
+            className="absolute inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+        <Sidebar mobileOpen={mobileMenuOpen} onNavigate={() => setMobileMenuOpen(false)} />
         <div className="flex min-w-0 flex-1 flex-col overflow-hidden relative">
           {/* Subtle ambient glow in main content */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(61,125,216,0.02)_0%,transparent_40%)] pointer-events-none" />
-          <Topbar />
-          <main className="relative z-10 min-w-0 flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-8 scrollbar-thin">
+          <Topbar onMenuToggle={() => setMobileMenuOpen((o) => !o)} />
+          <main className="relative z-10 min-w-0 flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 md:p-8 scrollbar-thin">
             <Outlet />
           </main>
         </div>

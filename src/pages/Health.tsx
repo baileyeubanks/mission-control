@@ -13,12 +13,25 @@ type ServiceStatus = {
   packets: string;
 };
 
+interface SystemMetrics {
+  cpu_load_percent: number;
+  memory_used_gb: string;
+  memory_total_gb: string;
+  memory_used_percent: number;
+  platform: string;
+  node_version: string;
+}
+
 interface HealthPayload {
   status: "ok";
   timestamp: string;
   uptime_seconds: number;
   memory_mb: number;
+  system: SystemMetrics;
   services: ServiceStatus;
+  probes?: {
+    supabase_latency_ms: number | null;
+  };
 }
 
 function humanLabel(value: string | null | undefined, fallback = "Not set") {
@@ -68,17 +81,17 @@ export function Health() {
     return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
-  const metrics = [
-    { label: "CPU load", value: "12.4%", status: "optimal", icon: Cpu },
-    { label: "Memory use", value: "4.2GB / 16GB", status: "optimal", icon: HardDrive },
-    { label: "Network latency", value: "24ms", status: "optimal", icon: Wifi },
+  const metrics = health ? [
+    { label: "CPU load", value: `${health.system.cpu_load_percent}%`, status: health.system.cpu_load_percent < 80 ? "optimal" : "warning", icon: Cpu },
+    { label: "Memory use", value: `${health.system.memory_used_gb} / ${health.system.memory_total_gb} GB`, status: health.system.memory_used_percent < 85 ? "optimal" : "warning", icon: HardDrive },
+    { label: "Network latency", value: health.probes?.supabase_latency_ms ? `${health.probes.supabase_latency_ms}ms` : "N/A", status: health.probes?.supabase_latency_ms && health.probes.supabase_latency_ms < 500 ? "optimal" : "warning", icon: Wifi },
     {
       label: "Packet runtime",
       value: health?.services.packets === "enabled" ? "Active" : "Missing",
       status: health?.services.packets === "enabled" ? "optimal" : "warning",
       icon: Database,
     },
-  ];
+  ] : [];
   const degradedServices = Object.entries(health?.services || {}).filter(([, status]) => status !== "configured" && status !== "enabled");
   const repairState = degradedServices.length === 0 ? "clear" : "degraded";
 

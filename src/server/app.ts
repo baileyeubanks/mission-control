@@ -70,6 +70,7 @@ import {
 import { PacketService, PacketValidationError } from "./packet-service";
 import { SupabasePacketStore } from "./packet-store";
 import { getSupabaseAdminFromEnv } from "./supabase-admin";
+import { authMiddleware, optionalAuthMiddleware, type AuthenticatedRequest } from "./auth-middleware";
 import { createStripeEmbeddedSession, constructStripeEvent } from "./stripe-service";
 import {
   createBriefSession,
@@ -242,11 +243,26 @@ export function createApp(options: AppOptions = {}): Express {
       }
     }
 
+    // Real system metrics
+    const os = await import("node:os");
+    const loadAvg = os.loadavg();
+    const totalMem = os.totalmem();
+    const freeMem = os.freemem();
+    const usedMem = totalMem - freeMem;
+
     res.json({
       status: "ok",
       timestamp: new Date().toISOString(),
       uptime_seconds: Math.floor(process.uptime()),
       memory_mb: Math.round(process.memoryUsage().rss / 1024 / 1024),
+      system: {
+        cpu_load_percent: Math.round((loadAvg[0] / os.cpus().length) * 100),
+        memory_used_gb: (usedMem / 1024 / 1024 / 1024).toFixed(1),
+        memory_total_gb: (totalMem / 1024 / 1024 / 1024).toFixed(1),
+        memory_used_percent: Math.round((usedMem / totalMem) * 100),
+        platform: os.platform(),
+        node_version: process.version,
+      },
       services: {
         supabase: supabaseStatus,
         twilio: twilioConfigured ? "configured" : "missing_config",
@@ -807,29 +823,39 @@ export function createApp(options: AppOptions = {}): Express {
     return res.json({ ok: true, data: getBankStats(account as CompanyAccountId | undefined, recoveryStoreDir) });
   });
 
-  app.get("/api/creative-briefs", (_req, res) => {
-    return res.json({ ok: true, data: listBriefSessions(recoveryStoreDir) });
+  app.get("/api/creative-briefs", optionalAuthMiddleware, (req: AuthenticatedRequest, res) => {
+    const filterUserId = req.user?.id;
+    return res.json({ ok: true, data: listBriefSessions(recoveryStoreDir, filterUserId) });
   });
 
-  app.post("/api/creative-briefs", (req, res) => {
+  app.post("/api/creative-briefs", optionalAuthMiddleware, (req: AuthenticatedRequest, res) => {
     try {
-      const session = createBriefSession(req.body.source ?? "website", recoveryStoreDir);
+      const userId = req.user?.id ?? null;
+      const session = createBriefSession(req.body.source ?? "website", userId, recoveryStoreDir);
       return res.status(201).json({ ok: true, data: session });
     } catch (error) {
       return res.status(400).json({ ok: false, error: { message: String(error) } });
     }
   });
 
-  app.get("/api/creative-briefs/:id", (req, res) => {
+  app.get("/api/creative-briefs/:id", optionalAuthMiddleware, (req: AuthenticatedRequest, res) => {
     const session = getBriefSession(req.params.id, recoveryStoreDir);
     if (!session) return res.status(404).json({ ok: false, error: { code: "NOT_FOUND", message: "Brief session not found." } });
+    // If authenticated, only allow access to own briefs (admins can see all via separate route)
+    if (req.user && session.userId && session.userId !== req.user.id) {
+      return res.status(403).json({ ok: false, error: { code: "FORBIDDEN", message: "You do not have access to this brief." } });
+    }
     return res.json({ ok: true, data: session });
   });
 
-  app.patch("/api/creative-briefs/:id", (req, res) => {
+  app.patch("/api/creative-briefs/:id", optionalAuthMiddleware, (req: AuthenticatedRequest, res) => {
     try {
-      const session = updateBriefSession(req.params.id, req.body, recoveryStoreDir);
-      return res.json({ ok: true, data: session });
+      const session = getBriefSession(req.params.id, recoveryStoreDir);
+      if (req.user && session && session.userId && session.userId !== req.user.id) {
+        return res.status(403).json({ ok: false, error: { code: "FORBIDDEN", message: "You do not have access to this brief." } });
+      }
+      const updated = updateBriefSession(req.params.id, req.body, recoveryStoreDir);
+      return res.json({ ok: true, data: updated });
     } catch (error) {
       return res.status(404).json({ ok: false, error: { message: String(error) } });
     }
@@ -845,49 +871,65 @@ export function createApp(options: AppOptions = {}): Express {
     }
   });
 
-  app.post("/api/creative-briefs/:id/submit", (req, res) => {
+  app.post("/api/creative-briefs/:id/submit", optionalAuthMiddleware, (req: AuthenticatedRequest, res) => {
     try {
-      const session = submitBrief(req.params.id, recoveryStoreDir);
-      return res.json({ ok: true, data: session });
+      const session = getBriefSession(req.params.id, recoveryStoreDir);
+      if (req.user && session && session.userId && session.userId !== req.user.id) {
+        return res.status(403).json({ ok: false, error: { code: "FORBIDDEN", message: "You do not have access to this brief." } });
+      }
+      const updated = submitBrief(req.params.id, recoveryStoreDir);
+      return res.json({ ok: true, data: updated });
     } catch (error) {
       return res.status(400).json({ ok: false, error: { message: String(error) } });
     }
   });
 
-  app.post("/api/creative-briefs/:id/enrich", async (req, res) => {
+  app.post("/api/creative-briefs/:id/enrich", optionalAuthMiddleware, async (req: AuthenticatedRequest, res) => {
     try {
       if (!modelClient) {
         return res.status(501).json({ ok: false, error: { code: "AI_UNAVAILABLE", message: "Gemini model client not configured." } });
       }
-      const session = await enrichBriefWithAI(req.params.id, modelClient, recoveryStoreDir);
-      return res.json({ ok: true, data: session });
+      const session = getBriefSession(req.params.id, recoveryStoreDir);
+      if (req.user && session && session.userId && session.userId !== req.user.id) {
+        return res.status(403).json({ ok: false, error: { code: "FORBIDDEN", message: "You do not have access to this brief." } });
+      }
+      const updated = await enrichBriefWithAI(req.params.id, modelClient, recoveryStoreDir);
+      return res.json({ ok: true, data: updated });
     } catch (error) {
       return res.status(500).json({ ok: false, error: { message: String(error) } });
     }
   });
 
-  app.post("/api/creative-briefs/:id/convert-to-proposal", (req, res) => {
+  app.post("/api/creative-briefs/:id/convert-to-proposal", optionalAuthMiddleware, (req: AuthenticatedRequest, res) => {
     try {
-      const session = convertBriefToProposalReady(req.params.id, recoveryStoreDir);
-      return res.json({ ok: true, data: session });
+      const session = getBriefSession(req.params.id, recoveryStoreDir);
+      if (req.user && session && session.userId && session.userId !== req.user.id) {
+        return res.status(403).json({ ok: false, error: { code: "FORBIDDEN", message: "You do not have access to this brief." } });
+      }
+      const updated = convertBriefToProposalReady(req.params.id, recoveryStoreDir);
+      return res.json({ ok: true, data: updated });
     } catch (error) {
       return res.status(400).json({ ok: false, error: { message: String(error) } });
     }
   });
 
-  app.post("/api/creative-briefs/:id/admin-note", (req, res) => {
+  app.post("/api/creative-briefs/:id/admin-note", authMiddleware, (req: AuthenticatedRequest, res) => {
     try {
-      const session = addAdminNote(req.params.id, String(req.body.text), String(req.body.author ?? "admin"), recoveryStoreDir);
-      return res.json({ ok: true, data: session });
+      const session = getBriefSession(req.params.id, recoveryStoreDir);
+      if (!session) return res.status(404).json({ ok: false, error: { code: "NOT_FOUND", message: "Brief session not found." } });
+      const updated = addAdminNote(req.params.id, String(req.body.text), String(req.body.author ?? req.user?.email ?? "admin"), recoveryStoreDir);
+      return res.json({ ok: true, data: updated });
     } catch (error) {
       return res.status(400).json({ ok: false, error: { message: String(error) } });
     }
   });
 
-  app.post("/api/creative-briefs/:id/link-quote", (req, res) => {
+  app.post("/api/creative-briefs/:id/link-quote", authMiddleware, (req: AuthenticatedRequest, res) => {
     try {
-      const session = setBriefRelatedQuote(req.params.id, String(req.body.quoteId), recoveryStoreDir);
-      return res.json({ ok: true, data: session });
+      const session = getBriefSession(req.params.id, recoveryStoreDir);
+      if (!session) return res.status(404).json({ ok: false, error: { code: "NOT_FOUND", message: "Brief session not found." } });
+      const updated = setBriefRelatedQuote(req.params.id, String(req.body.quoteId), recoveryStoreDir);
+      return res.json({ ok: true, data: updated });
     } catch (error) {
       return res.status(400).json({ ok: false, error: { message: String(error) } });
     }
@@ -1056,6 +1098,44 @@ export function createApp(options: AppOptions = {}): Express {
     } catch (error) {
       console.error("Canonical jobs lookup failed; returning local handoff candidates:", error);
       return res.json({ jobs: localJobCandidates });
+    }
+  });
+
+  app.post("/api/contacts", authMiddleware, async (req: AuthenticatedRequest, res) => {
+    const supabaseAdmin = getSupabaseAdminFromEnv();
+    if (!supabaseAdmin) {
+      return res.status(503).json({ ok: false, error: "Supabase not configured." });
+    }
+
+    const { name, email, phone, company, type = "lead", status = "Lead" } = req.body || {};
+    if (!name || !email) {
+      return res.status(400).json({ ok: false, error: "Name and email are required." });
+    }
+
+    try {
+      const { data, error } = await supabaseAdmin
+        .from("contacts")
+        .insert({
+          name,
+          full_name: name,
+          display_name: name,
+          email,
+          phone: phone || null,
+          company: company || null,
+          type,
+          status,
+        })
+        .select()
+        .single();
+
+      if (error) {
+        return res.status(500).json({ ok: false, error: error.message });
+      }
+
+      return res.status(201).json({ ok: true, data });
+    } catch (error) {
+      console.error("Contact creation failed:", error);
+      return res.status(500).json({ ok: false, error: "Failed to create contact." });
     }
   });
 

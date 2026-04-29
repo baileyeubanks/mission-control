@@ -4,9 +4,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, Filter, MoreHorizontal, Database } from "lucide-react";
+import { Plus, Search, Filter, MoreHorizontal, Database, X } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/components/AuthProvider";
+import { authFetch } from "@/lib/auth-fetch";
 
 interface Contact {
   id: string;
@@ -22,29 +23,55 @@ export function Contacts() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", phone: "", company: "" });
 
   useEffect(() => {
     if (!isAuthReady || !user) return;
-
-    async function fetchContacts() {
-      setLoading(true);
-      try {
-        const { data, error } = await supabase
-          .from('contacts')
-          .select('*')
-          .order('created_at', { ascending: false });
-
-        if (error) throw error;
-        setContacts(data || []);
-      } catch (error) {
-        console.error("Error fetching contacts from Supabase:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
     fetchContacts();
   }, [isAuthReady, user]);
+
+  async function fetchContacts() {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('contacts')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setContacts(data || []);
+    } catch (error) {
+      console.error("Error fetching contacts from Supabase:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function createContact(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.name || !form.email) return;
+    setCreating(true);
+    try {
+      const res = await authFetch("/api/contacts", {
+        method: "POST",
+        body: JSON.stringify(form),
+      });
+      const json = await res.json();
+      if (json.ok) {
+        setForm({ name: "", email: "", phone: "", company: "" });
+        setShowForm(false);
+        await fetchContacts();
+      } else {
+        alert("Failed to create contact: " + (json.error || "Unknown error"));
+      }
+    } catch (error) {
+      alert("Failed to create contact.");
+    } finally {
+      setCreating(false);
+    }
+  }
 
   const filteredContacts = contacts.filter(c => 
     c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -64,13 +91,33 @@ export function Contacts() {
         <Button
           size="sm"
           className="h-9 font-mono uppercase text-[10px] tracking-wider"
-          disabled
-          title="Contact creation is locked until the company-scoped contact write path is connected."
+          onClick={() => setShowForm(true)}
         >
           <Plus className="mr-2 h-3.5 w-3.5" />
-          Contact locked
+          Add Contact
         </Button>
       </div>
+
+      {showForm && (
+        <Card className="p-4 glass border-white/5">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-medium">New Contact</h3>
+            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setShowForm(false)}>
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+          <form onSubmit={createContact} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Input placeholder="Name *" value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))} required />
+            <Input placeholder="Email *" type="email" value={form.email} onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))} required />
+            <Input placeholder="Phone" value={form.phone} onChange={(e) => setForm(f => ({ ...f, phone: e.target.value }))} />
+            <Input placeholder="Company" value={form.company} onChange={(e) => setForm(f => ({ ...f, company: e.target.value }))} />
+            <div className="sm:col-span-2 flex justify-end gap-2">
+              <Button type="button" variant="outline" size="sm" onClick={() => setShowForm(false)}>Cancel</Button>
+              <Button type="submit" size="sm" disabled={creating}>{creating ? "Saving..." : "Save Contact"}</Button>
+            </div>
+          </form>
+        </Card>
+      )}
 
       <Card className="flex-1 flex flex-col overflow-hidden glass border-white/5">
         <div className="p-4 border-b border-white/5 flex items-center gap-4 bg-black/20">
@@ -100,12 +147,12 @@ export function Contacts() {
           <Table>
             <TableHeader className="bg-black/40 sticky top-0 z-10">
               <TableRow className="hover:bg-transparent border-white/5">
-                <TableHead className="w-[120px] font-mono text-[10px] uppercase tracking-widest">System_ID</TableHead>
+                <TableHead className="w-[100px] md:w-[120px] font-mono text-[10px] uppercase tracking-widest">System_ID</TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">Entity_Name</TableHead>
-                <TableHead className="font-mono text-[10px] uppercase tracking-widest">Type</TableHead>
+                <TableHead className="hidden sm:table-cell font-mono text-[10px] uppercase tracking-widest">Type</TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">Status</TableHead>
-                <TableHead className="font-mono text-[10px] uppercase tracking-widest">Authority_Owner</TableHead>
-                <TableHead className="text-right font-mono text-[10px] uppercase tracking-widest">Last_Sync</TableHead>
+                <TableHead className="hidden md:table-cell font-mono text-[10px] uppercase tracking-widest">Authority_Owner</TableHead>
+                <TableHead className="hidden lg:table-cell text-right font-mono text-[10px] uppercase tracking-widest">Last_Sync</TableHead>
                 <TableHead className="w-[50px]"></TableHead>
               </TableRow>
             </TableHeader>
@@ -120,9 +167,9 @@ export function Contacts() {
                 </TableRow>
               ) : filteredContacts.map((contact) => (
                 <TableRow key={contact.id} className="group hover:bg-white/5 border-white/5 transition-colors">
-                  <TableCell className="font-mono text-[10px] text-muted-foreground/60">{contact.id.slice(0, 12)}</TableCell>
+                  <TableCell className="font-mono text-[10px] text-muted-foreground/60">{contact.id.slice(0, 8)}...</TableCell>
                   <TableCell className="font-medium text-sm">{contact.name}</TableCell>
-                  <TableCell>
+                  <TableCell className="hidden sm:table-cell">
                     <Badge variant="outline" className="text-[9px] uppercase tracking-tighter bg-white/5 border-white/10">{contact.type}</Badge>
                   </TableCell>
                   <TableCell>
@@ -131,8 +178,8 @@ export function Contacts() {
                       <span className="text-[10px] font-mono uppercase tracking-wider">{contact.status}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-[10px] font-mono text-muted-foreground uppercase">{contact.owner_name || 'UNASSIGNED'}</TableCell>
-                  <TableCell className="text-right text-[10px] font-mono text-muted-foreground uppercase">
+                  <TableCell className="hidden md:table-cell text-[10px] font-mono text-muted-foreground uppercase">{contact.owner_name || 'UNASSIGNED'}</TableCell>
+                  <TableCell className="hidden lg:table-cell text-right text-[10px] font-mono text-muted-foreground uppercase">
                     {contact.last_contact_at ? new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(contact.last_contact_at)) : 'NEVER'}
                   </TableCell>
                   <TableCell>

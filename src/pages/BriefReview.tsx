@@ -23,6 +23,7 @@ import {
   FileText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { authFetch } from "@/lib/auth-fetch";
 import { VIDEO_TYPES, BUDGET_OPTIONS } from "./CreativeBriefIntake";
 
 interface BriefSession {
@@ -94,7 +95,7 @@ export function BriefReviewList() {
   async function fetchBriefs() {
     setLoading(true);
     try {
-      const res = await fetch("/api/creative-briefs");
+      const res = await authFetch("/api/creative-briefs");
       const json = await res.json();
       setBriefs(json.data ?? []);
     } finally {
@@ -204,7 +205,7 @@ export function BriefReviewDetail() {
   async function fetchBrief() {
     setLoading(true);
     try {
-      const res = await fetch(`/api/creative-briefs/${id}`);
+      const res = await authFetch(`/api/creative-briefs/${id}`);
       const json = await res.json();
       if (json.ok) setBrief(json.data);
     } finally {
@@ -214,10 +215,9 @@ export function BriefReviewDetail() {
 
   async function addNote() {
     if (!id || !noteText.trim()) return;
-    await fetch(`/api/creative-briefs/${id}/admin-note`, {
+    await authFetch(`/api/creative-briefs/${id}/admin-note`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: noteText, author: "admin" }),
+      body: JSON.stringify({ text: noteText }),
     });
     setNoteText("");
     fetchBrief();
@@ -228,7 +228,7 @@ export function BriefReviewDetail() {
     setConverting(true);
     try {
       // 1. Mark brief as proposal-ready
-      await fetch(`/api/creative-briefs/${id}/convert-to-proposal`, { method: "POST" });
+      await authFetch(`/api/creative-briefs/${id}/convert-to-proposal`, { method: "POST" });
       // 2. Create a proposal in root billing
       const briefData = brief;
       if (!briefData) return;
@@ -260,9 +260,8 @@ export function BriefReviewDetail() {
       });
       const proposalJson = await proposalRes.json();
       if (proposalJson.ok && proposalJson.data?.id) {
-        await fetch(`/api/creative-briefs/${id}/link-quote`, {
+        await authFetch(`/api/creative-briefs/${id}/link-quote`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ quoteId: proposalJson.data.id }),
         });
       }

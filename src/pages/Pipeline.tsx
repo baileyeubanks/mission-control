@@ -268,7 +268,7 @@ export function Pipeline() {
       </section>
 
       {/* Stats */}
-      <div className="grid gap-3 md:grid-cols-5 shrink-0">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-5 shrink-0">
         {[
           { label: "Pipeline", value: formatCents(stats.totalValue), icon: DollarSign },
           { label: "Won", value: formatCents(stats.wonValue), icon: CheckCircle2 },
@@ -300,12 +300,12 @@ export function Pipeline() {
         </div>
       ) : (
         <div className="flex-1 min-h-0 overflow-x-auto scrollbar-thin">
-          <div className="flex gap-3 h-full min-w-[1200px]">
+          <div className="flex gap-3 h-full min-w-max md:min-w-0 flex-nowrap">
             {COLUMNS.map((col) => {
               const items = grouped[col.id];
               const colValue = items.reduce((s, c) => s + c.valueCents, 0);
               return (
-                <div key={col.id} className="flex w-64 flex-col gap-2">
+                <div key={col.id} className="flex w-72 md:w-64 flex-col gap-2 shrink-0">
                   {/* Column Header */}
                   <div className="flex items-center justify-between p-2.5">
                     <div className="flex items-center gap-2">

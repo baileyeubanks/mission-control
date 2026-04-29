@@ -21,6 +21,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { authFetch } from "@/lib/auth-fetch";
 
 export const VIDEO_TYPES = [
   { id: "brand_film", label: "Brand Film", icon: Film },
@@ -121,7 +122,7 @@ export function CreativeBriefIntake() {
 
   // Create session on mount
   useEffect(() => {
-    fetch("/api/creative-briefs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ source: "website" }) })
+    authFetch("/api/creative-briefs", { method: "POST", body: JSON.stringify({ source: "website" }) })
       .then((r) => r.json())
       .then((json) => { if (json.ok) setSessionId(json.data.id); });
   }, []);
@@ -130,9 +131,8 @@ export function CreativeBriefIntake() {
     if (!sessionId) return;
     setSaving(true);
     try {
-      await fetch(`/api/creative-briefs/${sessionId}/phase/${phaseKey}`, {
+      await authFetch(`/api/creative-briefs/${sessionId}/phase/${phaseKey}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(phaseData),
       });
     } finally {
@@ -144,9 +144,8 @@ export function CreativeBriefIntake() {
     if (!sessionId) return;
     setSaving(true);
     try {
-      await fetch(`/api/creative-briefs/${sessionId}`, {
+      await authFetch(`/api/creative-briefs/${sessionId}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contact: {
             firstName: form.firstName,
@@ -167,10 +166,10 @@ export function CreativeBriefIntake() {
     if (!sessionId) return;
     setSaving(true);
     try {
-      await fetch(`/api/creative-briefs/${sessionId}/submit`, { method: "POST" });
+      await authFetch(`/api/creative-briefs/${sessionId}/submit`, { method: "POST" });
       // Trigger AI enrichment
-      await fetch(`/api/creative-briefs/${sessionId}/enrich`, { method: "POST" });
-      const res = await fetch(`/api/creative-briefs/${sessionId}`);
+      await authFetch(`/api/creative-briefs/${sessionId}/enrich`, { method: "POST" });
+      const res = await authFetch(`/api/creative-briefs/${sessionId}`);
       const json = await res.json();
       if (json.ok) {
         setBriefData(json.data);

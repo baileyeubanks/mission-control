@@ -112,12 +112,12 @@ export function Files() {
           <Table>
             <TableHeader className="bg-black/40 sticky top-0 z-10">
               <TableRow className="hover:bg-transparent border-white/5">
-                <TableHead className="w-[50px]"></TableHead>
+                <TableHead className="w-[40px] md:w-[50px]"></TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">File_Name</TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">Size</TableHead>
-                <TableHead className="font-mono text-[10px] uppercase tracking-widest">Modified</TableHead>
-                <TableHead className="font-mono text-[10px] uppercase tracking-widest">Owner</TableHead>
-                <TableHead className="w-[50px]"></TableHead>
+                <TableHead className="hidden md:table-cell font-mono text-[10px] uppercase tracking-widest">Modified</TableHead>
+                <TableHead className="hidden lg:table-cell font-mono text-[10px] uppercase tracking-widest">Owner</TableHead>
+                <TableHead className="w-[40px] md:w-[50px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -136,10 +136,10 @@ export function Files() {
                   </TableCell>
                   <TableCell className="font-medium text-sm">{file.name}</TableCell>
                   <TableCell className="text-[10px] font-mono text-muted-foreground uppercase">{file.size}</TableCell>
-                  <TableCell className="text-[10px] font-mono text-muted-foreground uppercase">
+                  <TableCell className="hidden md:table-cell text-[10px] font-mono text-muted-foreground uppercase">
                     {new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(file.updated_at))}
                   </TableCell>
-                  <TableCell className="text-[10px] font-mono text-muted-foreground uppercase">{file.owner_name}</TableCell>
+                  <TableCell className="hidden lg:table-cell text-[10px] font-mono text-muted-foreground uppercase">{file.owner_name}</TableCell>
                   <TableCell>
                     <Button
                       variant="ghost"
