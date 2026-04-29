@@ -249,8 +249,7 @@ function renderDocumentHtml(document: RootQuoteRecord | RootInvoiceRecord): stri
     <head>
       <meta charset="utf-8" />
       <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body { font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif; color: #18181b; margin: 0; background: #fafafa; -webkit-font-smoothing: antialiased; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #18181b; margin: 0; background: #fafafa; -webkit-font-smoothing: antialiased; }
         .doc { max-width: 800px; margin: 0 auto; padding: 48px; background: #fff; min-height: 100vh; box-shadow: 0 0 0 1px #e4e4e7; }
         .topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 40px; }
         .brand { font-size: 13px; font-weight: 600; color: #18181b; letter-spacing: 0.02em; }
@@ -378,13 +377,15 @@ async function createPdfBuffer(html: string): Promise<Buffer> {
   }
   let browser;
   try {
+    const isSparticuz = !CHROME_PATH;
     browser = await puppeteer.launch({
       executablePath,
       headless: true,
-      args: chromium.args,
+      args: isSparticuz ? chromium.args : ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
-    await page.setContent(html, { waitUntil: "networkidle0" });
+    await page.goto("about:blank", { waitUntil: "networkidle0" });
+    await page.setContent(html, { waitUntil: "load" });
     const pdf = await page.pdf({
       format: "Letter",
       printBackground: true,

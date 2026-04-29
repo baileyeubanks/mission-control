@@ -1,6 +1,86 @@
 {
   "quotes": [
     {
+      "id": "proposal-1777440144257-z85pc9",
+      "kind": "proposal",
+      "documentNumber": "CCO-P-2026-002",
+      "companyAccount": "content-co-op",
+      "client": {
+        "name": "John Smith",
+        "email": "john@acme.com",
+        "phone": "555-1234",
+        "company": "Acme Energy",
+        "address": null
+      },
+      "source": "manual",
+      "sourceEntityId": null,
+      "title": "Brand Film - Acme Energy",
+      "scopeSummary": "Cinematic brand film for energy company product launch",
+      "servicePeriod": null,
+      "projectTimeline": null,
+      "deliverables": [],
+      "lineItems": [
+        {
+          "id": "line-1777440144257-cmroo0",
+          "name": "Brand Film Production",
+          "description": "Full production",
+          "quantity": 1,
+          "unitPriceCents": 35000,
+          "taxable": false,
+          "category": "Video",
+          "metadata": {}
+        }
+      ],
+      "discountCents": 0,
+      "taxCents": 0,
+      "depositCents": 0,
+      "subtotalCents": 35000,
+      "totalCents": 35000,
+      "terms": "50% deposit to begin. Net 15 on delivery.",
+      "expirationDate": null,
+      "internalNotes": "",
+      "clientNotes": "",
+      "status": "draft",
+      "approvalStatus": "not_required",
+      "documentVersion": 1,
+      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; color: #18181b; margin: 0; background: #fafafa; -webkit-font-smoothing: antialiased; }\n        .doc { max-width: 800px; margin: 0 auto; padding: 48px; background: #fff; min-height: 100vh; box-shadow: 0 0 0 1px #e4e4e7; }\n        .topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 40px; }\n        .brand { font-size: 13px; font-weight: 600; color: #18181b; letter-spacing: 0.02em; }\n        .brand-sub { font-size: 11px; color: #a1a1aa; margin-top: 2px; }\n        .doc-type { text-align: right; }\n        .doc-type-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #71717a; }\n        .doc-number { font-size: 22px; font-weight: 700; color: #18181b; margin-top: 4px; }\n        .status-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; color: #fff; background: #f59e0b; }\n        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }\n        .block-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 8px; }\n        .block-value { font-size: 13px; color: #27272a; line-height: 1.6; }\n        .block-value strong { color: #18181b; font-weight: 600; }\n        .scope { background: #fafafa; border-radius: 8px; padding: 16px; margin-bottom: 32px; }\n        .scope-title { font-size: 13px; font-weight: 600; color: #18181b; margin-bottom: 6px; }\n        .scope-body { font-size: 12px; color: #52525b; line-height: 1.6; }\n        table { border-collapse: collapse; width: 100%; margin-top: 4px; }\n        th { text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #a1a1aa; border-bottom: 1.5px solid #e4e4e7; padding: 10px 8px; }\n        td { border-bottom: 1px solid #f4f4f5; padding: 12px 8px; vertical-align: top; font-size: 12px; color: #27272a; }\n        td .item-desc { color: #71717a; font-size: 11px; margin-top: 3px; line-height: 1.4; }\n        .td-right { text-align: right; }\n        .totals-wrap { display: flex; justify-content: flex-end; margin-top: 24px; }\n        .totals { width: 280px; }\n        .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; color: #52525b; }\n        .totals-row.grand { border-top: 1.5px solid #18181b; margin-top: 6px; padding-top: 10px; font-size: 15px; font-weight: 700; color: #18181b; }\n        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e4e4e7; }\n        .footer-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 6px; }\n        .footer-body { font-size: 11px; color: #52525b; line-height: 1.6; }\n        .pay-box { background: #fafafa; border: 1px solid #e4e4e7; border-radius: 8px; padding: 14px; margin-top: 16px; }\n        .pay-box-title { font-size: 11px; font-weight: 600; color: #18181b; margin-bottom: 4px; }\n        .pay-box-body { font-size: 11px; color: #71717a; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <div class=\"topbar\">\n          <div>\n            <div class=\"brand\">Content Co-op</div>\n            <div class=\"brand-sub\">Creative Production</div>\n          </div>\n          <div class=\"doc-type\">\n            <div class=\"doc-type-label\">Proposal</div>\n            <div class=\"doc-number\">CCO-P-2026-002</div>\n            <div class=\"status-pill\">draft / not required</div>\n          </div>\n        </div>\n\n        <div class=\"grid-2\">\n          <div>\n            <div class=\"block-label\">Bill To</div>\n            <div class=\"block-value\">\n              <strong>John Smith</strong><br />\n              Acme Energy<br />\n              john@acme.com<br />\n              \n              555-1234\n            </div>\n          </div>\n          <div>\n            <div class=\"block-label\">Document Details</div>\n            <div class=\"block-value\">\n              Date: 4/29/2026<br />\n              \n              \n              Version: 1\n            </div>\n          </div>\n        </div>\n\n        \n        <div class=\"scope\">\n          <div class=\"scope-title\">Brand Film - Acme Energy</div>\n          <div class=\"scope-body\">Cinematic brand film for energy company product launch</div>\n        </div>\n        \n\n        \n\n        <table>\n          <thead>\n            <tr>\n              <th style=\"width:50%\">Description</th>\n              <th style=\"width:15%\">Category</th>\n              <th class=\"td-right\" style=\"width:10%\">Qty</th>\n              <th class=\"td-right\" style=\"width:12%\">Rate</th>\n              <th class=\"td-right\" style=\"width:13%\">Amount</th>\n            </tr>\n          </thead>\n          <tbody><tr>\n        <td><strong>Brand Film Production</strong><div class=\"item-desc\">Full production</div></td>\n        <td>Video</td>\n        <td class=\"td-right\">1</td>\n        <td class=\"td-right\">$350.00</td>\n        <td class=\"td-right\">$350.00</td>\n      </tr></tbody>\n        </table>\n\n        <div class=\"totals-wrap\">\n          <div class=\"totals\">\n            <div class=\"totals-row\"><span>Subtotal</span><span>$350.00</span></div>\n            <div class=\"totals-row\"><span>Discount</span><span>$0.00</span></div>\n            <div class=\"totals-row\"><span>Tax / fees</span><span>$0.00</span></div>\n            <div><span>Deposit</span><strong>$0.00</strong></div>\n            <div class=\"totals-row grand\"><span>Total</span><span>$350.00</span></div>\n          </div>\n        </div>\n\n        <footer>\n          <div class=\"footer-title\">Terms & Conditions</div>\n          <div class=\"footer-body\">50% deposit to begin. Net 15 on delivery.</div>\n          \n          <div class=\"pay-box\">\n            <div class=\"pay-box-title\">How to Pay</div>\n            <div class=\"pay-box-body\">Online payment available via secure checkout. Bank transfer details provided on request. Questions? Reply to this document or contact your account manager.</div>\n          </div>\n        </footer>\n      </main>\n    </body>\n  </html>",
+      "artifacts": [
+        {
+          "id": "artifact-1777440471170-50xnxp",
+          "artifactType": "pdf",
+          "label": "CCO-P-2026-002 v1 PDF",
+          "url": "/api/root/quotes/proposal-1777440144257-z85pc9/pdf",
+          "documentVersion": 1,
+          "createdAt": "2026-04-29T05:27:51.170Z",
+          "dataSource": "local_recovery_store",
+          "metadata": {
+            "byte_length": 199820,
+            "finality": "draft_artifact"
+          }
+        }
+      ],
+      "history": [
+        {
+          "id": "history-1777440471170-t2w3a4",
+          "eventType": "proposal.pdf_exported",
+          "summary": "CCO-P-2026-002 PDF artifact generated.",
+          "actor": "local-operator",
+          "createdAt": "2026-04-29T05:27:51.170Z"
+        },
+        {
+          "id": "history-1777440144257-5q1jac",
+          "eventType": "proposal.created",
+          "summary": "Proposal created in Root document engine.",
+          "actor": "local-operator",
+          "createdAt": "2026-04-29T05:22:24.257Z"
+        }
+      ],
+      "relatedInvoiceId": null,
+      "createdAt": "2026-04-29T05:22:24.257Z",
+      "updatedAt": "2026-04-29T05:27:51.170Z",
+      "dataSource": "local_recovery_store"
+    },
+    {
       "id": "quote-1777071928741-e08qy3",
       "kind": "quote",
       "documentNumber": "ACS-Q-2026-002",
@@ -525,6 +605,26 @@
     }
   ],
   "events": [
+    {
+      "id": "event-1777440471171-v3xloc",
+      "eventType": "proposal.pdf_exported",
+      "companyAccount": "content-co-op",
+      "entityType": "proposal",
+      "entityId": "proposal-1777440144257-z85pc9",
+      "summary": "CCO-P-2026-002 PDF exported.",
+      "createdAt": "2026-04-29T05:27:51.171Z",
+      "dataSource": "local_recovery_store"
+    },
+    {
+      "id": "event-1777440144260-lbf5td",
+      "eventType": "proposal.created",
+      "companyAccount": "content-co-op",
+      "entityType": "proposal",
+      "entityId": "proposal-1777440144257-z85pc9",
+      "summary": "CCO-P-2026-002 created.",
+      "createdAt": "2026-04-29T05:22:24.260Z",
+      "dataSource": "local_recovery_store"
+    },
     {
       "id": "event-1777366087280-1cxezq",
       "eventType": "quote.pdf_exported",
