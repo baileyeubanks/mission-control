@@ -414,7 +414,7 @@ export function CreativeBriefIntake() {
 
       {/* Content */}
       <div className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-3xl">
+        <div className="w-full max-w-6xl">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={step}
@@ -870,7 +870,7 @@ export function CreativeBriefIntake() {
                         )}
                       </div>
 
-                      <div className="bg-white border border-slate-200 rounded-2xl p-8 text-center max-w-md mx-auto shadow-sm">
+                      <div className="bg-white border border-slate-200 rounded-2xl p-8 text-center max-w-lg mx-auto shadow-sm">
                         <h3 className="text-2xl font-display tracking-tight mb-4 text-slate-900">
                           Next step: book a short discovery call.
                         </h3>
