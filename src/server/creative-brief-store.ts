@@ -165,18 +165,61 @@ export interface AdminNote {
   createdAt: string;
 }
 
+export interface IntakeData {
+  projectType?: string;
+  projectContext?: string;
+  businessGoals?: string[];
+  businessGoalContext?: string;
+  audienceTypes?: string[];
+  audienceKnowledgeLevel?: string;
+  desiredAudienceResponse?: string[];
+  coreMessageContext?: string;
+  deliverables?: string[];
+  mainVideoLength?: string;
+  usageChannels?: string[];
+  productionNeeds?: string[];
+  filmingLocationType?: string;
+  expectedShootDays?: string;
+  onCameraPeopleCount?: string;
+  creativeStyle?: string[];
+  motionGraphicsLevel?: string;
+  referenceLinks?: string;
+  uploadedFiles?: string[];
+  timeline?: string;
+  budgetComfort?: string;
+  dynamicQuestionAnswer?: string;
+}
+
+export interface Zip2Estimate {
+  lean?: { name: string; range: string; includes: string[]; bestFor: string; timeline: string };
+  recommended?: { name: string; range: string; includes: string[]; bestFor: string; timeline: string };
+  premium?: { name: string; range: string; includes: string[]; bestFor: string; timeline: string };
+  estimateConfidence?: string;
+  assumptions?: string[];
+}
+
+export interface AddonItem {
+  id: string;
+  name: string;
+  cost: number;
+  selected: boolean;
+}
+
 export interface CreativeBriefSession {
   id: string;
   businessUnit: "content_coop";
   status: BriefStatus;
   contact: BriefContact | null;
   phases: BriefPhases;
+  intake?: IntakeData;
   aiEnrichment: AIEnrichment | null;
   estimate: ScopeEstimate | null;
+  zip2Estimate?: Zip2Estimate;
   proposalOptions: ProposalOption[];
   complexityScore: number;
   proposalReadiness: number;
   adminNotes: AdminNote[];
+  addons?: AddonItem[];
   source: "website" | "internal" | "admin" | "referral";
   relatedQuoteId: string | null;
   userId: string | null;

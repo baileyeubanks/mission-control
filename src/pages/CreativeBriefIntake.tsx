@@ -1,244 +1,420 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  ArrowRight,
-  ArrowLeft,
-  CheckCircle2,
-  Loader2,
-  Film,
-  MessageSquare,
-  Users,
-  Package,
-  Camera,
-  Palette,
-  DollarSign,
-  Send,
-  Sparkles,
-  Clock,
-  MapPin,
-  Calendar,
-  Briefcase,
-  ChevronRight,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
 import { authFetch } from "@/lib/auth-fetch";
+import { cn } from "@/lib/utils";
+import { generateDeterministicEstimate } from "@/lib/brief-pricing";
+import type { IntakeData } from "@/server/creative-brief-store";
+import {
+  PROJECT_TYPES,
+  BUSINESS_GOALS,
+  AUDIENCE_TYPES,
+  AUDIENCE_KNOWLEDGE,
+  DESIRED_RESPONSES,
+  DELIVERABLES,
+  VIDEO_LENGTHS,
+  USAGE_CHANNELS,
+  PRODUCTION_NEEDS,
+  LOCATIONS,
+  SHOOT_DAYS,
+  ON_CAMERA_PEOPLE,
+  CREATIVE_STYLES,
+  MOTION_GRAPHICS,
+  TIMELINES,
+  BUDGET_COMFORTS,
+} from "@/lib/brief-constants";
+import {
+  Check,
+  ChevronRight,
+  Loader2,
+  ArrowLeft,
+  Film,
+  Sparkles,
+  HardHat,
+  PlaySquare,
+  X,
+} from "lucide-react";
 
-export const VIDEO_TYPES = [
-  { id: "brand_film", label: "Brand Film", icon: Film },
-  { id: "executive_message", label: "Executive Message", icon: MessageSquare },
-  { id: "technical_explainer", label: "Technical Explainer", icon: Sparkles },
-  { id: "training_video", label: "Training Video", icon: Users },
-  { id: "product_service_promo", label: "Product / Service Promo", icon: Package },
-  { id: "event_video", label: "Event Video", icon: Calendar },
-  { id: "social_content_package", label: "Social Content Package", icon: Briefcase },
-  { id: "motion_graphics_animation", label: "Motion Graphics / Animation", icon: Palette },
-  { id: "unknown", label: "Not Sure Yet", icon: ChevronRight },
-];
-
-export const BUDGET_OPTIONS = [
-  { value: "recommend", label: "Recommend the best-fit scope" },
-  { value: "under_5k", label: "Under $5,000" },
-  { value: "5k_10k", label: "$5,000 – $10,000" },
-  { value: "10k_25k", label: "$10,000 – $25,000" },
-  { value: "25k_50k", label: "$25,000 – $50,000" },
-  { value: "50k_plus", label: "$50,000+" },
-  { value: "not_sure", label: "Not sure yet" },
-];
-
-const TONE_OPTIONS = ["Cinematic", "Executive", "Technical", "Emotional", "Instructional", "Campaign-driven", "Conversational"];
-const STYLE_OPTIONS = ["Polished corporate", "Documentary", "Minimalist", "High-energy", "Intimate interview", "Visual metaphor", " archival/historical"];
-
-interface FormState {
-  videoType: string;
-  description: string;
+interface ContactInfo {
   firstName: string;
   lastName: string;
   company: string;
   role: string;
   email: string;
   phone: string;
-  businessProblem: string;
-  whyNow: string;
-  desiredOutcome: string;
-  primaryAudience: string;
-  internalExternal: string;
-  knowledgeLevel: string;
-  coreMessage: string;
-  desiredResponse: string;
-  mainVideoLength: string;
-  numberOfVideos: number;
-  cutdowns: boolean;
-  socialVersions: boolean;
-  captions: boolean;
-  motionGraphics: boolean;
-  animation: boolean;
-  voiceover: boolean;
-  interviews: boolean;
-  bRoll: boolean;
-  photography: boolean;
-  locations: string;
-  filmingDays: number;
-  interviewSubjects: number;
-  travelRequired: boolean;
-  facilityAccess: boolean;
-  safetyRequirements: boolean;
-  deadline: string;
-  tone: string;
-  visualStyle: string;
-  referenceVideos: string;
-  brandGuidelines: string;
-  wordsToAvoid: string;
-  budgetRange: string;
-  decisionMaker: string;
-  approvalProcess: string;
-  timelineToApprove: string;
 }
 
-const DEFAULT_FORM: FormState = {
-  videoType: "", description: "",
-  firstName: "", lastName: "", company: "", role: "", email: "", phone: "",
-  businessProblem: "", whyNow: "", desiredOutcome: "",
-  primaryAudience: "", internalExternal: "", knowledgeLevel: "", coreMessage: "", desiredResponse: "",
-  mainVideoLength: "", numberOfVideos: 1, cutdowns: false, socialVersions: false, captions: false, motionGraphics: false, animation: false, voiceover: false, interviews: false, bRoll: false, photography: false,
-  locations: "", filmingDays: 1, interviewSubjects: 0, travelRequired: false, facilityAccess: false, safetyRequirements: false, deadline: "",
-  tone: "", visualStyle: "", referenceVideos: "", brandGuidelines: "", wordsToAvoid: "",
-  budgetRange: "", decisionMaker: "", approvalProcess: "", timelineToApprove: "",
-};
-
-function formatCents(cents: number): string {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(cents / 100);
+function mapIntakeToPhases(intake: IntakeData, contact: ContactInfo) {
+  return {
+    intent: {
+      videoType: intake.projectType || "",
+      description: intake.projectContext || "",
+      businessProblem: (intake.businessGoals || []).join(", "),
+      whyNow: intake.businessGoalContext || "",
+      desiredOutcome: "",
+    },
+    audience: {
+      primaryAudience: (intake.audienceTypes || []).join(", "),
+      internalExternal: "",
+      knowledgeLevel: intake.audienceKnowledgeLevel || "",
+      coreMessage: intake.coreMessageContext || "",
+      desiredResponse: (intake.desiredAudienceResponse || []).join(", "),
+    },
+    deliverables: {
+      mainVideoLength: intake.mainVideoLength || "",
+      numberOfVideos: intake.deliverables?.includes("Multiple videos") ? 3 : 1,
+      cutdowns: intake.deliverables?.includes("Short social cutdowns") || false,
+      socialVersions: intake.deliverables?.includes("LinkedIn versions") || false,
+      captions: intake.deliverables?.includes("Captions/subtitles") || false,
+      motionGraphics:
+        intake.motionGraphicsLevel === "Moderate graphics" ||
+        intake.motionGraphicsLevel === "Heavy graphics",
+      animation: intake.motionGraphicsLevel === "Full animation",
+      voiceover: intake.productionNeeds?.includes("Voiceover only") || false,
+      interviews: intake.productionNeeds?.includes("Interviews") || false,
+      bRoll: intake.productionNeeds?.includes("Existing footage/assets") || false,
+      photography: intake.deliverables?.includes("Photography") || false,
+    },
+    production: {
+      locations: intake.filmingLocationType || "",
+      filmingDays:
+        intake.expectedShootDays === "Half day"
+          ? 0.5
+          : intake.expectedShootDays === "1 day"
+          ? 1
+          : intake.expectedShootDays === "2 days"
+          ? 2
+          : intake.expectedShootDays === "3+ days"
+          ? 3
+          : 1,
+      interviewSubjects: parseInt(intake.onCameraPeopleCount || "0") || 0,
+      travelRequired: false,
+      facilityAccess: false,
+      safetyRequirements: false,
+      deadline: intake.timeline || "",
+    },
+    creative: {
+      tone: (intake.creativeStyle || []).join(", "),
+      visualStyle: (intake.creativeStyle || []).join(", "),
+      referenceVideos: intake.referenceLinks || "",
+      brandGuidelines: "",
+      wordsToAvoid: "",
+    },
+    budget: {
+      budgetRange: (intake.budgetComfort || "not_sure") as any,
+      decisionMaker: "",
+      approvalProcess: "",
+      timelineToApprove: intake.timeline || "",
+    },
+  };
 }
+
+// ─── UI Components ───
+
+function MultiSelectCards({
+  options,
+  selected,
+  onChange,
+}: {
+  options: string[];
+  selected: string[];
+  onChange: (s: string[]) => void;
+}) {
+  const toggle = (val: string) => {
+    if (selected.includes(val)) onChange(selected.filter((x) => x !== val));
+    else onChange([...selected, val]);
+  };
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+      {options.map((opt) => (
+        <button
+          key={opt}
+          onClick={() => toggle(opt)}
+          className={cn(
+            "p-4 rounded-lg border text-left transition-all text-sm font-medium h-full",
+            selected.includes(opt)
+              ? "bg-brand-accent-glow/10 border-brand-accent-glow text-brand-accent-glow"
+              : "bg-white border-slate-200 text-slate-600 hover:border-slate-300"
+          )}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function SingleSelectChips({
+  options,
+  selected,
+  onChange,
+}: {
+  options: string[];
+  selected: string;
+  onChange: (s: string) => void;
+}) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {options.map((opt) => (
+        <button
+          key={opt}
+          onClick={() => onChange(opt)}
+          className={cn(
+            "px-4 py-2 rounded-full border text-sm transition-all font-medium",
+            selected === opt
+              ? "bg-brand-accent-glow/10 border-brand-accent-glow text-brand-accent-glow"
+              : "bg-white border-slate-200 text-slate-600 hover:border-slate-300"
+          )}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function Dropdown({
+  options,
+  selected,
+  onChange,
+  placeholder = "Select an option...",
+}: {
+  options: string[];
+  selected: string | undefined;
+  onChange: (s: string) => void;
+  placeholder?: string;
+}) {
+  return (
+    <select
+      value={selected || ""}
+      onChange={(e) => onChange(e.target.value)}
+      className="w-full bg-white border border-slate-200 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-brand-accent-glow appearance-none cursor-pointer"
+    >
+      <option value="" disabled className="text-slate-400">
+        {placeholder}
+      </option>
+      {options.map((opt) => (
+        <option key={opt} value={opt}>
+          {opt}
+        </option>
+      ))}
+    </select>
+  );
+}
+
+function BudgetSelect({
+  options,
+  selected,
+  onChange,
+}: {
+  options: string[];
+  selected: string | undefined;
+  onChange: (s: string) => void;
+}) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {options.map((bc) => (
+        <button
+          key={bc}
+          onClick={() => onChange(bc)}
+          className={cn(
+            "p-4 rounded-lg border text-left transition-all text-sm font-medium",
+            selected === bc
+              ? "bg-brand-accent-glow/10 border-brand-accent-glow text-brand-accent-glow"
+              : "bg-white border-slate-200 text-slate-600 hover:border-slate-300"
+          )}
+        >
+          {bc}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ─── Main Component ───
 
 export function CreativeBriefIntake() {
   const [step, setStep] = useState(0);
-  const [form, setForm] = useState<FormState>(DEFAULT_FORM);
   const [sessionId, setSessionId] = useState<string | null>(null);
-  const [saving, setSaving] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [briefData, setBriefData] = useState<any>(null);
+  const [contact, setContact] = useState<ContactInfo>({
+    firstName: "",
+    lastName: "",
+    company: "",
+    role: "",
+    email: "",
+    phone: "",
+  });
+  const [intake, setIntake] = useState<IntakeData>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isEnriching, setIsEnriching] = useState(false);
+  const [briefSummary, setBriefSummary] = useState<any>(null);
+  const [estimate, setEstimate] = useState<any>(null);
   const [direction, setDirection] = useState(1);
-
-  const totalSteps = 9;
+  const [addons, setAddons] = useState([
+    { id: "photography", name: "Add Photography Package", cost: 1500, selected: false },
+    { id: "social", name: "Add Social Cutdowns", cost: 2500, selected: false },
+  ]);
 
   // Create session on mount
   useEffect(() => {
-    authFetch("/api/creative-briefs", { method: "POST", body: JSON.stringify({ source: "website" }) })
+    authFetch("/api/creative-briefs", {
+      method: "POST",
+      body: JSON.stringify({ source: "website" }),
+    })
       .then((r) => r.json())
-      .then((json) => { if (json.ok) setSessionId(json.data.id); });
+      .then((json) => {
+        if (json.ok) setSessionId(json.data.id);
+      });
   }, []);
 
-  async function savePhase(phaseKey: string, phaseData: object) {
-    if (!sessionId) return;
-    setSaving(true);
-    try {
-      await authFetch(`/api/creative-briefs/${sessionId}/phase/${phaseKey}`, {
-        method: "PATCH",
-        body: JSON.stringify(phaseData),
-      });
-    } finally {
-      setSaving(false);
-    }
-  }
+  const updateIntake = (key: keyof IntakeData, value: any) => {
+    setIntake((prev) => ({ ...prev, [key]: value }));
+  };
 
-  async function saveContact() {
+  const syncToBackend = async (updates: any) => {
     if (!sessionId) return;
-    setSaving(true);
-    try {
-      await authFetch(`/api/creative-briefs/${sessionId}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          contact: {
-            firstName: form.firstName,
-            lastName: form.lastName,
-            company: form.company,
-            role: form.role,
-            email: form.email,
-            phone: form.phone,
-          },
-        }),
-      });
-    } finally {
-      setSaving(false);
-    }
-  }
+    await authFetch(`/api/creative-briefs/${sessionId}`, {
+      method: "PATCH",
+      body: JSON.stringify(updates),
+    });
+  };
 
-  async function handleSubmit() {
-    if (!sessionId) return;
-    setSaving(true);
+  const handleNextStep = async () => {
+    setIsSubmitting(true);
     try {
-      await authFetch(`/api/creative-briefs/${sessionId}/submit`, { method: "POST" });
-      // Trigger AI enrichment
-      await authFetch(`/api/creative-briefs/${sessionId}/enrich`, { method: "POST" });
-      const res = await authFetch(`/api/creative-briefs/${sessionId}`);
-      const json = await res.json();
-      if (json.ok) {
-        setBriefData(json.data);
-        setSubmitted(true);
+      if (step === 0) {
+        await syncToBackend({
+          contact,
+          intake,
+          status: "contact_captured",
+        });
+        setStep(1);
+      } else if (step === 8) {
+        // Finalize brief
+        const currentIntake = { ...intake };
+        const est = generateDeterministicEstimate(currentIntake);
+        setEstimate(est);
+        await syncToBackend({
+          intake: currentIntake,
+          zip2Estimate: est,
+          addons,
+          status: "brief_submitted",
+        });
+        // Also populate phases for server-side enrichment compatibility
+        const phases = mapIntakeToPhases(currentIntake, contact);
+        await authFetch(`/api/creative-briefs/${sessionId}/phase/intent`, {
+          method: "PATCH",
+          body: JSON.stringify(phases.intent),
+        });
+        await authFetch(`/api/creative-briefs/${sessionId}/phase/audience`, {
+          method: "PATCH",
+          body: JSON.stringify(phases.audience),
+        });
+        await authFetch(`/api/creative-briefs/${sessionId}/phase/deliverables`, {
+          method: "PATCH",
+          body: JSON.stringify(phases.deliverables),
+        });
+        await authFetch(`/api/creative-briefs/${sessionId}/phase/production`, {
+          method: "PATCH",
+          body: JSON.stringify(phases.production),
+        });
+        await authFetch(`/api/creative-briefs/${sessionId}/phase/creative`, {
+          method: "PATCH",
+          body: JSON.stringify(phases.creative),
+        });
+        await authFetch(`/api/creative-briefs/${sessionId}/phase/budget`, {
+          method: "PATCH",
+          body: JSON.stringify(phases.budget),
+        });
+        // Trigger AI enrichment
+        try {
+          setIsEnriching(true);
+          await authFetch(`/api/creative-briefs/${sessionId}/enrich`, { method: "POST" });
+          const res = await authFetch(`/api/creative-briefs/${sessionId}`);
+          const json = await res.json();
+          if (json.ok && json.data.aiEnrichment) {
+            setBriefSummary(json.data.aiEnrichment);
+          }
+        } catch (e) {
+          console.error("Enrichment failed:", e);
+        } finally {
+          setIsEnriching(false);
+        }
+        setStep(9);
+      } else {
+        await syncToBackend({ intake, contact });
+        setStep((s) => s + 1);
       }
+    } catch (e) {
+      console.error(e);
     } finally {
-      setSaving(false);
+      setIsSubmitting(false);
     }
-  }
+  };
 
-  function nextStep() {
-    setDirection(1);
-    const next = step + 1;
-    if (step === 0) savePhase("intent", { videoType: form.videoType, description: form.description, businessProblem: form.businessProblem, whyNow: form.whyNow, desiredOutcome: form.desiredOutcome });
-    if (step === 1) saveContact();
-    if (step === 2) savePhase("audience", { primaryAudience: form.primaryAudience, internalExternal: form.internalExternal, knowledgeLevel: form.knowledgeLevel, coreMessage: form.coreMessage, desiredResponse: form.desiredResponse });
-    if (step === 3) savePhase("deliverables", { mainVideoLength: form.mainVideoLength, numberOfVideos: form.numberOfVideos, cutdowns: form.cutdowns, socialVersions: form.socialVersions, captions: form.captions, motionGraphics: form.motionGraphics, animation: form.animation, voiceover: form.voiceover, interviews: form.interviews, bRoll: form.bRoll, photography: form.photography });
-    if (step === 4) savePhase("production", { locations: form.locations, filmingDays: form.filmingDays, interviewSubjects: form.interviewSubjects, travelRequired: form.travelRequired, facilityAccess: form.facilityAccess, safetyRequirements: form.safetyRequirements, deadline: form.deadline });
-    if (step === 5) savePhase("creative", { tone: form.tone, visualStyle: form.visualStyle, referenceVideos: form.referenceVideos, brandGuidelines: form.brandGuidelines, wordsToAvoid: form.wordsToAvoid });
-    if (step === 6) savePhase("budget", { budgetRange: form.budgetRange, decisionMaker: form.decisionMaker, approvalProcess: form.approvalProcess, timelineToApprove: form.timelineToApprove });
-    setStep(next);
-  }
-
-  function prevStep() {
+  const handleBack = () => {
     setDirection(-1);
     setStep((s) => Math.max(0, s - 1));
-  }
+  };
 
+  const totalSteps = 10;
   const progress = ((step + 1) / totalSteps) * 100;
 
   const canProceed = useMemo(() => {
-    if (step === 0) return form.videoType && form.description.trim().length > 10;
-    if (step === 1) return form.firstName && form.company && form.email.includes("@");
-    if (step === 2) return form.businessProblem.trim().length > 5 && form.desiredOutcome.trim().length > 5;
-    if (step === 3) return form.primaryAudience.trim().length > 3 && form.coreMessage.trim().length > 5;
-    if (step === 4) return form.mainVideoLength && form.numberOfVideos > 0;
-    if (step === 5) return form.locations.trim().length > 2 && form.deadline;
-    if (step === 6) return form.tone && form.visualStyle;
-    if (step === 7) return form.budgetRange;
+    if (step === 0) return contact.firstName && contact.email && contact.company;
+    if (step === 1) return !!intake.projectType;
+    if (step === 2) return !!(intake.businessGoals?.length);
+    if (step === 3) return !!(intake.audienceTypes?.length) && !!intake.audienceKnowledgeLevel;
+    if (step === 4) return !!(intake.desiredAudienceResponse?.length);
+    if (step === 5) return !!(intake.deliverables?.length) && !!intake.mainVideoLength;
+    if (step === 6) return !!(intake.productionNeeds?.length);
+    if (step === 7) return !!(intake.creativeStyle?.length) && !!intake.motionGraphicsLevel;
+    if (step === 8) return !!intake.timeline && !!intake.budgetComfort;
     return true;
-  }, [step, form]);
+  }, [step, contact, intake]);
 
-  if (submitted && briefData) {
-    return <SubmittedView brief={briefData} />;
-  }
+  const calculateAdjustedRange = (rangeText: string) => {
+    const totalAddons = addons.filter((a) => a.selected).reduce((acc, a) => acc + a.cost, 0);
+    if (!totalAddons) return rangeText;
+    const matches = rangeText.match(/\$([0-9,]+)/g);
+    if (matches && matches.length === 2) {
+      const min = parseInt(matches[0].replace(/[^0-9]/g, "")) + totalAddons;
+      const max = parseInt(matches[1].replace(/[^0-9]/g, "")) + totalAddons;
+      return "$" + min.toLocaleString() + " – $" + max.toLocaleString();
+    }
+    return rangeText + " (+$" + totalAddons.toLocaleString() + " add-ons)";
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col">
       {/* Top bar */}
-      <div className="border-b border-slate-200 bg-slate-100 px-6 py-4 flex items-center justify-between">
+      <div className="border-b border-slate-200 bg-white/70 backdrop-blur px-6 py-4 flex items-center justify-between sticky top-0 z-20">
         <div className="flex items-center gap-3">
-          <Film className="h-5 w-5 text-emerald-400" />
-          <span className="text-sm font-semibold tracking-wide $1text-slate-900">Content Co-op</span>
-          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider hidden sm:inline">Creative Brief</span>
+          <Film className="h-5 w-5 text-brand-accent-glow" />
+          <span className="text-sm font-semibold tracking-wide text-slate-900">Content Co-op</span>
+          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider hidden sm:inline">
+            Creative Brief
+          </span>
         </div>
         <div className="flex items-center gap-3">
-          {saving && <Loader2 className="h-3.5 w-3.5 animate-spin text-slate-500" />}
-          <span className="text-[10px] font-mono text-slate-500">{step + 1} / {totalSteps}</span>
+          {(isSubmitting || isEnriching) && <Loader2 className="h-3.5 w-3.5 animate-spin text-slate-500" />}
+          <span className="text-[10px] font-mono text-slate-500">
+            {step + 1} / {totalSteps}
+          </span>
         </div>
       </div>
 
       {/* Progress */}
       <div className="h-0.5 bg-slate-200">
-        <motion.div className="h-full bg-emerald-500" animate={{ width: `${progress}%` }} transition={{ duration: 0.4 }} />
+        <motion.div
+          className="h-full bg-brand-accent-glow"
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.4 }}
+        />
       </div>
 
       {/* Content */}
       <div className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-xl">
+        <div className="w-full max-w-3xl">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={step}
@@ -248,628 +424,507 @@ export function CreativeBriefIntake() {
               exit={{ opacity: 0, x: direction > 0 ? -40 : 40 }}
               transition={{ duration: 0.3 }}
             >
-              {step === 0 && <StepIntent form={form} setForm={setForm} />}
-              {step === 1 && <StepContact form={form} setForm={setForm} />}
-              {step === 2 && <StepBusiness form={form} setForm={setForm} />}
-              {step === 3 && <StepAudience form={form} setForm={setForm} />}
-              {step === 4 && <StepDeliverables form={form} setForm={setForm} />}
-              {step === 5 && <StepProduction form={form} setForm={setForm} />}
-              {step === 6 && <StepCreative form={form} setForm={setForm} />}
-              {step === 7 && <StepBudget form={form} setForm={setForm} />}
-              {step === 8 && <StepReview form={form} onSubmit={handleSubmit} saving={saving} />}
+              {step === 0 && (
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-3xl sm:text-4xl font-display tracking-tight mb-4">
+                      Let&apos;s get the basics first so we can save your brief as we shape it.
+                    </h2>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-500">First Name</label>
+                        <input
+                          autoFocus
+                          value={contact.firstName}
+                          onChange={(e) => setContact({ ...contact, firstName: e.target.value })}
+                          placeholder="Jane"
+                          className="w-full bg-white border border-slate-200 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-brand-accent-glow"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-500">Last Name (Optional)</label>
+                        <input
+                          value={contact.lastName}
+                          onChange={(e) => setContact({ ...contact, lastName: e.target.value })}
+                          placeholder="Doe"
+                          className="w-full bg-white border border-slate-200 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-brand-accent-glow"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-500">Company Name</label>
+                        <input
+                          value={contact.company}
+                          onChange={(e) => setContact({ ...contact, company: e.target.value })}
+                          placeholder="Acme Corp"
+                          className="w-full bg-white border border-slate-200 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-brand-accent-glow"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-500">Role / Title (Optional)</label>
+                        <input
+                          value={contact.role}
+                          onChange={(e) => setContact({ ...contact, role: e.target.value })}
+                          placeholder="VP of Marketing"
+                          className="w-full bg-white border border-slate-200 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-brand-accent-glow"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-500">Work Email</label>
+                        <input
+                          type="email"
+                          value={contact.email}
+                          onChange={(e) => setContact({ ...contact, email: e.target.value })}
+                          placeholder="jane@acme.com"
+                          className="w-full bg-white border border-slate-200 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-brand-accent-glow"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-500">Phone</label>
+                        <input
+                          type="tel"
+                          value={contact.phone}
+                          onChange={(e) => setContact({ ...contact, phone: e.target.value })}
+                          placeholder="(555) 123-4567"
+                          className="w-full bg-white border border-slate-200 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-brand-accent-glow"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {step === 1 && (
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-3xl sm:text-4xl font-display tracking-tight mb-4">
+                      What are you trying to create?
+                    </h2>
+                    <p className="text-slate-500 text-lg">Select the closest match.</p>
+                  </div>
+                  <SingleSelectChips
+                    options={PROJECT_TYPES}
+                    selected={intake.projectType || ""}
+                    onChange={(v) => updateIntake("projectType", v)}
+                  />
+                  <div className="pt-4">
+                    <label className="text-sm font-medium text-slate-500 mb-2 block">
+                      Describe it in one sentence, if helpful. (Optional)
+                    </label>
+                    <textarea
+                      placeholder="e.g. A 2-minute overview of our new subsea robotics platform..."
+                      value={intake.projectContext || ""}
+                      onChange={(e) => updateIntake("projectContext", e.target.value)}
+                      className="w-full bg-white border border-slate-200 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-brand-accent-glow min-h-[80px] resize-none"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {step === 2 && (
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-3xl sm:text-4xl font-display tracking-tight mb-4">
+                      What should this video help accomplish?
+                    </h2>
+                    <p className="text-slate-500 text-lg">Select all that apply.</p>
+                  </div>
+                  <MultiSelectCards
+                    options={BUSINESS_GOALS}
+                    selected={intake.businessGoals || []}
+                    onChange={(v) => updateIntake("businessGoals", v)}
+                  />
+                  <div className="pt-4">
+                    <label className="text-sm font-medium text-slate-500 mb-2 block">
+                      Anything specific driving this project right now? (Optional)
+                    </label>
+                    <input
+                      placeholder="e.g. We have a major trade show in October..."
+                      value={intake.businessGoalContext || ""}
+                      onChange={(e) => updateIntake("businessGoalContext", e.target.value)}
+                      className="w-full bg-white border border-slate-200 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-brand-accent-glow"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-3xl sm:text-4xl font-display tracking-tight mb-4">
+                      Who needs to watch this?
+                    </h2>
+                  </div>
+                  <MultiSelectCards
+                    options={AUDIENCE_TYPES}
+                    selected={intake.audienceTypes || []}
+                    onChange={(v) => updateIntake("audienceTypes", v)}
+                  />
+                  <div className="pt-6">
+                    <label className="text-sm font-medium text-slate-900 mb-3 block">
+                      How familiar is this audience with the topic?
+                    </label>
+                    <Dropdown
+                      options={AUDIENCE_KNOWLEDGE}
+                      selected={intake.audienceKnowledgeLevel}
+                      onChange={(v) => updateIntake("audienceKnowledgeLevel", v)}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {step === 4 && (
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-3xl sm:text-4xl font-display tracking-tight mb-4">
+                      What should the audience remember or feel?
+                    </h2>
+                  </div>
+                  <MultiSelectCards
+                    options={DESIRED_RESPONSES}
+                    selected={intake.desiredAudienceResponse || []}
+                    onChange={(v) => updateIntake("desiredAudienceResponse", v)}
+                  />
+                  <div className="pt-6">
+                    <label className="text-sm font-medium text-slate-900 mb-3 block">
+                      Is there one key message we should not miss? (Optional)
+                    </label>
+                    <input
+                      value={intake.coreMessageContext || ""}
+                      onChange={(e) => updateIntake("coreMessageContext", e.target.value)}
+                      placeholder="e.g. Safety is a mindset, not a checklist."
+                      className="w-full bg-white border border-slate-200 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-brand-accent-glow"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {step === 5 && (
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-3xl sm:text-4xl font-display tracking-tight mb-4">
+                      What do you think you need delivered?
+                    </h2>
+                  </div>
+                  <MultiSelectCards
+                    options={DELIVERABLES}
+                    selected={intake.deliverables || []}
+                    onChange={(v) => updateIntake("deliverables", v)}
+                  />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6">
+                    <div>
+                      <label className="text-sm font-medium text-slate-900 mb-3 block">
+                        Approximate main video length?
+                      </label>
+                      <Dropdown
+                        options={VIDEO_LENGTHS}
+                        selected={intake.mainVideoLength}
+                        onChange={(v) => updateIntake("mainVideoLength", v)}
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-slate-900 mb-3 block">
+                        Where will this be used?
+                      </label>
+                      <Dropdown
+                        options={USAGE_CHANNELS}
+                        selected={intake.usageChannels?.[0]}
+                        onChange={(v) => updateIntake("usageChannels", [v])}
+                        placeholder="Primary usage channel..."
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {step === 6 && (
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-3xl sm:text-4xl font-display tracking-tight mb-4">
+                      What will likely need to be filmed or created?
+                    </h2>
+                  </div>
+                  <MultiSelectCards
+                    options={PRODUCTION_NEEDS}
+                    selected={intake.productionNeeds || []}
+                    onChange={(v) => updateIntake("productionNeeds", v)}
+                  />
+                  <div className="space-y-6 pt-6">
+                    <div>
+                      <label className="text-sm font-medium text-slate-900 mb-3 block">
+                        Where would filming happen?
+                      </label>
+                      <SingleSelectChips
+                        options={LOCATIONS}
+                        selected={intake.filmingLocationType || ""}
+                        onChange={(v) => updateIntake("filmingLocationType", v)}
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-slate-900 mb-3 block">
+                        How many filming days do you expect?
+                      </label>
+                      <SingleSelectChips
+                        options={SHOOT_DAYS}
+                        selected={intake.expectedShootDays || ""}
+                        onChange={(v) => updateIntake("expectedShootDays", v)}
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-slate-900 mb-3 block">
+                        How many people may appear on camera?
+                      </label>
+                      <SingleSelectChips
+                        options={ON_CAMERA_PEOPLE}
+                        selected={intake.onCameraPeopleCount || ""}
+                        onChange={(v) => updateIntake("onCameraPeopleCount", v)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {step === 7 && (
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-3xl sm:text-4xl font-display tracking-tight mb-4">
+                      How should this feel?
+                    </h2>
+                  </div>
+                  <MultiSelectCards
+                    options={CREATIVE_STYLES}
+                    selected={intake.creativeStyle || []}
+                    onChange={(v) => updateIntake("creativeStyle", v)}
+                  />
+                  <div className="space-y-6 pt-6">
+                    <div>
+                      <label className="text-sm font-medium text-slate-900 mb-3 block">
+                        How much motion graphics or animation do you expect?
+                      </label>
+                      <SingleSelectChips
+                        options={MOTION_GRAPHICS}
+                        selected={intake.motionGraphicsLevel || ""}
+                        onChange={(v) => updateIntake("motionGraphicsLevel", v)}
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-slate-900 mb-3 block">
+                        Have any example links, brand guides, or references? (Optional)
+                      </label>
+                      <textarea
+                        placeholder="Paste URLs to example videos, your website, or Google Drive folders here..."
+                        value={intake.referenceLinks || ""}
+                        onChange={(e) => updateIntake("referenceLinks", e.target.value)}
+                        className="w-full bg-white border border-slate-200 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-brand-accent-glow min-h-[80px] resize-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {step === 8 && (
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-3xl sm:text-4xl font-display tracking-tight mb-4">
+                      When do you need this completed?
+                    </h2>
+                  </div>
+                  <SingleSelectChips
+                    options={TIMELINES}
+                    selected={intake.timeline || ""}
+                    onChange={(v) => updateIntake("timeline", v)}
+                  />
+                  <div className="pt-8">
+                    <h2 className="text-2xl font-display tracking-tight mb-4">
+                      Do you already have an investment range in mind, or should we recommend the best-fit scope?
+                    </h2>
+                    <BudgetSelect
+                      options={BUDGET_COMFORTS}
+                      selected={intake.budgetComfort}
+                      onChange={(v) => updateIntake("budgetComfort", v)}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {step === 9 && (
+                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  {isEnriching ? (
+                    <div className="flex flex-col items-center justify-center py-20 gap-4">
+                      <Loader2 className="h-8 w-8 animate-spin text-brand-accent-glow" />
+                      <p className="text-slate-500">Shaping your brief and generating estimates...</p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="text-center mb-12">
+                        <div className="inline-flex h-16 w-16 rounded-full bg-emerald-100 border border-emerald-200 items-center justify-center mb-6">
+                          <Check className="h-8 w-8 text-emerald-600" />
+                        </div>
+                        <h2 className="text-4xl sm:text-5xl font-display tracking-tight mb-4">
+                          Your project has been shaped into a working brief.
+                        </h2>
+                        <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+                          Based on your answers, this looks like a{" "}
+                          <span className="font-semibold text-slate-900">
+                            {briefSummary?.projectType || intake.projectType || "Premium Video"}
+                          </span>{" "}
+                          with a likely range between{" "}
+                          <span className="font-semibold text-slate-900">
+                            {estimate?.lean?.range ? calculateAdjustedRange(estimate.lean.range) : ""}
+                          </span>
+                          . The next step is a short discovery call so we can confirm scope, timeline, and the right production approach.
+                        </p>
+                      </div>
+
+                      {briefSummary?.creativeHookIdea && (
+                        <div className="mb-12 bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-200 p-8 rounded-2xl relative overflow-hidden">
+                          <h3 className="text-xl font-semibold mb-4 text-slate-900 flex items-center">
+                            <PlaySquare className="w-5 h-5 mr-3 text-brand-accent-glow" />
+                            The &quot;Wow Factor&quot; Concept
+                          </h3>
+                          <p className="text-slate-700 leading-relaxed">{briefSummary.creativeHookIdea}</p>
+                        </div>
+                      )}
+
+                      {/* Scope Builder */}
+                      <div className="mb-8 p-6 border border-slate-200 bg-white rounded-2xl shadow-sm">
+                        <h4 className="text-lg font-medium mb-4 text-slate-900">Scope Builder</h4>
+                        <div className="flex flex-wrap gap-3">
+                          {addons.map((addon, i) => (
+                            <button
+                              key={addon.id}
+                              onClick={() => {
+                                const next = addons.map((a, idx) =>
+                                  idx === i ? { ...a, selected: !a.selected } : a
+                                );
+                                setAddons(next);
+                                syncToBackend({ addons: next });
+                              }}
+                              className={cn(
+                                "px-4 py-2 border rounded-full text-sm font-medium transition-colors flex items-center",
+                                addon.selected
+                                  ? "bg-brand-accent-glow/10 border-brand-accent-glow text-brand-accent-glow"
+                                  : "bg-white border-slate-200 text-slate-600 hover:border-slate-300"
+                              )}
+                            >
+                              {addon.selected ? <Check className="w-4 h-4 mr-2" /> : null}
+                              {addon.name} (+${addon.cost.toLocaleString()})
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Estimates */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                        {[estimate?.lean, estimate?.recommended, estimate?.premium].map(
+                          (est, i) =>
+                            est && (
+                              <div
+                                key={i}
+                                className={cn(
+                                  "p-6 rounded-2xl border transition-all duration-300 bg-white",
+                                  i === 1
+                                    ? "border-brand-accent-glow relative scale-105 shadow-lg"
+                                    : "border-slate-200 opacity-90"
+                                )}
+                              >
+                                {i === 1 && (
+                                  <div className="absolute top-0 right-6 -translate-y-1/2 bg-brand-accent-glow text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                                    Recommended
+                                  </div>
+                                )}
+                                <div className="text-slate-500 uppercase tracking-wider text-xs font-medium mb-2">
+                                  {est.name} / Focus
+                                </div>
+                                <div className="text-2xl font-bold mb-4 font-mono text-slate-900">
+                                  {calculateAdjustedRange(est.range)}
+                                </div>
+                                <div className="text-sm text-slate-500 mb-6">{est.bestFor}</div>
+                                <ul className="space-y-3 mb-6 flex-1">
+                                  {est.includes.map((inc: string, j: number) => (
+                                    <li key={j} className="text-sm flex items-start gap-2 text-slate-700">
+                                      <Check className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                                      {inc}
+                                    </li>
+                                  ))}
+                                  {addons
+                                    .filter((a) => a.selected)
+                                    .map((a) => (
+                                      <li key={a.id} className="text-sm flex items-start gap-2 text-brand-accent-glow">
+                                        <Check className="h-4 w-4 text-brand-accent-glow shrink-0 mt-0.5" />
+                                        + {a.name}
+                                      </li>
+                                    ))}
+                                </ul>
+                                <div className="pt-6 border-t border-slate-200 mt-auto">
+                                  <span className="text-xs text-slate-500 uppercase">Estimated Timeline</span>
+                                  <div className="text-sm font-medium text-slate-900">{est.timeline}</div>
+                                </div>
+                              </div>
+                            )
+                        )}
+                      </div>
+
+                      <div className="bg-white border border-slate-200 rounded-2xl p-8 text-center max-w-md mx-auto shadow-sm">
+                        <h3 className="text-2xl font-display tracking-tight mb-4 text-slate-900">
+                          Next step: book a short discovery call.
+                        </h3>
+                        <p className="text-slate-500 mb-6">
+                          We&apos;ll use the brief you just created to make the call focused and useful.
+                        </p>
+                        <div className="space-y-4">
+                          <a
+                            href="https://calendly.com/baileyeubanks"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block w-full bg-brand-accent-glow text-white hover:bg-blue-700 px-5 py-3 rounded-lg text-sm font-medium transition-colors text-center"
+                          >
+                            Book Discovery Call
+                          </a>
+                          <button
+                            onClick={() => (window.location.href = "/")}
+                            className="block w-full text-slate-500 hover:text-slate-900 text-sm transition-colors"
+                          >
+                            Return to Home
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
 
           {/* Navigation */}
-          <div className="mt-8 flex items-center justify-between">
-            <button
-              onClick={prevStep}
-              disabled={step === 0}
-              className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-slate-400 hover:$1text-slate-900 disabled:opacity-30 transition-colors"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back
-            </button>
-            {step < 8 ? (
+          {step < 9 && (
+            <div className="mt-12 flex items-center justify-between">
               <button
-                onClick={nextStep}
-                disabled={!canProceed || saving}
-                className="flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium $1text-slate-900 hover:bg-emerald-500 disabled:opacity-40 transition-colors"
+                onClick={handleBack}
+                disabled={step === 0}
+                className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-slate-500 hover:text-slate-900 disabled:opacity-30 transition-colors"
               >
-                Continue
-                <ArrowRight className="h-4 w-4" />
+                <ArrowLeft className="h-4 w-4" />
+                Back
               </button>
-            ) : null}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Steps ───
-
-function StepIntent({ form, setForm }: { form: FormState; setForm: React.Dispatch<React.SetStateAction<FormState>> }) {
-  return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-semibold $1text-slate-900">What kind of video are you thinking about?</h2>
-        <p className="mt-1 text-sm text-slate-400">We&apos;ll help shape it into a clear production brief.</p>
-      </div>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-        {VIDEO_TYPES.map((vt) => (
-          <button
-            key={vt.id}
-            onClick={() => setForm((f) => ({ ...f, videoType: vt.id }))}
-            className={cn(
-              "flex flex-col items-center gap-2 rounded-xl border px-3 py-4 text-center transition-all",
-              form.videoType === vt.id
-                ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-400"
-                : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700 hover:text-zinc-200"
-            )}
-          >
-            <vt.icon className="h-5 w-5" />
-            <span className="text-xs font-medium">{vt.label}</span>
-          </button>
-        ))}
-      </div>
-      <div>
-        <label className="mb-2 block text-sm font-medium text-zinc-300">Describe your project in a sentence or two</label>
-        <textarea
-          value={form.description}
-          onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-          rows={3}
-          placeholder="We need a video that..."
-          className="w-full rounded-xl border border-zinc-800 bg-slate-200/60 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">What prompted this project?</label>
-          <input
-            value={form.whyNow}
-            onChange={(e) => setForm((f) => ({ ...f, whyNow: e.target.value }))}
-            placeholder="New product launch, leadership change, etc."
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">What problem should this solve?</label>
-          <input
-            value={form.businessProblem}
-            onChange={(e) => setForm((f) => ({ ...f, businessProblem: e.target.value }))}
-            placeholder="Customers don't understand our new service..."
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function StepContact({ form, setForm }: { form: FormState; setForm: React.Dispatch<React.SetStateAction<FormState>> }) {
-  return (
-    <div className="space-y-5">
-      <div>
-        <h2 className="text-2xl font-semibold $1text-slate-900">Who should we send the brief to?</h2>
-        <p className="mt-1 text-sm text-slate-400">We&apos;ll send a summary once your project is shaped.</p>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">First name *</label>
-          <input
-            value={form.firstName}
-            onChange={(e) => setForm((f) => ({ ...f, firstName: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Last name</label>
-          <input
-            value={form.lastName}
-            onChange={(e) => setForm((f) => ({ ...f, lastName: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Company *</label>
-          <input
-            value={form.company}
-            onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Role / Title</label>
-          <input
-            value={form.role}
-            onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Email *</label>
-          <input
-            type="email"
-            value={form.email}
-            onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Phone</label>
-          <input
-            type="tel"
-            value={form.phone}
-            onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function StepBusiness({ form, setForm }: { form: FormState; setForm: React.Dispatch<React.SetStateAction<FormState>> }) {
-  return (
-    <div className="space-y-5">
-      <div>
-        <h2 className="text-2xl font-semibold $1text-slate-900">What would make this a win?</h2>
-        <p className="mt-1 text-sm text-slate-400">Start with the business goal. What needs to change after this video exists?</p>
-      </div>
-      <div>
-        <label className="mb-1.5 block text-xs font-medium text-slate-400">Business problem</label>
-        <textarea
-          value={form.businessProblem}
-          onChange={(e) => setForm((f) => ({ ...f, businessProblem: e.target.value }))}
-          rows={3}
-          placeholder="We need stakeholders to approve the new initiative..."
-          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-      <div>
-        <label className="mb-1.5 block text-xs font-medium text-slate-400">Desired outcome</label>
-        <textarea
-          value={form.desiredOutcome}
-          onChange={(e) => setForm((f) => ({ ...f, desiredOutcome: e.target.value }))}
-          rows={3}
-          placeholder="After watching, the audience should understand X and feel Y..."
-          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-    </div>
-  );
-}
-
-function StepAudience({ form, setForm }: { form: FormState; setForm: React.Dispatch<React.SetStateAction<FormState>> }) {
-  return (
-    <div className="space-y-5">
-      <div>
-        <h2 className="text-2xl font-semibold $1text-slate-900">Who needs to see this?</h2>
-        <p className="mt-1 text-sm text-slate-400">Who needs to understand, believe, or act on this message?</p>
-      </div>
-      <div>
-        <label className="mb-1.5 block text-xs font-medium text-slate-400">Primary audience</label>
-        <input
-          value={form.primaryAudience}
-          onChange={(e) => setForm((f) => ({ ...f, primaryAudience: e.target.value }))}
-          placeholder="Senior executives, field technicians, new hires..."
-          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Internal or external?</label>
-          <select
-            value={form.internalExternal}
-            onChange={(e) => setForm((f) => ({ ...f, internalExternal: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          >
-            <option value="">Select...</option>
-            <option value="internal">Internal only</option>
-            <option value="external">External / public</option>
-            <option value="both">Both</option>
-          </select>
-        </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Audience knowledge level</label>
-          <select
-            value={form.knowledgeLevel}
-            onChange={(e) => setForm((f) => ({ ...f, knowledgeLevel: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          >
-            <option value="">Select...</option>
-            <option value="expert">Expert — they know the subject</option>
-            <option value="familiar">Familiar — some background</option>
-            <option value="novice">Novice — needs explanation</option>
-            <option value="mixed">Mixed audience</option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <label className="mb-1.5 block text-xs font-medium text-slate-400">Core message</label>
-        <input
-          value={form.coreMessage}
-          onChange={(e) => setForm((f) => ({ ...f, coreMessage: e.target.value }))}
-          placeholder="The single most important thing they should remember..."
-          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-      <div>
-        <label className="mb-1.5 block text-xs font-medium text-slate-400">Desired response</label>
-        <input
-          value={form.desiredResponse}
-          onChange={(e) => setForm((f) => ({ ...f, desiredResponse: e.target.value }))}
-          placeholder="Feel informed, take action, approve budget, share internally..."
-          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-    </div>
-  );
-}
-
-function StepDeliverables({ form, setForm }: { form: FormState; setForm: React.Dispatch<React.SetStateAction<FormState>> }) {
-  const toggles = [
-    { key: "cutdowns" as const, label: "Platform cutdowns" },
-    { key: "socialVersions" as const, label: "Social versions" },
-    { key: "captions" as const, label: "Captions / subtitles" },
-    { key: "motionGraphics" as const, label: "Motion graphics" },
-    { key: "animation" as const, label: "Animation" },
-    { key: "voiceover" as const, label: "Professional voiceover" },
-    { key: "interviews" as const, label: "On-camera interviews" },
-    { key: "bRoll" as const, label: "B-roll footage" },
-    { key: "photography" as const, label: "Photography" },
-  ];
-
-  return (
-    <div className="space-y-5">
-      <div>
-        <h2 className="text-2xl font-semibold $1text-slate-900">What do you need produced?</h2>
-        <p className="mt-1 text-sm text-slate-400">One strong video, or a package of related assets?</p>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Number of videos</label>
-          <input
-            type="number"
-            min={1}
-            value={form.numberOfVideos}
-            onChange={(e) => setForm((f) => ({ ...f, numberOfVideos: Math.max(1, parseInt(e.target.value) || 1) }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Main video length</label>
-          <select
-            value={form.mainVideoLength}
-            onChange={(e) => setForm((f) => ({ ...f, mainVideoLength: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          >
-            <option value="">Select...</option>
-            <option value="30s">~30 seconds</option>
-            <option value="60s">~1 minute</option>
-            <option value="2min">~2 minutes</option>
-            <option value="3_5min">3–5 minutes</option>
-            <option value="5_10min">5–10 minutes</option>
-            <option value="10min_plus">10+ minutes</option>
-            <option value="variable">Variable / not sure</option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <label className="mb-2 block text-xs font-medium text-slate-400">Deliverables</label>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-          {toggles.map((t) => (
-            <button
-              key={t.key}
-              onClick={() => setForm((f) => ({ ...f, [t.key]: !f[t.key] } as FormState))}
-              className={cn(
-                "flex items-center gap-2 rounded-lg border px-3 py-2.5 text-left text-xs transition-all",
-                form[t.key]
-                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                  : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700"
-              )}
-            >
-              <div className={cn("h-3.5 w-3.5 rounded-sm border", form[t.key] ? "border-emerald-500 bg-emerald-500" : "border-zinc-600")}>
-                {form[t.key] && <CheckCircle2 className="h-3.5 w-3.5 text-black" />}
-              </div>
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function StepProduction({ form, setForm }: { form: FormState; setForm: React.Dispatch<React.SetStateAction<FormState>> }) {
-  return (
-    <div className="space-y-5">
-      <div>
-        <h2 className="text-2xl font-semibold $1text-slate-900">Production reality</h2>
-        <p className="mt-1 text-sm text-slate-400">Where, when, and what resources are involved?</p>
-      </div>
-      <div>
-        <label className="mb-1.5 block text-xs font-medium text-slate-400">Filming location(s)</label>
-        <input
-          value={form.locations}
-          onChange={(e) => setForm((f) => ({ ...f, locations: e.target.value }))}
-          placeholder="Houston office, client site, studio..."
-          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Filming days</label>
-          <input
-            type="number"
-            min={0}
-            value={form.filmingDays}
-            onChange={(e) => setForm((f) => ({ ...f, filmingDays: Math.max(0, parseInt(e.target.value) || 0) }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Interview subjects</label>
-          <input
-            type="number"
-            min={0}
-            value={form.interviewSubjects}
-            onChange={(e) => setForm((f) => ({ ...f, interviewSubjects: Math.max(0, parseInt(e.target.value) || 0) }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-400">Deadline</label>
-          <input
-            type="date"
-            value={form.deadline}
-            onChange={(e) => setForm((f) => ({ ...f, deadline: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
-          />
-        </div>
-      </div>
-      <div className="grid gap-3 sm:grid-cols-3">
-        {[
-          { key: "travelRequired" as const, label: "Travel required", icon: MapPin },
-          { key: "facilityAccess" as const, label: "Facility access needed", icon: Camera },
-          { key: "safetyRequirements" as const, label: "Safety requirements", icon: CheckCircle2 },
-        ].map((item) => (
-          <button
-            key={item.key}
-            onClick={() => setForm((f) => ({ ...f, [item.key]: !f[item.key] } as FormState))}
-            className={cn(
-              "flex items-center gap-2 rounded-lg border px-3 py-2.5 text-left text-xs transition-all",
-              form[item.key]
-                ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700"
-            )}
-          >
-            <item.icon className="h-3.5 w-3.5" />
-            {item.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function StepCreative({ form, setForm }: { form: FormState; setForm: React.Dispatch<React.SetStateAction<FormState>> }) {
-  return (
-    <div className="space-y-5">
-      <div>
-        <h2 className="text-2xl font-semibold $1text-slate-900">Creative direction</h2>
-        <p className="mt-1 text-sm text-slate-400">What should this feel like?</p>
-      </div>
-      <div>
-        <label className="mb-2 block text-xs font-medium text-slate-400">Tone</label>
-        <div className="flex flex-wrap gap-2">
-          {TONE_OPTIONS.map((t) => (
-            <button
-              key={t}
-              onClick={() => setForm((f) => ({ ...f, tone: t }))}
-              className={cn(
-                "rounded-full border px-3 py-1.5 text-xs transition-all",
-                form.tone === t
-                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                  : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700"
-              )}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div>
-        <label className="mb-2 block text-xs font-medium text-slate-400">Visual style</label>
-        <div className="flex flex-wrap gap-2">
-          {STYLE_OPTIONS.map((s) => (
-            <button
-              key={s}
-              onClick={() => setForm((f) => ({ ...f, visualStyle: s }))}
-              className={cn(
-                "rounded-full border px-3 py-1.5 text-xs transition-all",
-                form.visualStyle === s
-                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                  : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700"
-              )}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div>
-        <label className="mb-1.5 block text-xs font-medium text-slate-400">Reference videos (URLs or descriptions)</label>
-        <textarea
-          value={form.referenceVideos}
-          onChange={(e) => setForm((f) => ({ ...f, referenceVideos: e.target.value }))}
-          rows={2}
-          placeholder="Links or descriptions of videos that feel close to what you want..."
-          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-      <div>
-        <label className="mb-1.5 block text-xs font-medium text-slate-400">Words or topics to avoid</label>
-        <input
-          value={form.wordsToAvoid}
-          onChange={(e) => setForm((f) => ({ ...f, wordsToAvoid: e.target.value }))}
-          placeholder="Jargon, competitor names, sensitive terms..."
-          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-    </div>
-  );
-}
-
-function StepBudget({ form, setForm }: { form: FormState; setForm: React.Dispatch<React.SetStateAction<FormState>> }) {
-  return (
-    <div className="space-y-5">
-      <div>
-        <h2 className="text-2xl font-semibold $1text-slate-900">Budget & approvals</h2>
-        <p className="mt-1 text-sm text-slate-400">Help us understand the buying reality.</p>
-      </div>
-      <div>
-        <label className="mb-2 block text-xs font-medium text-slate-400">Do you have a budget range in mind?</label>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {BUDGET_OPTIONS.map((opt) => (
-            <button
-              key={opt.value}
-              onClick={() => setForm((f) => ({ ...f, budgetRange: opt.value }))}
-              className={cn(
-                "rounded-lg border px-3 py-2.5 text-left text-xs transition-all",
-                form.budgetRange === opt.value
-                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                  : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700"
-              )}
-            >
-              {opt.label}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div>
-        <label className="mb-1.5 block text-xs font-medium text-slate-400">Who is the decision maker?</label>
-        <input
-          value={form.decisionMaker}
-          onChange={(e) => setForm((f) => ({ ...f, decisionMaker: e.target.value }))}
-          placeholder="CEO, VP of Marketing, committee..."
-          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-      <div>
-        <label className="mb-1.5 block text-xs font-medium text-slate-400">Approval process</label>
-        <textarea
-          value={form.approvalProcess}
-          onChange={(e) => setForm((f) => ({ ...f, approvalProcess: e.target.value }))}
-          rows={2}
-          placeholder="Single approver, legal review, brand committee..."
-          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-    </div>
-  );
-}
-
-function StepReview({ form, onSubmit, saving }: { form: FormState; onSubmit: () => void; saving: boolean }) {
-  return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-semibold $1text-slate-900">Review your brief</h2>
-        <p className="mt-1 text-sm text-slate-400">Submit this for internal review and we&apos;ll shape a proposal.</p>
-      </div>
-      <div className="rounded-xl border border-zinc-800 bg-slate-200/40 p-5 space-y-4">
-        <ReviewRow label="Project" value={`${VIDEO_TYPES.find((v) => v.id === form.videoType)?.label ?? form.videoType} — ${form.description.slice(0, 80)}${form.description.length > 80 ? "..." : ""}`} />
-        <ReviewRow label="Contact" value={`${form.firstName} ${form.lastName} — ${form.company} — ${form.email}`} />
-        <ReviewRow label="Audience" value={`${form.primaryAudience} (${form.internalExternal})`} />
-        <ReviewRow label="Deliverables" value={`${form.numberOfVideos} video(s), ${form.mainVideoLength}`} />
-        <ReviewRow label="Production" value={`${form.filmingDays} day(s), ${form.locations}`} />
-        <ReviewRow label="Creative" value={`${form.tone} / ${form.visualStyle}`} />
-        <ReviewRow label="Budget" value={BUDGET_OPTIONS.find((b) => b.value === form.budgetRange)?.label ?? form.budgetRange} />
-      </div>
-      <button
-        onClick={onSubmit}
-        disabled={saving}
-        className="w-full flex items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3 text-sm font-semibold $1text-slate-900 hover:bg-emerald-500 disabled:opacity-50 transition-colors"
-      >
-        {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-        {saving ? "Processing..." : "Submit Brief for Review"}
-      </button>
-    </div>
-  );
-}
-
-function ReviewRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
-      <span className="text-[10px] font-medium uppercase tracking-wider text-slate-500 w-24 shrink-0">{label}</span>
-      <span className="text-sm text-zinc-200">{value || "—"}</span>
-    </div>
-  );
-}
-
-function SubmittedView({ brief }: { brief: any }) {
-  const estimate = brief.estimate;
-  const ai = brief.aiEnrichment;
-
-  return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col items-center justify-center p-6">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-lg"
-      >
-        <div className="text-center mb-8">
-          <div className="mx-auto h-12 w-12 rounded-full bg-emerald-500/10 flex items-center justify-center mb-4">
-            <CheckCircle2 className="h-6 w-6 text-emerald-500" />
-          </div>
-          <h1 className="text-2xl font-semibold $1text-slate-900">Brief submitted</h1>
-          <p className="mt-2 text-sm text-slate-400">
-            We&apos;ve shaped your project into a working production brief. Our team will review and follow up within one business day.
-          </p>
-        </div>
-
-        {estimate && (
-          <div className="rounded-xl border border-zinc-800 bg-slate-200/40 p-5 mb-4">
-            <h3 className="text-xs font-medium uppercase tracking-wider text-slate-500 mb-3">Estimated Investment</h3>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Essential</span>
-                <span className="text-zinc-200">{formatCents(estimate.minimalCents)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Recommended</span>
-                <span className="text-emerald-400 font-medium">{formatCents(estimate.recommendedCents)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Premium</span>
-                <span className="text-zinc-200">{formatCents(estimate.premiumCents)}</span>
-              </div>
+              <button
+                onClick={handleNextStep}
+                disabled={!canProceed || isSubmitting}
+                className="flex items-center gap-2 rounded-lg bg-brand-accent-glow px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-40 transition-colors"
+              >
+                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                {step === 8 ? "Shape My Brief" : "Continue"}
+                <ChevronRight className="h-4 w-4" />
+              </button>
             </div>
-            <p className="mt-3 text-[10px] text-slate-500">{estimate.explanation} Confidence: {estimate.confidence}.</p>
-          </div>
-        )}
-
-        {ai && (
-          <div className="rounded-xl border border-zinc-800 bg-slate-200/40 p-5">
-            <h3 className="text-xs font-medium uppercase tracking-wider text-slate-500 mb-2">What happens next</h3>
-            <ul className="space-y-1.5 text-sm text-zinc-300">
-              <li className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 text-slate-500 mt-0.5 shrink-0" />
-                Internal review of your brief
-              </li>
-              <li className="flex items-start gap-2">
-                <Sparkles className="h-3.5 w-3.5 text-slate-500 mt-0.5 shrink-0" />
-                Proposal scoped to your needs
-              </li>
-              <li className="flex items-start gap-2">
-                <MessageSquare className="h-3.5 w-3.5 text-slate-500 mt-0.5 shrink-0" />
-                Strategy call to align on scope
-              </li>
-            </ul>
-          </div>
-        )}
-      </motion.div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
