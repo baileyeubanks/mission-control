@@ -157,7 +157,7 @@ export function BriefReviewList() {
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium text-slate-900">{brief.contact?.company || "Unknown company"}</span>
                       <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium uppercase", statusBadge(brief.status))}>
-                        {brief.status.replace(/_/g, " ")}
+                        {brief.status?.replace(/_/g, " ") || "draft"}
                       </span>
                       {brief.aiEnrichment && (
                         <span className="flex items-center gap-1 text-[10px] text-purple-700">
@@ -273,7 +273,7 @@ export function BriefReviewDetail() {
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-semibold text-slate-900">{brief.contact?.company || "Unknown"}</h1>
               <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium uppercase", statusBadge(brief.status))}>
-                {brief.status.replace(/_/g, " ")}
+                {brief.status?.replace(/_/g, " ") || "draft"}
               </span>
             </div>
             <p className="mt-1 text-sm text-slate-500">
@@ -298,8 +298,8 @@ export function BriefReviewDetail() {
                 </h3>
                 <div className="space-y-3 text-sm">
                   <div className="grid gap-2 sm:grid-cols-2">
-                    <InfoRow label="Project Type" value={ai.projectType.replace(/_/g, " ")} />
-                    <InfoRow label="Business Function" value={ai.businessFunction.replace(/_/g, " ")} />
+                    <InfoRow label="Project Type" value={ai.projectType?.replace(/_/g, " ") || "—"} />
+                    <InfoRow label="Business Function" value={ai.businessFunction?.replace(/_/g, " ") || "—"} />
                   </div>
                   <InfoRow label="Business Objective" value={ai.businessObjective} />
                   <InfoRow label="Audience" value={ai.audience} />

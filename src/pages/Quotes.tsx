@@ -159,7 +159,7 @@ export function Quotes() {
   async function fetchQuotes() {
     setLoading(true);
     try {
-      const res = await authFetch("/api/root/quotes?account=content_coop");
+      const res = await authFetch("/api/root/quotes?account=content-co-op");
       const json = await res.json();
       if (json.ok && Array.isArray(json.data)) {
         setQuotes(json.data.map(mapRootQuoteToUI));
@@ -243,7 +243,7 @@ export function Quotes() {
         method: "POST",
         body: JSON.stringify({
           kind: form.kind,
-          companyAccount: "content_coop",
+          companyAccount: "content-co-op",
           client: {
             name: form.clientName,
             email: form.clientEmail || null,

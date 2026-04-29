@@ -197,20 +197,21 @@ let briefsHydrated = false;
 
 async function hydrateBriefsFromSupabase(storeDir?: string): Promise<void> {
   if (briefsHydrated) return;
-  const res = await sbSelect<{ data: unknown }>("creative_briefs");
-  if (res.ok && res.data && res.data.length > 0) {
-    const state: BriefState = {
-      sessions: res.data.map((r) => r.data) as CreativeBriefSession[],
-    };
-    writeState(state, storeDir);
+  const file = briefFile(storeDir);
+  const hasLocalData = fs.existsSync(file) && JSON.parse(fs.readFileSync(file, "utf-8")).sessions?.length > 0;
+  if (!hasLocalData) {
+    const res = await sbSelect<{ data: unknown }>("creative_briefs");
+    if (res.ok && res.data && res.data.length > 0) {
+      const state: BriefState = {
+        sessions: res.data.map((r) => r.data) as CreativeBriefSession[],
+      };
+      writeState(state, storeDir);
+    }
   }
   briefsHydrated = true;
 }
 
 function readState(storeDir?: string): BriefState {
-  if (!briefsHydrated) {
-    hydrateBriefsFromSupabase(storeDir).catch(() => { /* silent */ });
-  }
   const file = briefFile(storeDir);
   if (!fs.existsSync(file)) return { sessions: [] };
   try {

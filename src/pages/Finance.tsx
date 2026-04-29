@@ -100,7 +100,7 @@ export function Finance() {
   async function fetchInvoices() {
     setLoading(true);
     try {
-      const res = await authFetch("/api/root/invoices?account=content_coop");
+      const res = await authFetch("/api/root/invoices?account=content-co-op");
       const json = await res.json();
       if (json.ok && Array.isArray(json.data)) {
         setInvoices(json.data.map(mapRootInvoiceToUI));
@@ -177,7 +177,7 @@ export function Finance() {
       const res = await authFetch("/api/root/invoices", {
         method: "POST",
         body: JSON.stringify({
-          companyAccount: "content_coop",
+          companyAccount: "content-co-op",
           client: {
             name: form.clientName,
             email: form.clientEmail || null,

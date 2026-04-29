@@ -873,16 +873,6 @@
       "companyAccount": "content-co-op"
     },
     {
-      "id": "event-1777077080330-gzwmrp",
-      "summary": "CCO-P-2026-001 converted to invoice.",
-      "entityId": "proposal-cco-local-001",
-      "createdAt": "2026-04-25T00:31:20.330Z",
-      "eventType": "proposal.converted_to_invoice",
-      "dataSource": "local_recovery_store",
-      "entityType": "proposal",
-      "companyAccount": "content-co-op"
-    },
-    {
       "id": "event-1777077080330-9f2vay",
       "summary": "INV-2026-002 created from CCO-P-2026-001.",
       "entityId": "invoice-1777077080329-hb8vlr",
@@ -890,6 +880,16 @@
       "eventType": "invoice.created_from_quote",
       "dataSource": "local_recovery_store",
       "entityType": "invoice",
+      "companyAccount": "content-co-op"
+    },
+    {
+      "id": "event-1777077080330-gzwmrp",
+      "summary": "CCO-P-2026-001 converted to invoice.",
+      "entityId": "proposal-cco-local-001",
+      "createdAt": "2026-04-25T00:31:20.330Z",
+      "eventType": "proposal.converted_to_invoice",
+      "dataSource": "local_recovery_store",
+      "entityType": "proposal",
       "companyAccount": "content-co-op"
     },
     {
@@ -943,16 +943,6 @@
       "companyAccount": "astro-cleaning-services"
     },
     {
-      "id": "event-1777071964601-l7mgfc",
-      "summary": "ACS-Q-2026-002 converted to invoice.",
-      "entityId": "quote-1777071928741-e08qy3",
-      "createdAt": "2026-04-24T23:06:04.601Z",
-      "eventType": "quote.converted_to_invoice",
-      "dataSource": "local_recovery_store",
-      "entityType": "quote",
-      "companyAccount": "astro-cleaning-services"
-    },
-    {
       "id": "event-1777071964601-wwwofg",
       "summary": "INV-2026-001 created from ACS-Q-2026-002.",
       "entityId": "invoice-1777071964600-1qv5yy",
@@ -960,6 +950,16 @@
       "eventType": "invoice.created_from_quote",
       "dataSource": "local_recovery_store",
       "entityType": "invoice",
+      "companyAccount": "astro-cleaning-services"
+    },
+    {
+      "id": "event-1777071964601-l7mgfc",
+      "summary": "ACS-Q-2026-002 converted to invoice.",
+      "entityId": "quote-1777071928741-e08qy3",
+      "createdAt": "2026-04-24T23:06:04.601Z",
+      "eventType": "quote.converted_to_invoice",
+      "dataSource": "local_recovery_store",
+      "entityType": "quote",
       "companyAccount": "astro-cleaning-services"
     },
     {
@@ -1003,16 +1003,6 @@
       "companyAccount": "astro-cleaning-services"
     },
     {
-      "id": "event-1777071857094-yfvp7m",
-      "summary": "CCO proposal seed is available.",
-      "entityId": "proposal-cco-local-001",
-      "createdAt": "2026-04-24T23:04:17.094Z",
-      "eventType": "proposal.created",
-      "dataSource": "local_recovery_store",
-      "entityType": "proposal",
-      "companyAccount": "content-co-op"
-    },
-    {
       "id": "event-1777071857094-orfdxl",
       "summary": "ACS quote seed is available.",
       "entityId": "quote-acs-local-001",
@@ -1021,6 +1011,16 @@
       "dataSource": "local_recovery_store",
       "entityType": "quote",
       "companyAccount": "astro-cleaning-services"
+    },
+    {
+      "id": "event-1777071857094-yfvp7m",
+      "summary": "CCO proposal seed is available.",
+      "entityId": "proposal-cco-local-001",
+      "createdAt": "2026-04-24T23:04:17.094Z",
+      "eventType": "proposal.created",
+      "dataSource": "local_recovery_store",
+      "entityType": "proposal",
+      "companyAccount": "content-co-op"
     }
   ]
 }
