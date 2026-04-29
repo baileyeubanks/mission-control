@@ -1389,7 +1389,13 @@ export async function startHttpServer(port = Number(process.env.PORT || 4300)): 
 
   await new Promise<void>((resolve) => {
     app.listen(port, "0.0.0.0", () => {
-      console.log(`Server running on http://localhost:${port}`);
+      console.log(`\n🚀 Server running on http://localhost:${port}`);
+      console.log(`   Environment: ${process.env.NODE_ENV || "development"}`);
+      console.log(`   Supabase:    ${hasEnvKey("SUPABASE_URL") ? "✅" : "❌"}`);
+      console.log(`   Stripe:      ${hasEnvKey("STRIPE_SECRET_KEY") ? "✅" : "❌"}`);
+      console.log(`   Gemini:      ${hasEnvKey("GEMINI_API_KEY") ? "✅" : "❌"}`);
+      console.log(`   Twilio:      ${hasEnvKey("TWILIO_ACCOUNT_SID") ? "✅" : "❌"}`);
+      console.log("");
       resolve();
     });
   });
