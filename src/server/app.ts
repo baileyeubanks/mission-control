@@ -1044,6 +1044,81 @@ export function createApp(options: AppOptions = {}): Express {
     }
   });
 
+  app.post("/api/creative-briefs/:id/generate-quote", authMiddleware, (req: AuthenticatedRequest, res) => {
+    try {
+      const session = getBriefSession(req.params.id, recoveryStoreDir);
+      if (!session) return res.status(404).json({ ok: false, error: { code: "NOT_FOUND", message: "Brief session not found." } });
+      if (session.relatedQuoteId) {
+        const existing = getRootQuote(session.relatedQuoteId, recoveryStoreDir);
+        if (existing) return res.json({ ok: true, data: existing, message: "Quote already exists for this brief." });
+      }
+
+      const contact = session.contact;
+      const intent = session.phases.intent;
+      const deliverables = session.phases.deliverables;
+      const production = session.phases.production;
+      const budget = session.phases.budget;
+      const estimate = session.estimate;
+      const options = session.proposalOptions;
+
+      const lineItems = options.length > 0
+        ? options.map((opt) => ({
+            name: opt.label,
+            description: opt.description,
+            quantity: 1,
+            unitPriceCents: opt.totalCents,
+            taxable: false,
+          }))
+        : [{
+            name: intent?.videoType || "Video Production",
+            description: intent?.description || "Production services based on creative brief.",
+            quantity: deliverables?.numberOfVideos || 1,
+            unitPriceCents: estimate?.recommendedCents || 100000,
+            taxable: false,
+          }];
+
+      const quote = createRootQuote({
+        kind: "proposal",
+        companyAccount: "content-co-op",
+        client: {
+          name: contact ? `${contact.firstName} ${contact.lastName || ""}`.trim() : "Unknown",
+          email: contact?.email || null,
+          phone: contact?.phone || null,
+          company: contact?.company || null,
+          address: null,
+        },
+        title: intent?.description || "Video Production Proposal",
+        scopeSummary: intent?.description || "",
+        servicePeriod: production ? `${production.filmingDays} filming days` : null,
+        projectTimeline: production?.deadline || null,
+        deliverables: options.length > 0
+          ? options[0].deliverables
+          : deliverables
+            ? [
+                deliverables.mainVideoLength,
+                ...(deliverables.cutdowns ? ["Cutdowns"] : []),
+                ...(deliverables.socialVersions ? ["Social versions"] : []),
+              ].filter(Boolean)
+            : [],
+        lineItems,
+        depositCents: Math.round((estimate?.recommendedCents || lineItems.reduce((s, i) => s + i.unitPriceCents, 0)) * 0.5),
+        taxCents: 0,
+        discountCents: 0,
+        terms: "50% deposit to start. Balance due before final deliverable release.",
+        expirationDate: null,
+        source: "creative_brief",
+        sourceEntityId: session.id,
+      }, recoveryStoreDir);
+
+      setBriefRelatedQuote(session.id, quote.id, recoveryStoreDir);
+
+      return res.status(201).json({ ok: true, data: quote });
+    } catch (error) {
+      console.error("Generate quote from brief failed:", error);
+      return res.status(400).json({ ok: false, error: { message: String(error) } });
+    }
+  });
+
   app.get("/api/mission-control/handoffs", (req, res) => {
     const account = typeof req.query.account === "string" ? req.query.account : null;
     const handoffs = listMissionHandoffs(recoveryStoreDir).filter((handoff) => !account || handoff.company_account === account);

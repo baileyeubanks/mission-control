@@ -197,6 +197,7 @@ export function BriefReviewDetail() {
   const [loading, setLoading] = useState(true);
   const [noteText, setNoteText] = useState("");
   const [converting, setConverting] = useState(false);
+  const [generatedQuote, setGeneratedQuote] = useState<{ id: string } | null>(null);
 
   useEffect(() => {
     if (id) fetchBrief();
@@ -227,45 +228,12 @@ export function BriefReviewDetail() {
     if (!id) return;
     setConverting(true);
     try {
-      // 1. Mark brief as proposal-ready
-      await authFetch(`/api/creative-briefs/${id}/convert-to-proposal`, { method: "POST" });
-      // 2. Create a proposal in root billing
-      const briefData = brief;
-      if (!briefData) return;
-      const proposalRes = await fetch("/api/root/quotes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          companyAccount: "content-co-op",
-          kind: "proposal",
-          client: {
-            name: `${briefData.contact?.firstName} ${briefData.contact?.lastName || ""}`.trim(),
-            email: briefData.contact?.email,
-            phone: briefData.contact?.phone,
-            company: briefData.contact?.company,
-          },
-          title: briefData.phases.intent?.description?.slice(0, 60) || "Creative Proposal",
-          scopeSummary: briefData.phases.intent?.description || "",
-          lineItems: briefData.proposalOptions?.[1]?.deliverables.map((d: string, i: number) => ({
-            name: d,
-            description: "",
-            category: "Production",
-            quantity: 1,
-            unitPriceCents: Math.round((briefData.proposalOptions?.[1]?.totalCents || 0) / (briefData.proposalOptions?.[1]?.deliverables.length || 1)),
-          })) || [{ name: "Creative Production", description: "", category: "Production", quantity: 1, unitPriceCents: briefData.estimate?.recommendedCents ?? 0 }],
-          terms: "Payment terms: 50% deposit to begin production. Net 15 on final delivery.",
-          source: "creative_brief",
-          sourceEntityId: id,
-        }),
-      });
-      const proposalJson = await proposalRes.json();
-      if (proposalJson.ok && proposalJson.data?.id) {
-        await authFetch(`/api/creative-briefs/${id}/link-quote`, {
-          method: "POST",
-          body: JSON.stringify({ quoteId: proposalJson.data.id }),
-        });
+      const res = await authFetch(`/api/creative-briefs/${id}/generate-quote`, { method: "POST" });
+      const json = await res.json();
+      if (json.ok) {
+        setGeneratedQuote(json.data);
+        fetchBrief();
       }
-      fetchBrief();
     } finally {
       setConverting(false);
     }
