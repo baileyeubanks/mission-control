@@ -189,6 +189,14 @@ export function createApp(options: AppOptions = {}): Express {
     credentials: true,
   }));
 
+  // Request logging (production only)
+  if (process.env.NODE_ENV === "production") {
+    app.use((req, _res, next) => {
+      console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+      next();
+    });
+  }
+
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
 
