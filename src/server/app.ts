@@ -73,6 +73,7 @@ import { getSupabaseAdminFromEnv } from "./supabase-admin";
 import { authMiddleware, optionalAuthMiddleware, type AuthenticatedRequest } from "./auth-middleware";
 import { createStripeEmbeddedSession, constructStripeEvent } from "./stripe-service";
 import { createClientPortalToken, verifyClientPortalToken } from "./client-portal-store";
+import { renderQuoteEmail, renderInvoiceEmail, sendEmail } from "./email-service";
 import {
   createBriefSession,
   getBriefSession,
@@ -199,6 +200,89 @@ export function createApp(options: AppOptions = {}): Express {
     const result = verifyClientPortalToken(token, recoveryStoreDir);
     if (!result.valid) return res.status(401).json({ ok: false, error: result.error });
     return res.json({ ok: true, email: result.email });
+  });
+
+  app.post("/api/quotes/:id/send", authMiddleware, async (req: AuthenticatedRequest, res) => {
+    try {
+      const quote = getRootQuote(req.params.id, recoveryStoreDir);
+      if (!quote) return res.status(404).json({ ok: false, error: "Quote not found." });
+      if (!quote.client.email) return res.status(400).json({ ok: false, error: "Quote has no client email." });
+
+      const portal = createClientPortalToken(quote.client.email, recoveryStoreDir);
+      const portalUrl = `${req.protocol}://${req.get("host")}${portal.url}`;
+
+      const { subject, html, text } = renderQuoteEmail({
+        clientName: quote.client.name,
+        documentNumber: quote.documentNumber,
+        title: quote.title,
+        totalCents: quote.totalCents,
+        depositCents: quote.depositCents,
+        expiryDate: quote.expirationDate,
+        portalUrl,
+      });
+
+      const pdfResult = await getRootQuotePdf(quote.id, recoveryStoreDir);
+      const emailResult = await sendEmail({
+        to: quote.client.email,
+        subject,
+        html,
+        text,
+        attachments: [{ filename: `${quote.documentNumber}.pdf`, content: pdfResult.pdf }],
+      });
+
+      if (emailResult.ok) {
+        if (quote.status === "ready_to_send") {
+          markRootQuoteSent(quote.id, "Sent via email from Mission Control.", recoveryStoreDir);
+        }
+        return res.json({ ok: true, messageId: emailResult.messageId, provider: emailResult.provider });
+      } else {
+        return res.status(502).json({ ok: false, error: emailResult.error, preview: emailResult.preview });
+      }
+    } catch (error) {
+      console.error("Quote send failed:", error);
+      return res.status(500).json({ ok: false, error: "Failed to send quote email." });
+    }
+  });
+
+  app.post("/api/invoices/:id/send", authMiddleware, async (req: AuthenticatedRequest, res) => {
+    try {
+      const invoice = getRootInvoice(req.params.id, recoveryStoreDir);
+      if (!invoice) return res.status(404).json({ ok: false, error: "Invoice not found." });
+      if (!invoice.client.email) return res.status(400).json({ ok: false, error: "Invoice has no client email." });
+
+      const portal = createClientPortalToken(invoice.client.email, recoveryStoreDir);
+      const portalUrl = `${req.protocol}://${req.get("host")}${portal.url}`;
+
+      const balanceDueCents = Math.max(invoice.totalCents - invoice.amountPaidCents, 0);
+      const { subject, html, text } = renderInvoiceEmail({
+        clientName: invoice.client.name,
+        invoiceNumber: invoice.invoiceNumber,
+        title: invoice.title,
+        totalCents: invoice.totalCents,
+        amountPaidCents: invoice.amountPaidCents,
+        balanceDueCents,
+        dueDate: invoice.dueDate,
+        portalUrl,
+      });
+
+      const pdfResult = await getRootInvoicePdf(invoice.id, recoveryStoreDir);
+      const emailResult = await sendEmail({
+        to: invoice.client.email,
+        subject,
+        html,
+        text,
+        attachments: [{ filename: `${invoice.invoiceNumber}.pdf`, content: pdfResult.pdf }],
+      });
+
+      if (emailResult.ok) {
+        return res.json({ ok: true, messageId: emailResult.messageId, provider: emailResult.provider });
+      } else {
+        return res.status(502).json({ ok: false, error: emailResult.error, preview: emailResult.preview });
+      }
+    } catch (error) {
+      console.error("Invoice send failed:", error);
+      return res.status(500).json({ ok: false, error: "Failed to send invoice email." });
+    }
   });
 
   app.use((_req, res, next) => {

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Plus, Search, Filter, Download, Database, TrendingUp, AlertCircle, CheckCircle2, X, Eye, FileText, CreditCard, RotateCcw, Trash2, Loader2, ChevronRight, Mail, Phone, Building2, MapPin, CalendarDays } from "lucide-react";
+import { Plus, Search, Filter, Download, Database, TrendingUp, AlertCircle, CheckCircle2, X, Eye, FileText, CreditCard, RotateCcw, Trash2, Loader2, ChevronRight, Mail, Phone, Building2, MapPin, CalendarDays, Send } from "lucide-react";
 import { authFetch } from "@/lib/auth-fetch";
 import { useAuth } from "@/components/AuthProvider";
 
@@ -622,6 +622,10 @@ export function Finance() {
                 )}
                 {detailInvoice.issueStatus === "issued" && detailInvoice.paymentStatus !== "paid" && (
                   <>
+                    <Button size="sm" className="text-xs" onClick={() => runAction(detailInvoice.id, "send")} disabled={!!actionLoading}>
+                      <Send className="mr-1.5 h-3.5 w-3.5" />
+                      {actionLoading === "send" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : "Send to Client"}
+                    </Button>
                     <Button size="sm" variant="outline" className="text-xs" onClick={() => runAction(detailInvoice.id, "payment-link")} disabled={!!actionLoading}>
                       <CreditCard className="mr-1.5 h-3.5 w-3.5" />
                       {actionLoading === "payment-link" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : "Stripe Link"}

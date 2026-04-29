@@ -898,9 +898,9 @@ export function Quotes() {
                 )}
                 {detailQuote.rawStatus === "ready_to_send" && (
                   <>
-                    <Button size="sm" className="text-xs" onClick={() => runAction(detailQuote.id, "mark-sent")} disabled={!!actionLoading}>
+                    <Button size="sm" className="text-xs" onClick={() => runAction(detailQuote.id, "send")} disabled={!!actionLoading}>
                       <Send className="mr-1.5 h-3.5 w-3.5" />
-                      {actionLoading === "mark-sent" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : "Mark Sent"}
+                      {actionLoading === "send" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : "Send to Client"}
                     </Button>
                     <Button size="sm" variant="outline" className="text-xs" onClick={() => runAction(detailQuote.id, "convert-to-invoice")} disabled={!!actionLoading}>
                       <CreditCard className="mr-1.5 h-3.5 w-3.5" />
