@@ -104,13 +104,13 @@ export function Sidebar({ mobileOpen = false, onNavigate }: SidebarProps) {
   return (
     <div
       className={cn(
-        "flex h-full flex-col glass border-r border-white/5 transition-transform duration-300 ease-in-out",
+        "flex h-full flex-col glass border-r border-slate-200 transition-transform duration-300 ease-in-out",
         "fixed left-0 top-7 z-50 w-64 md:static md:w-16 md:translate-x-0 lg:w-64",
         mobileOpen ? "translate-x-0" : "-translate-x-full"
       )}
     >
       {/* Brand */}
-      <div className="flex h-20 items-center justify-center border-b border-white/5 px-3 md:justify-start md:px-6">
+      <div className="flex h-20 items-center justify-center border-b border-slate-200 px-3 md:justify-start md:px-6">
         <div className="flex items-center gap-3">
           <div className="relative h-10 w-10 flex items-center justify-center">
             <div className="absolute inset-0 rounded-full bg-brand-accent-glow/20 blur-md animate-pulse" />
@@ -118,7 +118,7 @@ export function Sidebar({ mobileOpen = false, onNavigate }: SidebarProps) {
           </div>
           <div className="hidden flex-col md:flex">
             <span className="font-display text-[1.4rem] leading-none tracking-[0.06em]">MISSION CONTROL</span>
-            <span className="text-[9px] font-mono text-white/30 uppercase tracking-[0.4em] mt-0.5">ACS + CCO</span>
+            <span className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.4em] mt-0.5">ACS + CCO</span>
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@ export function Sidebar({ mobileOpen = false, onNavigate }: SidebarProps) {
                       "flex items-center gap-3 rounded-md px-3 py-2 text-xs font-medium transition-all duration-200 md:justify-start",
                       isActive
                         ? "bg-brand-accent-glow/10 text-brand-accent-glow border-l-2 border-brand-accent-glow"
-                        : "text-white/40 hover:bg-white/[0.04] hover:text-white/70"
+                        : "text-slate-500 hover:bg-slate-100 hover:text-slate-700"
                     )
                   }
                   title={item.name}
@@ -155,7 +155,7 @@ export function Sidebar({ mobileOpen = false, onNavigate }: SidebarProps) {
       </div>
 
       {/* Session Status */}
-      <div className="border-t border-white/5 bg-black/20 p-2 md:p-4">
+      <div className="border-t border-slate-200 bg-slate-100 p-2 md:p-4">
         <div className={cn(
           "flex items-center justify-center rounded-md border px-2 py-2 transition-colors md:justify-between md:px-3",
           user

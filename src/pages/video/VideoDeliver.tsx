@@ -143,30 +143,30 @@ export function VideoDeliver() {
             <Rocket className="h-5 w-5 text-brand-accent-glow" />
             <h1 className="text-2xl font-display tracking-[0.06em]">Co-Deliver</h1>
           </div>
-          <p className="mt-1 text-xs text-white/40">Multi-platform publishing · Scheduling · Analytics rollup</p>
+          <p className="mt-1 text-xs text-slate-500">Multi-platform publishing · Scheduling · Analytics rollup</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Button
             variant="outline"
             size="sm"
             onClick={() => window.open("http://127.0.0.1:4304", "_blank")}
-            className="font-mono text-[10px] uppercase tracking-widest border-white/10 hover:bg-white/[0.04]"
+            className="font-mono text-[10px] uppercase tracking-widest border-slate-200 hover:bg-slate-100"
           >
             <ExternalLink className="mr-2 h-3.5 w-3.5" />
             Open Co-Deliver
           </Button>
-          <Button variant="ghost" size="icon" onClick={() => void refresh()} title="Refresh" className="hover:bg-white/[0.04]">
-            <RefreshCcw className="h-4 w-4 text-white/30" />
+          <Button variant="ghost" size="icon" onClick={() => void refresh()} title="Refresh" className="hover:bg-slate-100">
+            <RefreshCcw className="h-4 w-4 text-slate-400" />
           </Button>
         </div>
       </section>
 
       {/* Project Selector */}
-      <Card className="glass border-white/5">
+      <Card className="glass border-slate-200">
         <CardContent className="flex items-center gap-3 p-4">
           <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Project</span>
           <select
-            className="flex-1 rounded-sm border border-white/10 bg-black/30 px-3 py-2 text-xs text-foreground outline-none focus:border-primary/50"
+            className="flex-1 rounded-sm border border-slate-200 bg-slate-100 px-3 py-2 text-xs text-foreground outline-none focus:border-primary/50"
             value={projectId || ""}
             onChange={(e) => setSearchParams(e.target.value ? { projectId: e.target.value } : {})}
           >
@@ -192,7 +192,7 @@ export function VideoDeliver() {
             <div className="space-y-2">
               <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Platform</label>
               <select
-                className="w-full rounded-sm border border-white/10 bg-black/30 px-3 py-2 text-xs text-foreground outline-none"
+                className="w-full rounded-sm border border-slate-200 bg-slate-100 px-3 py-2 text-xs text-foreground outline-none"
                 value={formPlatform}
                 onChange={(e) => setFormPlatform(e.target.value as VideoPlatform)}
               >
@@ -204,7 +204,7 @@ export function VideoDeliver() {
             <div className="space-y-2">
               <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Asset</label>
               <select
-                className="w-full rounded-sm border border-white/10 bg-black/30 px-3 py-2 text-xs text-foreground outline-none"
+                className="w-full rounded-sm border border-slate-200 bg-slate-100 px-3 py-2 text-xs text-foreground outline-none"
                 value={formAssetId}
                 onChange={(e) => setFormAssetId(e.target.value)}
               >
@@ -216,15 +216,15 @@ export function VideoDeliver() {
             </div>
             <div className="space-y-2 md:col-span-2">
               <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Title</label>
-              <Input value={formTitle} onChange={(e) => setFormTitle(e.target.value)} className="bg-black/30 border-white/10 text-xs" />
+              <Input value={formTitle} onChange={(e) => setFormTitle(e.target.value)} className="bg-slate-100 border-slate-200 text-xs" />
             </div>
             <div className="space-y-2 md:col-span-2">
               <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Description</label>
-              <Input value={formDesc} onChange={(e) => setFormDesc(e.target.value)} className="bg-black/30 border-white/10 text-xs" />
+              <Input value={formDesc} onChange={(e) => setFormDesc(e.target.value)} className="bg-slate-100 border-slate-200 text-xs" />
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Tags (comma separated)</label>
-              <Input value={formTags} onChange={(e) => setFormTags(e.target.value)} className="bg-black/30 border-white/10 text-xs" />
+              <Input value={formTags} onChange={(e) => setFormTags(e.target.value)} className="bg-slate-100 border-slate-200 text-xs" />
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Schedule (optional)</label>
@@ -232,7 +232,7 @@ export function VideoDeliver() {
                 type="datetime-local"
                 value={formScheduled}
                 onChange={(e) => setFormScheduled(e.target.value)}
-                className="bg-black/30 border-white/10 text-xs"
+                className="bg-slate-100 border-slate-200 text-xs"
               />
             </div>
             <div className="flex items-center gap-2 md:col-span-2">
@@ -265,10 +265,10 @@ export function VideoDeliver() {
             {deliveries.map((d) => {
               const Icon = platformIcons[d.platform];
               return (
-                <Card key={d.id} className="glass border-white/5">
+                <Card key={d.id} className="glass border-slate-200">
                   <CardContent className="flex items-start justify-between gap-4 p-4">
                     <div className="flex items-start gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-white/5 bg-black/20">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-slate-200 bg-slate-100">
                         <Icon className="h-5 w-5 text-primary" />
                       </div>
                       <div className="min-w-0">
@@ -312,7 +312,7 @@ export function VideoDeliver() {
               );
             })}
             {deliveries.length === 0 && (
-              <div className="rounded-sm border border-white/5 bg-black/20 p-12 text-center">
+              <div className="rounded-sm border border-slate-200 bg-slate-100 p-12 text-center">
                 <Rocket className="mx-auto h-8 w-8 text-muted-foreground/30" />
                 <p className="mt-3 text-sm text-muted-foreground">No delivery packages yet.</p>
                 <p className="mt-1 text-xs text-muted-foreground">Select a project and create a package to publish.</p>
@@ -322,7 +322,7 @@ export function VideoDeliver() {
 
           {/* Analytics Sidebar */}
           <div className="space-y-3">
-            <Card className="glass border-white/5">
+            <Card className="glass border-slate-200">
               <CardHeader className="py-4">
                 <CardTitle className="text-sm flex items-center gap-2">
                   <BarChart3 className="h-4 w-4 text-primary" />
@@ -334,7 +334,7 @@ export function VideoDeliver() {
                   deliveries
                     .filter((d) => d.analytics)
                     .map((d) => (
-                      <div key={d.id} className="rounded-sm border border-white/5 bg-black/20 p-3">
+                      <div key={d.id} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
                         <p className="text-xs font-medium">{d.title}</p>
                         <div className="mt-2 grid grid-cols-2 gap-2 text-[10px] font-mono text-muted-foreground">
                           <span>Views: {d.analytics?.views}</span>

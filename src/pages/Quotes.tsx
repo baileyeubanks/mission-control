@@ -685,7 +685,7 @@ export function Quotes() {
                     <TableCell>
                       <Badge
                         variant="outline"
-                        className={`text-[9px] uppercase tracking-tighter bg-white/5 border-white/10 ${
+                        className={`text-[9px] uppercase tracking-tighter bg-white/5 border-slate-200 ${
                           q.status === "Accepted"
                             ? "text-success border-success/20"
                             : q.status === "Invoiced"

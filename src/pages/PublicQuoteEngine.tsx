@@ -115,7 +115,7 @@ export function PublicQuoteEngine() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-base text-white font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
       {/* Ambient */}
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(61,125,216,0.06)_0%,transparent_50%)]" />
       <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle_at_top_right,rgba(61,125,216,0.04)_0%,transparent_50%)]" />
@@ -128,7 +128,7 @@ export function PublicQuoteEngine() {
             Content Co-op
           </div>
           <h1 className="text-4xl font-display tracking-[0.08em]">REQUEST A QUOTE</h1>
-          <p className="mt-2 text-sm text-white/40 font-mono">
+          <p className="mt-2 text-sm text-slate-500 font-mono">
             Tell us about your project. We'll respond within 24 hours.
           </p>
         </div>
@@ -139,7 +139,7 @@ export function PublicQuoteEngine() {
               <CheckCircle2 className="h-8 w-8 text-success" />
             </div>
             <h2 className="text-2xl font-display tracking-[0.08em]">QUOTE RECEIVED</h2>
-            <p className="text-sm text-white/50 max-w-sm mx-auto">
+            <p className="text-sm text-slate-500 max-w-sm mx-auto">
               We've captured your project details. A producer will review and send a formal proposal within 24 hours.
             </p>
             <div className="flex justify-center gap-3 pt-2">
@@ -162,13 +162,13 @@ export function PublicQuoteEngine() {
                     className={`flex items-start gap-3 rounded-md border p-4 text-left transition-all ${
                       service === s.id
                         ? "border-brand-accent-glow/40 bg-brand-accent-glow/10"
-                        : "border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.04]"
+                        : "border-slate-200 bg-white/[0.02] hover:border-slate-200 hover:bg-slate-100"
                     }`}
                   >
-                    <s.icon className={`h-5 w-5 shrink-0 mt-0.5 ${service === s.id ? "text-brand-accent-glow" : "text-white/30"}`} />
+                    <s.icon className={`h-5 w-5 shrink-0 mt-0.5 ${service === s.id ? "text-brand-accent-glow" : "text-slate-400"}`} />
                     <div>
-                      <p className={`text-sm font-medium ${service === s.id ? "text-white" : "text-white/70"}`}>{s.label}</p>
-                      <p className="text-xs text-white/30 mt-0.5">{s.desc}</p>
+                      <p className={`text-sm font-medium ${service === s.id ? "text-slate-900" : "text-slate-600"}`}>{s.label}</p>
+                      <p className="text-xs text-slate-400 mt-0.5">{s.desc}</p>
                     </div>
                   </button>
                 ))}
@@ -180,50 +180,50 @@ export function PublicQuoteEngine() {
               <span className="label-nav">2. Who are you?</span>
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-wider text-white/30">Full Name *</label>
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Full Name *</label>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/20" />
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
                     <input
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full rounded-md border border-white/10 bg-black/30 pl-9 pr-3 py-2.5 text-sm text-white outline-none focus:border-brand-accent-glow/50 placeholder:text-white/20"
+                      className="w-full rounded-md border border-slate-200 bg-slate-100 pl-9 pr-3 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-accent-glow/50 placeholder:text-slate-400"
                       placeholder="Your name"
                     />
                   </div>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-wider text-white/30">Email *</label>
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Email *</label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/20" />
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full rounded-md border border-white/10 bg-black/30 pl-9 pr-3 py-2.5 text-sm text-white outline-none focus:border-brand-accent-glow/50 placeholder:text-white/20"
+                      className="w-full rounded-md border border-slate-200 bg-slate-100 pl-9 pr-3 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-accent-glow/50 placeholder:text-slate-400"
                       placeholder="you@company.com"
                     />
                   </div>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-wider text-white/30">Phone</label>
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Phone</label>
                   <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/20" />
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
                     <input
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full rounded-md border border-white/10 bg-black/30 pl-9 pr-3 py-2.5 text-sm text-white outline-none focus:border-brand-accent-glow/50 placeholder:text-white/20"
+                      className="w-full rounded-md border border-slate-200 bg-slate-100 pl-9 pr-3 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-accent-glow/50 placeholder:text-slate-400"
                       placeholder="(555) 000-0000"
                     />
                   </div>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-wider text-white/30">Company</label>
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Company</label>
                   <div className="relative">
-                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/20" />
+                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
                     <input
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
-                      className="w-full rounded-md border border-white/10 bg-black/30 pl-9 pr-3 py-2.5 text-sm text-white outline-none focus:border-brand-accent-glow/50 placeholder:text-white/20"
+                      className="w-full rounded-md border border-slate-200 bg-slate-100 pl-9 pr-3 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-accent-glow/50 placeholder:text-slate-400"
                       placeholder="Company name"
                     />
                   </div>
@@ -236,33 +236,33 @@ export function PublicQuoteEngine() {
               <span className="label-nav">3. Budget & Timeline</span>
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-wider text-white/30">Budget Range</label>
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Budget Range</label>
                   <div className="relative">
-                    <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/20" />
+                    <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
                     <select
                       value={budget}
                       onChange={(e) => setBudget(e.target.value)}
-                      className="w-full rounded-md border border-white/10 bg-black/30 pl-9 pr-3 py-2.5 text-sm text-white outline-none focus:border-brand-accent-glow/50 appearance-none"
+                      className="w-full rounded-md border border-slate-200 bg-slate-100 pl-9 pr-3 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-accent-glow/50 appearance-none"
                     >
-                      <option value="" className="bg-brand-base">Select budget...</option>
+                      <option value="" className="bg-slate-50">Select budget...</option>
                       {budgetOptions.map((b) => (
-                        <option key={b.value} value={b.value} className="bg-brand-base">{b.label}</option>
+                        <option key={b.value} value={b.value} className="bg-slate-50">{b.label}</option>
                       ))}
                     </select>
                   </div>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-wider text-white/30">Timeline</label>
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Timeline</label>
                   <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/20" />
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
                     <select
                       value={timeline}
                       onChange={(e) => setTimeline(e.target.value)}
-                      className="w-full rounded-md border border-white/10 bg-black/30 pl-9 pr-3 py-2.5 text-sm text-white outline-none focus:border-brand-accent-glow/50 appearance-none"
+                      className="w-full rounded-md border border-slate-200 bg-slate-100 pl-9 pr-3 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-accent-glow/50 appearance-none"
                     >
-                      <option value="" className="bg-brand-base">Select timeline...</option>
+                      <option value="" className="bg-slate-50">Select timeline...</option>
                       {timelineOptions.map((t) => (
-                        <option key={t.value} value={t.value} className="bg-brand-base">{t.label}</option>
+                        <option key={t.value} value={t.value} className="bg-slate-50">{t.label}</option>
                       ))}
                     </select>
                   </div>
@@ -274,14 +274,14 @@ export function PublicQuoteEngine() {
             <div className="glass-panel p-6 space-y-4">
               <span className="label-nav">4. Project Details</span>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-wider text-white/30">Describe your project *</label>
+                <label className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Describe your project *</label>
                 <div className="relative">
-                  <MessageSquare className="absolute left-3 top-3 h-3.5 w-3.5 text-white/20" />
+                  <MessageSquare className="absolute left-3 top-3 h-3.5 w-3.5 text-slate-400" />
                   <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     rows={4}
-                    className="w-full rounded-md border border-white/10 bg-black/30 pl-9 pr-3 py-2.5 text-sm text-white outline-none focus:border-brand-accent-glow/50 placeholder:text-white/20 resize-none"
+                    className="w-full rounded-md border border-slate-200 bg-slate-100 pl-9 pr-3 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-accent-glow/50 placeholder:text-slate-400 resize-none"
                     placeholder="What are you trying to achieve? Who's the audience? Any references or inspirations?"
                   />
                 </div>
@@ -317,7 +317,7 @@ export function PublicQuoteEngine() {
               </button>
             </div>
 
-            <p className="text-center text-[10px] font-mono text-white/20 uppercase tracking-wider">
+            <p className="text-center text-[10px] font-mono text-slate-400 uppercase tracking-wider">
               No commitment. We'll respond within 24 business hours.
             </p>
           </div>

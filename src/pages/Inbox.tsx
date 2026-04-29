@@ -42,7 +42,7 @@ function packetTone(status?: Packet["status"]): string {
     case "queued":
       return "bg-warning/10 border-warning/20 text-warning";
     default:
-      return "bg-muted/10 border-white/10 text-muted-foreground";
+      return "bg-muted/10 border-slate-200 text-muted-foreground";
   }
 }
 
@@ -112,7 +112,7 @@ function readinessTone(status?: CanonicalInboxThread["readiness"]["status"]): st
     case "blocked":
       return "border-destructive/20 bg-destructive/10 text-destructive";
     default:
-      return "border-white/10 bg-white/5 text-muted-foreground";
+      return "border-slate-200 bg-white/5 text-muted-foreground";
   }
 }
 
@@ -365,14 +365,14 @@ export function Inbox() {
         </div>
       )}
 
-      <Card className="flex flex-1 flex-col overflow-hidden glass border-white/5 md:flex-row">
-        <div className="flex max-h-80 w-full flex-col border-b border-white/5 bg-black/20 md:max-h-none md:w-80 md:border-b-0 md:border-r">
-          <div className="p-4 border-b border-white/5 bg-black/40">
+      <Card className="flex flex-1 flex-col overflow-hidden glass border-slate-200 md:flex-row">
+        <div className="flex max-h-80 w-full flex-col border-b border-slate-200 bg-slate-100 md:max-h-none md:w-80 md:border-b-0 md:border-r">
+          <div className="p-4 border-b border-slate-200 bg-white">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
               <Input
                 placeholder="Search intake"
-                className="pl-10 bg-black/20 border-white/5 font-mono text-[10px] uppercase tracking-wider h-9"
+                className="pl-10 bg-slate-100 border-slate-200 font-mono text-[10px] uppercase tracking-wider h-9"
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
               />
@@ -389,7 +389,7 @@ export function Inbox() {
               visibleThreads.map((thread) => (
                 <div
                   key={thread.threadId}
-                  className={`p-4 border-b border-white/5 cursor-pointer transition-colors group ${
+                  className={`p-4 border-b border-slate-200 cursor-pointer transition-colors group ${
                     activeThread?.threadId === thread.threadId ? "bg-white/5 border-l-2 border-l-primary" : "hover:bg-white/5"
                   }`}
                   onClick={() => setActiveThreadId(thread.threadId)}
@@ -404,10 +404,10 @@ export function Inbox() {
                   </div>
                   <p className="text-xs truncate font-display tracking-tight text-foreground">{thread.preview}</p>
                   <div className="mt-2 flex items-center gap-2">
-                    <span className="text-[8px] font-mono uppercase text-muted-foreground/40 px-1 py-0.5 border border-white/5 rounded-sm">
+                    <span className="text-[8px] font-mono uppercase text-muted-foreground/40 px-1 py-0.5 border border-slate-200 rounded-sm">
                       {threadSourceLabel(thread.sourceKind)}
                     </span>
-                    <span className="text-[8px] font-mono uppercase text-muted-foreground/40 px-1 py-0.5 border border-white/5 rounded-sm">
+                    <span className="text-[8px] font-mono uppercase text-muted-foreground/40 px-1 py-0.5 border border-slate-200 rounded-sm">
                       {thread.channel}
                     </span>
                   </div>
@@ -417,10 +417,10 @@ export function Inbox() {
           </div>
         </div>
 
-        <div className="flex min-w-0 flex-1 flex-col bg-black/10">
+        <div className="flex min-w-0 flex-1 flex-col bg-slate-100">
           {activeThread ? (
             <>
-              <div className="flex flex-col gap-3 border-b border-white/5 bg-black/40 p-4 xl:flex-row xl:items-center xl:justify-between">
+              <div className="flex flex-col gap-3 border-b border-slate-200 bg-white p-4 xl:flex-row xl:items-center xl:justify-between">
                 <div className="flex min-w-0 items-center gap-4">
                   <div className="h-10 w-10 rounded-sm bg-primary/10 flex items-center justify-center border border-primary/20">
                     <User className="h-5 w-5 text-primary" />
@@ -436,7 +436,7 @@ export function Inbox() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-8 font-mono text-[9px] uppercase border-white/10"
+                    className="h-8 font-mono text-[9px] uppercase border-slate-200"
                     onClick={() => void queuePacket("thread_summarize")}
                     disabled={packetAction === "thread_summarize" || messages.length === 0}
                   >
@@ -446,7 +446,7 @@ export function Inbox() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-8 font-mono text-[9px] uppercase border-white/10"
+                    className="h-8 font-mono text-[9px] uppercase border-slate-200"
                     onClick={() => void queuePacket("intake_extract")}
                     disabled={packetAction === "intake_extract" || messages.length === 0}
                   >
@@ -475,7 +475,7 @@ export function Inbox() {
                 )}
 
                 {activeThread.handoffId && (
-                  <div className="rounded-sm border border-white/5 bg-black/20 p-4">
+                  <div className="rounded-sm border border-slate-200 bg-slate-100 p-4">
                     <div className="grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(220px,0.8fr)_minmax(220px,0.8fr)]">
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
@@ -488,7 +488,7 @@ export function Inbox() {
                           >
                             {handoffStatusLabel(activeThread.handoffStatus)}
                           </Badge>
-                          <Badge variant="outline" className="text-[8px] font-mono uppercase border-white/10 bg-white/5 text-muted-foreground">
+                          <Badge variant="outline" className="text-[8px] font-mono uppercase border-slate-200 bg-white/5 text-muted-foreground">
                             {dataSourceLabel(activeThread.dataSource)}
                           </Badge>
                         </div>
@@ -528,7 +528,7 @@ export function Inbox() {
                         )}
                       </div>
 
-                      <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+                      <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
                         <p className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground">Artifacts</p>
                         {handoffArtifacts.length > 0 ? (
                           <div className="mt-2 space-y-1.5">
@@ -548,17 +548,17 @@ export function Inbox() {
                     <div className="mt-4 flex flex-wrap gap-2">
                       {activeThread.sourceKind === "creative_brief" ? (
                         <>
-                          <a className="inline-flex h-8 items-center rounded-md border border-white/10 px-3 text-[9px] font-mono uppercase hover:bg-white/5" href="/admin/files">
+                          <a className="inline-flex h-8 items-center rounded-md border border-slate-200 px-3 text-[9px] font-mono uppercase hover:bg-white/5" href="/admin/files">
                             <FolderOpen className="mr-2 h-3 w-3 text-primary" />
                             Open files
                           </a>
-                          <a className="inline-flex h-8 items-center rounded-md border border-white/10 px-3 text-[9px] font-mono uppercase hover:bg-white/5" href="/admin/approvals">
+                          <a className="inline-flex h-8 items-center rounded-md border border-slate-200 px-3 text-[9px] font-mono uppercase hover:bg-white/5" href="/admin/approvals">
                             <FileCheck2 className="mr-2 h-3 w-3 text-primary" />
                             Open approvals
                           </a>
                         </>
                       ) : (
-                        <a className="inline-flex h-8 items-center rounded-md border border-white/10 px-3 text-[9px] font-mono uppercase hover:bg-white/5" href="/admin/jobs">
+                        <a className="inline-flex h-8 items-center rounded-md border border-slate-200 px-3 text-[9px] font-mono uppercase hover:bg-white/5" href="/admin/jobs">
                           <BriefcaseBusiness className="mr-2 h-3 w-3 text-primary" />
                           Open jobs
                         </a>
@@ -566,7 +566,7 @@ export function Inbox() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-8 border-white/10 font-mono text-[9px] uppercase"
+                        className="h-8 border-slate-200 font-mono text-[9px] uppercase"
                         onClick={() => void handleConvertHandoff()}
                         disabled={handoffAction || activeThread.handoffStatus === "converted"}
                       >
@@ -604,7 +604,7 @@ export function Inbox() {
                     )}
 
                     {latestDraftPacket && (
-                      <div className="rounded-sm border border-white/10 bg-black/20 p-4">
+                      <div className="rounded-sm border border-slate-200 bg-slate-100 p-4">
                         <div className="flex items-center justify-between gap-3">
                           <p className="text-[10px] font-mono font-bold uppercase tracking-widest">Reply draft</p>
                           <Badge variant="outline" className={`text-[8px] uppercase tracking-tighter ${packetTone(latestDraftPacket.status)}`}>
@@ -618,7 +618,7 @@ export function Inbox() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="mt-3 h-8 font-mono text-[9px] uppercase border-white/10"
+                            className="mt-3 h-8 font-mono text-[9px] uppercase border-slate-200"
                             onClick={() => setDraft(draftPacketText)}
                           >
                             Use draft
@@ -628,7 +628,7 @@ export function Inbox() {
                     )}
 
                     {latestIntakePacket && (
-                      <div className="rounded-sm border border-white/10 bg-black/20 p-4">
+                      <div className="rounded-sm border border-slate-200 bg-slate-100 p-4">
                         <div className="flex items-center justify-between gap-3">
                           <p className="text-[10px] font-mono font-bold uppercase tracking-widest">Intake extract</p>
                           <Badge variant="outline" className={`text-[8px] uppercase tracking-tighter ${packetTone(latestIntakePacket.status)}`}>
@@ -674,7 +674,7 @@ export function Inbox() {
                             ? "bg-warning/5 border-warning/10 text-warning/90 italic"
                             : isOutgoing
                               ? "bg-primary/10 border-primary/20"
-                              : "bg-white/5 border-white/5"
+                              : "bg-white/5 border-slate-200"
                         }`}
                       >
                         {message.content}
@@ -684,26 +684,26 @@ export function Inbox() {
                 })}
               </div>
 
-              <div className="border-t border-white/5 bg-black/40 p-4">
+              <div className="border-t border-slate-200 bg-white p-4">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
                   <Button
                     variant="outline"
                     size="icon"
-                    className="shrink-0 h-10 w-10 border-white/10"
+                    className="shrink-0 h-10 w-10 border-slate-200"
                     disabled
                     title="Attachments are disabled until the file/artifact backend is connected."
                     aria-label="Attach file"
                   >
                     <Paperclip className="h-4 w-4" />
                   </Button>
-                  <div className="flex-1 bg-black/20 border border-white/5 rounded-sm focus-within:border-primary/50 transition-colors">
+                  <div className="flex-1 bg-slate-100 border border-slate-200 rounded-sm focus-within:border-primary/50 transition-colors">
                     <textarea
                       className="w-full min-h-[100px] max-h-[300px] p-4 text-sm bg-transparent resize-none focus:outline-none font-display leading-relaxed"
                       placeholder="Write a reply or internal note"
                       value={draft}
                       onChange={(event) => setDraft(event.target.value)}
                     />
-                    <div className="flex flex-col gap-3 border-t border-white/5 bg-black/20 p-3 lg:flex-row lg:items-center lg:justify-between">
+                    <div className="flex flex-col gap-3 border-t border-slate-200 bg-slate-100 p-3 lg:flex-row lg:items-center lg:justify-between">
                       <div className="flex flex-wrap gap-2">
                         <Button
                           variant="ghost"

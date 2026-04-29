@@ -60,7 +60,7 @@ const BriefReviewDetail = lazy(() => import("./pages/BriefReview").then(m => ({ 
 const Placeholder = ({ title }: { title: string }) => (
   <div className="flex flex-col gap-4">
     <h1 className="text-3xl font-display tracking-tighter">{title}</h1>
-    <div className="glass border-white/5 p-12 flex items-center justify-center rounded-sm">
+    <div className="glass border-slate-200 p-12 flex items-center justify-center rounded-sm">
       <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Panel available by direct route</p>
     </div>
   </div>
@@ -128,7 +128,7 @@ function PublicGateway() {
   if (user) return <Navigate to="/admin" replace />;
 
   return (
-    <div className="min-h-screen bg-brand-base text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(61,125,216,0.06)_0%,transparent_50%)]" />
       <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col justify-center gap-8 px-6 py-12">
         <div className="grid gap-8 lg:grid-cols-[1.4fr_0.9fr]">
@@ -143,14 +143,14 @@ function PublicGateway() {
                 <h1 className="max-w-3xl text-4xl font-display tracking-[0.12em] md:text-6xl">
                   Mission Control
                 </h1>
-                <p className="max-w-2xl text-sm text-white/40 md:text-base">
+                <p className="max-w-2xl text-sm text-slate-500 md:text-base">
                   ACS Operations + CCO OS in one unified shell. Quotes, invoices, dispatch, video production, and crew management.
                 </p>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-3">
                 <div className="glass-panel p-4">
-                  <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-white/30">
+                  <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-slate-400">
                     <Shield className="h-3 w-3" />
                     Auth
                   </div>
@@ -159,14 +159,14 @@ function PublicGateway() {
                   </div>
                 </div>
                 <div className="glass-panel p-4">
-                  <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-white/30">
+                  <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-slate-400">
                     <Activity className="h-3 w-3" />
                     Runtime
                   </div>
                   <div className="text-xs font-mono uppercase text-success">Reachable</div>
                 </div>
                 <div className="glass-panel p-4">
-                  <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-white/30">
+                  <div className="mb-2 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-slate-400">
                     <Shield className="h-3 w-3" />
                     Role
                   </div>
@@ -180,7 +180,7 @@ function PublicGateway() {
             <div className="flex h-full flex-col justify-between gap-8">
               <div className="space-y-4">
                 <h2 className="text-2xl font-display tracking-[0.12em]">Access</h2>
-                <p className="text-sm text-white/40">
+                <p className="text-sm text-slate-500">
                   Local recovery opens directly on this machine. Remote sign-in uses Google when configured.
                 </p>
               </div>
@@ -193,10 +193,10 @@ function PublicGateway() {
                 >
                   {useLocalRecoveryGateway ? "Local Recovery Active" : "Sign In With Google"}
                 </button>
-                <a href="/quote" className="block w-full text-center btn-outline text-sm">
+                <a href="/quote" className="block w-full text-center btn-outline text-sm text-slate-600 hover:text-slate-900">
                   Request a Quote (CCO)
                 </a>
-                <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-white/20">
+                <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-slate-400">
                   Admin, crew, and protected panel routing remains unchanged.
                 </p>
               </div>

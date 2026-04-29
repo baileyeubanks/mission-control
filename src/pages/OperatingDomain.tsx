@@ -141,7 +141,7 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
 
   return (
     <div className="flex flex-col gap-5">
-      <section className="rounded-sm border border-white/5 bg-black/20 p-5">
+      <section className="rounded-sm border border-slate-200 bg-slate-100 p-5">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <h1 className="text-2xl font-display tracking-normal">{domain.title}</h1>
@@ -162,7 +162,7 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
       )}
 
       {domainId === "quotes" && quoteFormOpen && (
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <CardTitle className="text-sm">Create Local ACS Quote Handoff</CardTitle>
           </CardHeader>
@@ -178,7 +178,7 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
                 {creatingQuote ? <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" /> : <Plus className="mr-2 h-3.5 w-3.5" />}
                 Create handoff
               </Button>
-              <Button variant="outline" onClick={() => setQuoteFormOpen(false)} className="h-9 text-xs border-white/10">
+              <Button variant="outline" onClick={() => setQuoteFormOpen(false)} className="h-9 text-xs border-slate-200">
                 Cancel
               </Button>
             </div>
@@ -187,7 +187,7 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
       )}
 
       {domainId === "quotes" && (
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="flex flex-col items-start gap-3 py-4">
             <CardTitle className="text-sm">Local Quote Handoffs</CardTitle>
             <Button
@@ -201,12 +201,12 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
           </CardHeader>
           <CardContent className="grid gap-3 p-4 pt-0 xl:grid-cols-2">
             {handoffs.length === 0 ? (
-              <div className="rounded-sm border border-white/5 bg-black/20 p-3 text-sm text-muted-foreground">
+              <div className="rounded-sm border border-slate-200 bg-slate-100 p-3 text-sm text-muted-foreground">
                 No local quote handoffs yet. Create one here or connect the ACS public quote engine.
               </div>
             ) : (
               handoffs.map((handoff) => (
-                <article key={handoff.id} className="rounded-sm border border-white/5 bg-black/20 p-3">
+                <article key={handoff.id} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium">{handoff.contact.name}</p>
@@ -218,11 +218,11 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
                   </div>
                   <p className="mt-3 text-xs text-muted-foreground">{handoff.summary}</p>
                   <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                    <div className="rounded-sm border border-white/5 bg-black/20 p-2">
+                    <div className="rounded-sm border border-slate-200 bg-slate-100 p-2">
                       <p className="text-[9px] uppercase text-muted-foreground">Address</p>
                       <p className="mt-1 truncate text-xs">{typeof handoff.details.service_address === "string" ? handoff.details.service_address : "Not set"}</p>
                     </div>
-                    <div className="rounded-sm border border-white/5 bg-black/20 p-2">
+                    <div className="rounded-sm border border-slate-200 bg-slate-100 p-2">
                       <p className="text-[9px] uppercase text-muted-foreground">Next step</p>
                       <p className="mt-1 truncate text-xs">Open Inbox to convert</p>
                     </div>
@@ -235,28 +235,28 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
       )}
 
       <div className="grid gap-3 lg:grid-cols-2">
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <CardTitle className="text-sm">Authority</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 p-4 pt-0">
-            <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+            <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
               <p className="text-[10px] uppercase text-muted-foreground">Owns</p>
               <p className="mt-2 text-sm">{domain.authority}</p>
             </div>
-            <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+            <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
               <p className="text-[10px] uppercase text-muted-foreground">Does not own</p>
               <p className="mt-2 text-sm">{domain.doesNotOwn}</p>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <CardTitle className="text-sm">Next Action</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 p-4 pt-0">
-            <p className="rounded-sm border border-white/5 bg-black/20 p-3 text-sm">{domain.nextAction}</p>
+            <p className="rounded-sm border border-slate-200 bg-slate-100 p-3 text-sm">{domain.nextAction}</p>
             {domain.blocker && (
               <p className="rounded-sm border border-destructive/20 bg-destructive/10 p-3 text-xs text-destructive">
                 {domain.blocker}
@@ -266,31 +266,31 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
         </Card>
       </div>
 
-      <Card className="glass border-white/5">
+      <Card className="glass border-slate-200">
         <CardHeader className="py-4">
           <CardTitle className="text-sm">Lifecycle</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-2 p-4 pt-0 md:grid-cols-3 xl:grid-cols-4">
           {domain.lifecycle.map((stage) => (
-            <div key={stage} className="rounded-sm border border-white/5 bg-black/20 p-3">
+            <div key={stage} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
               <p className="text-sm font-medium">{stage}</p>
             </div>
           ))}
         </CardContent>
       </Card>
 
-      <Card className="glass border-white/5">
+      <Card className="glass border-slate-200">
         <CardHeader className="py-4">
           <CardTitle className="text-sm">Read Models</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-3 p-4 pt-0 xl:grid-cols-2">
           {readModels.length === 0 ? (
-            <div className="rounded-sm border border-white/5 bg-black/20 p-3 text-sm text-muted-foreground">
+            <div className="rounded-sm border border-slate-200 bg-slate-100 p-3 text-sm text-muted-foreground">
               No read model records are wired for this domain yet.
             </div>
           ) : (
             readModels.map((record) => (
-              <article key={record.id} className="rounded-sm border border-white/5 bg-black/20 p-3">
+              <article key={record.id} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{record.title}</p>
@@ -302,15 +302,15 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
                 </div>
 
                 <div className="mt-3 grid gap-2 sm:grid-cols-3">
-                  <div className="rounded-sm border border-white/5 bg-black/20 p-2">
+                  <div className="rounded-sm border border-slate-200 bg-slate-100 p-2">
                     <p className="text-[9px] uppercase text-muted-foreground">Owner</p>
                     <p className="mt-1 truncate text-xs">{record.owner}</p>
                   </div>
-                  <div className="rounded-sm border border-white/5 bg-black/20 p-2">
+                  <div className="rounded-sm border border-slate-200 bg-slate-100 p-2">
                     <p className="text-[9px] uppercase text-muted-foreground">Source</p>
                     <p className="mt-1 truncate text-xs">{record.sourceSystem}</p>
                   </div>
-                  <div className="rounded-sm border border-white/5 bg-black/20 p-2">
+                  <div className="rounded-sm border border-slate-200 bg-slate-100 p-2">
                     <p className="text-[9px] uppercase text-muted-foreground">Amount</p>
                     <p className="mt-1 truncate text-xs">{record.amountLabel || "N/A"}</p>
                   </div>
@@ -321,7 +321,7 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
                     <p className="text-[10px] uppercase text-muted-foreground">Facts</p>
                     <div className="mt-2 space-y-1">
                       {record.facts.slice(0, 3).map((fact) => (
-                        <p key={fact} className="rounded-sm border border-white/5 bg-black/20 p-2 text-xs text-muted-foreground">
+                        <p key={fact} className="rounded-sm border border-slate-200 bg-slate-100 p-2 text-xs text-muted-foreground">
                           {fact}
                         </p>
                       ))}
@@ -342,7 +342,7 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
                   </div>
                 </div>
 
-                <p className="mt-3 rounded-sm border border-white/5 bg-black/20 p-2 text-xs text-muted-foreground">
+                <p className="mt-3 rounded-sm border border-slate-200 bg-slate-100 p-2 text-xs text-muted-foreground">
                   {record.nextAction}
                 </p>
                 {record.blocker && (
@@ -354,13 +354,13 @@ export function OperatingDomain({ domainId }: { domainId: MissionOperatingDomain
         </CardContent>
       </Card>
 
-      <Card className="glass border-white/5">
+      <Card className="glass border-slate-200">
         <CardHeader className="py-4">
           <CardTitle className="text-sm">Source Authority</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 p-4 pt-0">
           {domain.sourceDocs.map((source) => (
-            <div key={source} className="flex items-center justify-between gap-3 rounded-sm border border-white/5 bg-black/20 p-3">
+            <div key={source} className="flex items-center justify-between gap-3 rounded-sm border border-slate-200 bg-slate-100 p-3">
               <p className="min-w-0 truncate text-xs text-muted-foreground">{source}</p>
               <ExternalLink className="h-3.5 w-3.5 shrink-0 text-primary" />
             </div>

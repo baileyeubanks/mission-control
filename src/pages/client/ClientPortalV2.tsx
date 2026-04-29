@@ -125,7 +125,7 @@ export function ClientPortalV2() {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-brand-base">
+      <div className="flex h-screen items-center justify-center bg-slate-50">
         <Loader2 className="h-8 w-8 animate-spin text-brand-accent-glow" />
       </div>
     );
@@ -133,11 +133,11 @@ export function ClientPortalV2() {
 
   if (error && !data) {
     return (
-      <div className="flex h-screen items-center justify-center bg-brand-base p-6">
+      <div className="flex h-screen items-center justify-center bg-slate-50 p-6">
         <div className="glass-panel p-8 max-w-sm text-center border-destructive/20">
           <AlertTriangle className="mx-auto h-8 w-8 text-destructive mb-3" />
           <h1 className="text-xl font-display text-destructive mb-2">LOAD_ERROR</h1>
-          <p className="text-sm text-white/40">{error}</p>
+          <p className="text-sm text-slate-500">{error}</p>
         </div>
       </div>
     );
@@ -149,7 +149,7 @@ export function ClientPortalV2() {
   const clientName = quotes[0]?.client.name ?? invoices[0]?.client.name ?? "Client";
 
   return (
-    <div className="min-h-screen bg-brand-base text-white font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(61,125,216,0.04)_0%,transparent_50%)]" />
 
       <div className="relative z-10 mx-auto max-w-3xl px-6 py-10">
@@ -161,10 +161,10 @@ export function ClientPortalV2() {
             </div>
             <div>
               <h1 className="text-xl font-display tracking-[0.08em]">CLIENT PORTAL</h1>
-              <p className="text-[9px] font-mono text-white/30 uppercase tracking-[0.3em]">Content Co-op</p>
+              <p className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.3em]">Content Co-op</p>
             </div>
           </div>
-          <Badge variant="outline" className="text-[9px] font-mono uppercase border-white/10 text-white/40">
+          <Badge variant="outline" className="text-[9px] font-mono uppercase border-slate-200 text-slate-500">
             <Mail className="mr-1.5 h-3 w-3" />
             {clientEmail}
           </Badge>
@@ -172,8 +172,8 @@ export function ClientPortalV2() {
 
         {/* Welcome */}
         <div className="glass-panel p-5 mb-6">
-          <p className="text-sm text-white/60">
-            Welcome back, <span className="text-white font-medium">{clientName}</span>. Here's everything we've sent you.
+          <p className="text-sm text-slate-500">
+            Welcome back, <span className="text-slate-900 font-medium">{clientName}</span>. Here's everything we've sent you.
           </p>
         </div>
 
@@ -193,22 +193,22 @@ export function ClientPortalV2() {
                       {quote.status.replace(/_/g, " ")}
                     </Badge>
                   </div>
-                  <p className="text-[10px] font-mono text-white/30 uppercase mt-1">{quote.documentNumber}</p>
+                  <p className="text-[10px] font-mono text-slate-400 uppercase mt-1">{quote.documentNumber}</p>
                 </CardHeader>
                 <CardContent className="space-y-4 p-4 pt-0">
-                  <p className="text-sm text-white/50">{quote.scopeSummary}</p>
+                  <p className="text-sm text-slate-500">{quote.scopeSummary}</p>
 
                   <div className="grid grid-cols-3 gap-2">
-                    <div className="rounded-md border border-white/5 bg-black/20 p-2.5 text-center">
-                      <p className="text-[9px] font-mono uppercase text-white/30">Subtotal</p>
+                    <div className="rounded-md border border-slate-200 bg-slate-100 p-2.5 text-center">
+                      <p className="text-[9px] font-mono uppercase text-slate-400">Subtotal</p>
                       <p className="text-sm font-display">{formatCents(quote.subtotalCents)}</p>
                     </div>
-                    <div className="rounded-md border border-white/5 bg-black/20 p-2.5 text-center">
-                      <p className="text-[9px] font-mono uppercase text-white/30">Total</p>
+                    <div className="rounded-md border border-slate-200 bg-slate-100 p-2.5 text-center">
+                      <p className="text-[9px] font-mono uppercase text-slate-400">Total</p>
                       <p className="text-sm font-display text-primary">{formatCents(quote.totalCents)}</p>
                     </div>
-                    <div className="rounded-md border border-white/5 bg-black/20 p-2.5 text-center">
-                      <p className="text-[9px] font-mono uppercase text-white/30">Deposit</p>
+                    <div className="rounded-md border border-slate-200 bg-slate-100 p-2.5 text-center">
+                      <p className="text-[9px] font-mono uppercase text-slate-400">Deposit</p>
                       <p className="text-sm font-display">{formatCents(quote.depositCents)}</p>
                     </div>
                   </div>
@@ -232,14 +232,14 @@ export function ClientPortalV2() {
                         onChange={(e) => setChangeNote(e.target.value)}
                         placeholder="What would you like changed?"
                         rows={3}
-                        className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2 text-xs text-white outline-none focus:border-primary/50 resize-none placeholder:text-white/20"
+                        className="w-full rounded-md border border-slate-200 bg-slate-100 px-3 py-2 text-xs text-slate-900 outline-none focus:border-primary/50 resize-none placeholder:text-slate-400"
                       />
                       <div className="flex gap-2">
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => { setShowChangeForm(null); setChangeNote(""); }}
-                          className="border-white/10 text-xs"
+                          className="border-slate-200 text-xs"
                         >
                           Cancel
                         </Button>
@@ -261,7 +261,7 @@ export function ClientPortalV2() {
                         variant="outline"
                         onClick={() => setShowChangeForm(quote.id)}
                         disabled={Boolean(activeAction)}
-                        className="flex-1 border-white/10 text-xs"
+                        className="flex-1 border-slate-200 text-xs"
                       >
                         <MessageSquare className="mr-1.5 h-3 w-3" />
                         Request Changes
@@ -291,7 +291,7 @@ export function ClientPortalV2() {
               <div key={quote.id} className="glass-panel p-4 flex items-center justify-between gap-4">
                 <div className="min-w-0">
                   <p className="text-sm font-medium truncate">{quote.title}</p>
-                  <p className="text-[10px] font-mono text-white/30 mt-0.5">{quote.documentNumber} · {new Date(quote.createdAt).toLocaleDateString()}</p>
+                  <p className="text-[10px] font-mono text-slate-400 mt-0.5">{quote.documentNumber} · {new Date(quote.createdAt).toLocaleDateString()}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
                   <span className="text-sm font-display">{formatCents(quote.totalCents)}</span>
@@ -312,7 +312,7 @@ export function ClientPortalV2() {
               <div key={invoice.id} className="glass-panel p-4 flex items-center justify-between gap-4">
                 <div className="min-w-0">
                   <p className="text-sm font-medium truncate">{invoice.title}</p>
-                  <p className="text-[10px] font-mono text-white/30 mt-0.5">{invoice.invoiceNumber} · Due: {invoice.dueDate ? new Date(invoice.dueDate).toLocaleDateString() : "TBD"}</p>
+                  <p className="text-[10px] font-mono text-slate-400 mt-0.5">{invoice.invoiceNumber} · Due: {invoice.dueDate ? new Date(invoice.dueDate).toLocaleDateString() : "TBD"}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
                   <span className="text-sm font-display">{formatCents(invoice.totalCents)}</span>
@@ -338,14 +338,14 @@ export function ClientPortalV2() {
         {/* Empty State */}
         {quotes.length === 0 && invoices.length === 0 && (
           <div className="glass-panel p-12 text-center">
-            <FileText className="mx-auto h-8 w-8 text-white/10 mb-3" />
-            <p className="text-sm text-white/30">No documents found for this email.</p>
-            <p className="text-[10px] font-mono text-white/20 mt-1">Check back after your first quote is sent.</p>
+            <FileText className="mx-auto h-8 w-8 text-slate-900/10 mb-3" />
+            <p className="text-sm text-slate-400">No documents found for this email.</p>
+            <p className="text-[10px] font-mono text-slate-400 mt-1">Check back after your first quote is sent.</p>
           </div>
         )}
 
         <footer className="text-center pt-8 pb-4">
-          <p className="text-[9px] font-mono text-white/15 uppercase tracking-[0.3em]">
+          <p className="text-[9px] font-mono text-slate-900/15 uppercase tracking-[0.3em]">
             Powered by Mission Control · Content Co-op
           </p>
         </footer>

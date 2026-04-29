@@ -217,7 +217,7 @@ export function VideoEdit() {
             <Scissors className="h-5 w-5 text-brand-accent-glow" />
             <h1 className="text-2xl font-display tracking-[0.06em]">Phantom Cutter</h1>
           </div>
-          <p className="mt-1 text-xs text-white/40 font-mono uppercase tracking-widest">
+          <p className="mt-1 text-xs text-slate-500 font-mono uppercase tracking-widest">
             Client-side processing arsenal — zero upload, zero server dependency
           </p>
         </div>
@@ -225,8 +225,8 @@ export function VideoEdit() {
           <Badge variant="outline" className={`text-[8px] uppercase ${cutterReady ? "text-success border-success/30" : "text-warning border-warning/30"}`}>
             {cutterReady ? "Phantom Online" : cutterLoading ? "Booting..." : "Phantom Offline"}
           </Badge>
-          <Button variant="ghost" size="icon" onClick={() => void refresh()} className="hover:bg-white/[0.04]">
-            <RefreshCcw className="h-4 w-4 text-white/30" />
+          <Button variant="ghost" size="icon" onClick={() => void refresh()} className="hover:bg-slate-100">
+            <RefreshCcw className="h-4 w-4 text-slate-400" />
           </Button>
         </div>
       </section>
@@ -251,7 +251,7 @@ export function VideoEdit() {
               {!selectedFile ? (
                 <div
                   onClick={() => fileInputRef.current?.click()}
-                  className="cursor-pointer rounded-sm border-2 border-dashed border-white/10 bg-black/20 p-10 text-center transition-colors hover:border-primary/30 hover:bg-white/5"
+                  className="cursor-pointer rounded-sm border-2 border-dashed border-slate-200 bg-slate-100 p-10 text-center transition-colors hover:border-primary/30 hover:bg-white/5"
                 >
                   <UploadCloud className="mx-auto h-10 w-10 text-muted-foreground/40" />
                   <p className="mt-3 text-sm text-muted-foreground">Drop video or click to load</p>
@@ -263,8 +263,8 @@ export function VideoEdit() {
                 <div className="space-y-3">
                   {/* Preview */}
                   {videoPreviewUrl && (
-                    <div className="relative rounded-sm overflow-hidden border border-white/5">
-                      <video src={videoPreviewUrl} className="w-full max-h-64 object-contain bg-black/40" controls />
+                    <div className="relative rounded-sm overflow-hidden border border-slate-200">
+                      <video src={videoPreviewUrl} className="w-full max-h-64 object-contain bg-white" controls />
                     </div>
                   )}
 
@@ -282,11 +282,11 @@ export function VideoEdit() {
                   <div className="grid grid-cols-2 gap-2">
                     <div className="space-y-1">
                       <label className="text-[10px] font-mono uppercase text-muted-foreground">Start (sec)</label>
-                      <Input value={trimStart} onChange={(e) => setTrimStart(e.target.value)} className="bg-black/30 border-white/10 text-xs" />
+                      <Input value={trimStart} onChange={(e) => setTrimStart(e.target.value)} className="bg-slate-100 border-slate-200 text-xs" />
                     </div>
                     <div className="space-y-1">
                       <label className="text-[10px] font-mono uppercase text-muted-foreground">End (sec)</label>
-                      <Input value={trimEnd} onChange={(e) => setTrimEnd(e.target.value)} className="bg-black/30 border-white/10 text-xs" />
+                      <Input value={trimEnd} onChange={(e) => setTrimEnd(e.target.value)} className="bg-slate-100 border-slate-200 text-xs" />
                     </div>
                   </div>
 
@@ -316,11 +316,11 @@ export function VideoEdit() {
                   {processResults.length > 0 && (
                     <div className="grid gap-2 sm:grid-cols-3">
                       {processResults.map((r, i) => (
-                        <div key={i} className="rounded-sm border border-white/5 bg-black/20 overflow-hidden">
+                        <div key={i} className="rounded-sm border border-slate-200 bg-slate-100 overflow-hidden">
                           {r.type.startsWith("video") ? (
                             <video src={r.url} className="w-full h-20 object-cover" controls />
                           ) : r.type.startsWith("audio") ? (
-                            <div className="h-20 flex items-center justify-center bg-black/40">
+                            <div className="h-20 flex items-center justify-center bg-white">
                               <Music className="h-6 w-6 text-primary" />
                             </div>
                           ) : (
@@ -348,7 +348,7 @@ export function VideoEdit() {
           </Card>
 
           {/* Asset Library */}
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm">Asset Library</CardTitle>
             </CardHeader>
@@ -359,7 +359,7 @@ export function VideoEdit() {
                   type="button"
                   onClick={() => setSelectedAssetId(asset.id)}
                   className={`flex items-start justify-between gap-3 rounded-sm border p-3 text-left transition-colors ${
-                    selectedAssetId === asset.id ? "border-primary/30 bg-primary/5" : "border-white/5 bg-black/20 hover:bg-white/5"
+                    selectedAssetId === asset.id ? "border-primary/30 bg-primary/5" : "border-slate-200 bg-slate-100 hover:bg-white/5"
                   }`}
                 >
                   <div className="min-w-0">
@@ -373,7 +373,7 @@ export function VideoEdit() {
                 </button>
               ))}
               {assets.length === 0 && (
-                <div className="col-span-full rounded-sm border border-white/5 bg-black/20 p-6 text-center text-xs text-muted-foreground">
+                <div className="col-span-full rounded-sm border border-slate-200 bg-slate-100 p-6 text-center text-xs text-muted-foreground">
                   No assets in arsenal.
                 </div>
               )}
@@ -382,7 +382,7 @@ export function VideoEdit() {
 
           {/* Timeline Comments */}
           {selectedAsset && (
-            <Card className="glass border-white/5">
+            <Card className="glass border-slate-200">
               <CardHeader className="py-4">
                 <CardTitle className="text-sm flex items-center gap-2">
                   <MessageSquare className="h-4 w-4 text-primary" />
@@ -391,15 +391,15 @@ export function VideoEdit() {
               </CardHeader>
               <CardContent className="space-y-3 p-4 pt-0">
                 <div className="flex gap-2">
-                  <Input placeholder="Time (sec)" value={commentTime} onChange={(e) => setCommentTime(e.target.value)} className="w-24 bg-black/30 border-white/10 text-xs" />
-                  <Input placeholder="Add tactical note..." value={commentText} onChange={(e) => setCommentText(e.target.value)} className="flex-1 bg-black/30 border-white/10 text-xs" />
+                  <Input placeholder="Time (sec)" value={commentTime} onChange={(e) => setCommentTime(e.target.value)} className="w-24 bg-slate-100 border-slate-200 text-xs" />
+                  <Input placeholder="Add tactical note..." value={commentText} onChange={(e) => setCommentText(e.target.value)} className="flex-1 bg-slate-100 border-slate-200 text-xs" />
                   <Button size="sm" onClick={() => void handleAddComment()}>
                     <Plus className="h-3.5 w-3.5" />
                   </Button>
                 </div>
                 <div className="space-y-2 max-h-64 overflow-y-auto">
                   {comments.map((c) => (
-                    <div key={c.id} className="flex items-start gap-3 rounded-sm border border-white/5 bg-black/20 p-3">
+                    <div key={c.id} className="flex items-start gap-3 rounded-sm border border-slate-200 bg-slate-100 p-3">
                       <span className="shrink-0 rounded-sm bg-primary/10 px-1.5 py-0.5 text-[10px] font-mono text-primary">
                         {Math.floor(c.timecodeSec / 60)}:{String(Math.floor(c.timecodeSec % 60)).padStart(2, "0")}
                       </span>
@@ -421,7 +421,7 @@ export function VideoEdit() {
 
         {/* RIGHT — Arsenal Panel */}
         <div className="space-y-4">
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-primary" />
@@ -429,26 +429,26 @@ export function VideoEdit() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 p-4 pt-0">
-              <div className="flex items-center justify-between rounded-sm border border-white/5 bg-black/20 p-3">
+              <div className="flex items-center justify-between rounded-sm border border-slate-200 bg-slate-100 p-3">
                 <span className="text-xs text-muted-foreground">Phantom Cutter</span>
                 <Badge variant="outline" className={`text-[8px] uppercase ${cutterReady ? "text-success border-success/30" : "text-warning border-warning/30"}`}>
                   {cutterReady ? "Online" : "Offline"}
                 </Badge>
               </div>
-              <div className="flex items-center justify-between rounded-sm border border-white/5 bg-black/20 p-3">
+              <div className="flex items-center justify-between rounded-sm border border-slate-200 bg-slate-100 p-3">
                 <span className="text-xs text-muted-foreground">SharedArrayBuffer</span>
                 <Badge variant="outline" className={`text-[8px] uppercase ${isPhantomCutterSupported() ? "text-success border-success/30" : "text-destructive border-destructive/30"}`}>
                   {isPhantomCutterSupported() ? "Enabled" : "Blocked"}
                 </Badge>
               </div>
-              <div className="flex items-center justify-between rounded-sm border border-white/5 bg-black/20 p-3">
+              <div className="flex items-center justify-between rounded-sm border border-slate-200 bg-slate-100 p-3">
                 <span className="text-xs text-muted-foreground">Server Fallback</span>
                 <Badge variant="outline" className="text-[8px] uppercase text-primary border-primary/30">Ready</Badge>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm">Quick Intel</CardTitle>
             </CardHeader>

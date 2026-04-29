@@ -21,7 +21,7 @@ function packetTone(status?: Packet["status"]): string {
     case "queued":
       return "bg-warning/10 border-warning/20 text-warning";
     default:
-      return "bg-muted/10 border-white/10 text-muted-foreground";
+      return "bg-muted/10 border-slate-200 text-muted-foreground";
   }
 }
 
@@ -154,7 +154,7 @@ export function Scheduling() {
             <Button
               variant="outline"
               size="icon"
-              className="h-9 w-9 border-white/10"
+              className="h-9 w-9 border-slate-200"
               aria-label="Previous month"
               onClick={() => setDisplayDate(d => {
                 const nd = new Date(d);
@@ -169,7 +169,7 @@ export function Scheduling() {
             <Button
               variant="outline"
               size="icon"
-              className="h-9 w-9 border-white/10"
+              className="h-9 w-9 border-slate-200"
               aria-label="Next month"
               onClick={() => setDisplayDate(d => {
                 const nd = new Date(d);
@@ -184,7 +184,7 @@ export function Scheduling() {
           <Button
             variant="outline"
             size="sm"
-            className="h-9 font-mono uppercase text-[10px] border-white/10"
+            className="h-9 font-mono uppercase text-[10px] border-slate-200"
             aria-label="Go to today"
             onClick={() => setDisplayDate(new Date())}
             title="Jump to current month"
@@ -212,8 +212,8 @@ export function Scheduling() {
       )}
 
       {latestOptimizePacket && (
-        <Card className="glass border-white/5">
-          <CardHeader className="border-b border-white/5 bg-black/20">
+        <Card className="glass border-slate-200">
+          <CardHeader className="border-b border-slate-200 bg-slate-100">
             <div className="flex items-center justify-between gap-3">
               <CardTitle className="text-xs font-medium text-muted-foreground">Optimization advisory</CardTitle>
               <Badge variant="outline" className={`text-[10px] ${packetTone(latestOptimizePacket.status)}`}>
@@ -226,7 +226,7 @@ export function Scheduling() {
             {Array.isArray(latestOptimizePacket.output_json?.assignments) && latestOptimizePacket.output_json.assignments.length > 0 && (
               <div className="grid gap-3 lg:grid-cols-2">
                 {latestOptimizePacket.output_json.assignments.map((assignment, index) => (
-                  <div key={`${assignment.crewId}-${index}`} className="rounded-sm border border-white/5 bg-black/20 p-4">
+                  <div key={`${assignment.crewId}-${index}`} className="rounded-sm border border-slate-200 bg-slate-100 p-4">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-xs font-medium">
                         {crews.find((crew) => crew.id === assignment.crewId)?.displayName || assignment.crewId}
@@ -236,7 +236,7 @@ export function Scheduling() {
                     <p className="mt-2 text-[11px] text-muted-foreground">{assignment.reasoning}</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {assignment.jobIds.map((jobId: string) => (
-                        <span key={jobId} className="rounded-sm border border-white/10 px-2 py-1 text-[10px] text-muted-foreground">
+                        <span key={jobId} className="rounded-sm border border-slate-200 px-2 py-1 text-[10px] text-muted-foreground">
                           {jobs.find((job) => job.id === jobId)?.title || jobId.slice(0, 8)}
                         </span>
                       ))}
@@ -250,8 +250,8 @@ export function Scheduling() {
       )}
 
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-        <Card className="glass border-white/5">
-          <CardHeader className="border-b border-white/5 bg-black/20">
+        <Card className="glass border-slate-200">
+          <CardHeader className="border-b border-slate-200 bg-slate-100">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xs font-medium text-muted-foreground">Scheduled jobs</CardTitle>
               <Badge variant="outline" className="text-[10px]">{scheduledJobs.length} scheduled</Badge>
@@ -264,7 +264,7 @@ export function Scheduling() {
               <p className="py-12 text-center text-xs text-muted-foreground">No scheduled jobs</p>
             ) : (
               scheduledJobs.slice(0, 14).map((job) => (
-                <div key={job.id} className="rounded-sm border border-white/5 bg-black/20 p-4">
+                <div key={job.id} className="rounded-sm border border-slate-200 bg-slate-100 p-4">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-sm font-display tracking-tight">{job.title}</p>
@@ -288,8 +288,8 @@ export function Scheduling() {
           </CardContent>
         </Card>
 
-        <Card className="glass border-white/5">
-          <CardHeader className="border-b border-white/5 bg-black/20">
+        <Card className="glass border-slate-200">
+          <CardHeader className="border-b border-slate-200 bg-slate-100">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xs font-medium text-muted-foreground">Dispatch readiness</CardTitle>
               <Badge variant="outline" className="text-[10px]">{readinessBlockedJobs.length} blockers</Badge>
@@ -323,7 +323,7 @@ export function Scheduling() {
                 <p className="text-[11px] text-muted-foreground">No canonical crew profiles are available yet.</p>
               ) : (
                 crews.map((crew) => (
-                  <div key={crew.id} className="rounded-sm border border-white/5 bg-black/20 px-3 py-2">
+                  <div key={crew.id} className="rounded-sm border border-slate-200 bg-slate-100 px-3 py-2">
                     <p className="text-sm font-display">{crew.displayName}</p>
                     <p className="text-[11px] text-muted-foreground">{humanLabel(crew.role)}</p>
                   </div>
@@ -337,7 +337,7 @@ export function Scheduling() {
                 <p className="text-[11px] text-muted-foreground">All active jobs currently have a scheduled window.</p>
               ) : (
                 backlogJobs.slice(0, 8).map((job) => (
-                  <div key={job.id} className="rounded-sm border border-white/5 bg-black/20 px-3 py-2">
+                  <div key={job.id} className="rounded-sm border border-slate-200 bg-slate-100 px-3 py-2">
                     <p className="text-sm font-display">{job.title}</p>
                     <div className="mt-1 flex flex-wrap items-center gap-2">
                       <p className="text-[11px] text-muted-foreground">{job.clientName || job.clientEmail || "Unassigned client"}</p>

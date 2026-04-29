@@ -513,7 +513,7 @@ export function Finance() {
                   <TableCell className="font-medium text-sm">{inv.client_name}</TableCell>
                   <TableCell className="font-mono text-sm">{formatCurrency(inv.amount)}</TableCell>
                   <TableCell>
-                    <Badge variant="outline" className={`text-[9px] uppercase tracking-tighter bg-white/5 border-white/10 ${
+                    <Badge variant="outline" className={`text-[9px] uppercase tracking-tighter bg-white/5 border-slate-200 ${
                       inv.status === "Paid" ? "text-success border-success/20" :
                       inv.status === "Overdue" ? "text-destructive border-destructive/20" :
                       inv.status === "Sent" ? "text-primary border-primary/20" :

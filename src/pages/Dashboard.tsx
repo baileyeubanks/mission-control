@@ -135,7 +135,7 @@ export function Dashboard() {
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-display tracking-[0.06em]">Mission Control</h1>
           </div>
-          <p className="mt-1 text-xs text-white/40">{account.label}</p>
+          <p className="mt-1 text-xs text-slate-500">{account.label}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {bootstrap.accounts.map((item) => (
@@ -144,18 +144,18 @@ export function Dashboard() {
               variant={item.id === account.id ? "default" : "outline"}
               size="sm"
               onClick={() => selectAccount(item.id)}
-              className={`font-mono text-[10px] uppercase tracking-widest ${item.id === account.id ? "" : "border-white/10 hover:bg-white/[0.04]"}`}
+              className={`font-mono text-[10px] uppercase tracking-widest ${item.id === account.id ? "" : "border-slate-200 hover:bg-slate-100"}`}
             >
               {item.shortLabel}
             </Button>
           ))}
-          <Button variant="ghost" size="icon" onClick={() => void refresh()} title="Refresh" className="hover:bg-white/[0.04]">
-            <RefreshCcw className="h-4 w-4 text-white/30" />
+          <Button variant="ghost" size="icon" onClick={() => void refresh()} title="Refresh" className="hover:bg-slate-100">
+            <RefreshCcw className="h-4 w-4 text-slate-400" />
           </Button>
         </div>
       </section>
 
-      <Card className="glass border-white/5">
+      <Card className="glass border-slate-200">
         <CardHeader className="py-4">
           <div className="flex items-center justify-between gap-3">
             <CardTitle className="text-sm">System Readiness</CardTitle>
@@ -173,7 +173,7 @@ export function Dashboard() {
             return (
               <div key={name} className="flex items-center justify-between glass-panel p-3">
                 <div>
-                  <p className="text-[10px] font-mono uppercase tracking-widest text-white/30">{name}</p>
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400">{name}</p>
                   <p className={`mt-1 text-[10px] font-mono uppercase tracking-widest ${tone(liveValue)}`}>
                     {String(liveValue).replace(/_/g, " ")}
                     {showLatency && ` · ${health.probes.supabase_latency_ms}ms`}
@@ -197,7 +197,7 @@ export function Dashboard() {
 
       <div className="grid gap-3 md:grid-cols-4">
         {metrics.map((metric) => (
-          <Card key={metric.label} className="glass border-white/5">
+          <Card key={metric.label} className="glass border-slate-200">
             <CardContent className="flex items-center justify-between p-4">
               <div>
                 <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{metric.label}</p>
@@ -219,11 +219,11 @@ export function Dashboard() {
             key={action.path}
             type="button"
             onClick={() => navigate(action.path)}
-            className="flex items-center justify-between gap-3 glass-panel p-4 text-left transition-colors hover:border-white/10 hover:bg-white/[0.04]"
+            className="flex items-center justify-between gap-3 glass-panel p-4 text-left transition-colors hover:border-slate-200 hover:bg-slate-100"
           >
             <div>
-              <p className="text-sm font-medium text-white/80">{action.label}</p>
-              <p className="mt-1 text-xs text-white/30">{action.detail}</p>
+              <p className="text-sm font-medium text-slate-700">{action.label}</p>
+              <p className="mt-1 text-xs text-slate-400">{action.detail}</p>
             </div>
             <action.icon className="h-4 w-4 text-brand-accent-glow" />
           </button>
@@ -231,7 +231,7 @@ export function Dashboard() {
       </div>
 
       {selectedAccount === "content-co-op" && (
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm flex items-center gap-2">
@@ -246,8 +246,8 @@ export function Dashboard() {
           <CardContent className="space-y-2 p-4 pt-0">
             {publicQuotes.length === 0 ? (
               <div className="glass-panel p-4 text-center">
-                <p className="text-xs text-white/30">No public quotes yet.</p>
-                <p className="text-[10px] font-mono text-white/20 mt-1">Share /quote to start receiving intake.</p>
+                <p className="text-xs text-slate-400">No public quotes yet.</p>
+                <p className="text-[10px] font-mono text-slate-400 mt-1">Share /quote to start receiving intake.</p>
               </div>
             ) : (
               publicQuotes.slice(0, 5).map((quote) => (
@@ -255,11 +255,11 @@ export function Dashboard() {
                   key={quote.id}
                   type="button"
                   onClick={() => navigate("/admin/quotes")}
-                  className="w-full flex items-center justify-between gap-3 glass-panel p-3 text-left transition-colors hover:border-white/10 hover:bg-white/[0.04]"
+                  className="w-full flex items-center justify-between gap-3 glass-panel p-3 text-left transition-colors hover:border-slate-200 hover:bg-slate-100"
                 >
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-white/80 truncate">{quote.title}</p>
-                    <p className="text-[10px] font-mono text-white/30 mt-0.5">{quote.client.name} · {quote.documentNumber}</p>
+                    <p className="text-sm font-medium text-slate-700 truncate">{quote.title}</p>
+                    <p className="text-[10px] font-mono text-slate-400 mt-0.5">{quote.client.name} · {quote.documentNumber}</p>
                   </div>
                   <Badge variant="outline" className={`shrink-0 text-[8px] uppercase ${tone(quote.status)}`}>
                     {quote.status.replace(/_/g, " ")}
@@ -272,7 +272,7 @@ export function Dashboard() {
       )}
 
       {valueLoops.length > 0 && (
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <CardTitle className="text-sm">Value Loops</CardTitle>
           </CardHeader>
@@ -282,7 +282,7 @@ export function Dashboard() {
                 key={loop.id}
                 type="button"
                 onClick={() => navigate(loop.route)}
-                className="rounded-sm border border-white/5 bg-black/20 p-3 text-left transition-colors hover:border-primary/30 hover:bg-white/5"
+                className="rounded-sm border border-slate-200 bg-slate-100 p-3 text-left transition-colors hover:border-primary/30 hover:bg-white/5"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
@@ -301,7 +301,7 @@ export function Dashboard() {
       )}
 
       {agentLanes.length > 0 && (
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <CardTitle className="text-sm">Agent Lanes</CardTitle>
           </CardHeader>
@@ -311,7 +311,7 @@ export function Dashboard() {
                 key={lane.id}
                 type="button"
                 onClick={() => navigate(lane.route)}
-                className="rounded-sm border border-white/5 bg-black/20 p-3 text-left transition-colors hover:border-primary/30 hover:bg-white/5"
+                className="rounded-sm border border-slate-200 bg-slate-100 p-3 text-left transition-colors hover:border-primary/30 hover:bg-white/5"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
@@ -330,7 +330,7 @@ export function Dashboard() {
       )}
 
       {integrationFlows.length > 0 && (
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <CardTitle className="text-sm">Integration Flows</CardTitle>
           </CardHeader>
@@ -340,7 +340,7 @@ export function Dashboard() {
                 key={flow.id}
                 type="button"
                 onClick={() => navigate(flow.route)}
-                className="rounded-sm border border-white/5 bg-black/20 p-3 text-left transition-colors hover:border-primary/30 hover:bg-white/5"
+                className="rounded-sm border border-slate-200 bg-slate-100 p-3 text-left transition-colors hover:border-primary/30 hover:bg-white/5"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
@@ -359,7 +359,7 @@ export function Dashboard() {
       )}
 
       {adapterGaps.length > 0 && (
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <div className="flex items-center justify-between gap-3">
               <CardTitle className="text-sm">Adapter Gaps</CardTitle>
@@ -372,7 +372,7 @@ export function Dashboard() {
                 key={gap.id}
                 type="button"
                 onClick={() => navigate(gap.affectedRoutes[0] || "/admin")}
-                className="rounded-sm border border-white/5 bg-black/20 p-3 text-left transition-colors hover:border-primary/30 hover:bg-white/5"
+                className="rounded-sm border border-slate-200 bg-slate-100 p-3 text-left transition-colors hover:border-primary/30 hover:bg-white/5"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
@@ -391,7 +391,7 @@ export function Dashboard() {
       )}
 
       {bootstrap.rollout && (
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
@@ -412,7 +412,7 @@ export function Dashboard() {
           <CardContent className="grid gap-4 p-4 pt-0 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="grid gap-2 sm:grid-cols-2">
               {bootstrap.rollout.workPackets.slice(0, 4).map((packet) => (
-                <div key={packet.id} className="rounded-sm border border-white/5 bg-black/20 p-3">
+                <div key={packet.id} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
                   <div className="flex items-start justify-between gap-2">
                     <p className="text-sm font-medium">{packet.title}</p>
                     <Badge variant="outline" className={`shrink-0 text-[8px] uppercase ${tone(packet.status)}`}>
@@ -423,7 +423,7 @@ export function Dashboard() {
                 </div>
               ))}
             </div>
-            <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+            <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
               <p className="text-[10px] uppercase text-muted-foreground">Parked signal</p>
               {bootstrap.rollout.signals.slice(0, 1).map((signal) => (
                 <div key={signal.id} className="mt-2">
@@ -445,13 +445,13 @@ export function Dashboard() {
       )}
 
       <div className="grid gap-5 xl:grid-cols-[1fr_0.8fr]">
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <CardTitle className="text-sm">Modules</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-2 p-4 pt-0 md:grid-cols-2">
             {modules.map((module) => (
-              <div key={module.id} className="flex items-center justify-between gap-3 rounded-sm border border-white/5 bg-black/20 p-3">
+              <div key={module.id} className="flex items-center justify-between gap-3 rounded-sm border border-slate-200 bg-slate-100 p-3">
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium">{module.label}</p>
                 <p className={`text-[10px] uppercase ${tone(module.status)}`}>{module.status.replace(/-/g, " ")}</p>
@@ -464,13 +464,13 @@ export function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <CardTitle className="text-sm">Work</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 p-4 pt-0">
             {tasks.map((task) => (
-              <div key={task.id} className="flex items-center justify-between gap-3 rounded-sm border border-white/5 bg-black/20 p-3">
+              <div key={task.id} className="flex items-center justify-between gap-3 rounded-sm border border-slate-200 bg-slate-100 p-3">
                 <p className="truncate text-sm">{task.title}</p>
                 <Badge variant="outline" className={`shrink-0 text-[9px] uppercase ${tone(task.status)}`}>
                   {task.status.replace(/-/g, " ")}

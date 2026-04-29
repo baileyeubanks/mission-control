@@ -261,7 +261,7 @@ export function Pipeline() {
               className="h-9 rounded-md border border-slate-200 bg-slate-100 pl-9 pr-3 text-xs text-slate-900 outline-none focus:border-brand-accent-glow/50 placeholder:text-slate-400 w-48"
             />
           </div>
-          <Button variant="ghost" size="icon" onClick={() => void refresh()} className="hover:bg-white/[0.04]">
+          <Button variant="ghost" size="icon" onClick={() => void refresh()} className="hover:bg-slate-100">
             <RefreshCcw className="h-4 w-4 text-slate-400" />
           </Button>
         </div>
@@ -327,7 +327,7 @@ export function Pipeline() {
                         key={card.id}
                         type="button"
                         onClick={() => setSelectedCard(card)}
-                        className="w-full p-3 text-left transition-colors hover:border-slate-200 hover:bg-white/[0.04]"
+                        className="w-full p-3 text-left transition-colors hover:border-slate-200 hover:bg-slate-100"
                       >
                         <p className="text-xs font-medium text-slate-800 truncate">{card.title}</p>
                         <p className="text-[10px] font-mono text-slate-400 mt-0.5 truncate">{card.clientName}</p>
@@ -357,11 +357,11 @@ export function Pipeline() {
 
       {/* Detail Panel */}
       {selectedCard && selectedQuote && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4">
           <div className="w-full max-w-lg p-6 space-y-4 max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-display tracking-[0.06em]">Deal Detail</h2>
-              <Button variant="ghost" size="icon" onClick={() => setSelectedCard(null)} className="hover:bg-white/[0.04]">
+              <Button variant="ghost" size="icon" onClick={() => setSelectedCard(null)} className="hover:bg-slate-100">
                 <XCircle className="h-4 w-4 text-slate-400" />
               </Button>
             </div>
@@ -399,12 +399,12 @@ export function Pipeline() {
               {(selectedQuote.status === "accepted" || selectedQuote.status === "ready_to_invoice") && (
                 <>
                   {!productionIds.has(selectedQuote.id) ? (
-                    <Button size="sm" variant="outline" onClick={() => moveToProduction(selectedQuote.id)} className="border-slate-200 text-xs hover:bg-white/[0.04]">
+                    <Button size="sm" variant="outline" onClick={() => moveToProduction(selectedQuote.id)} className="border-slate-200 text-xs hover:bg-slate-100">
                       <Target className="mr-2 h-3.5 w-3.5" />
                       Mark In Production
                     </Button>
                   ) : (
-                    <Button size="sm" variant="outline" onClick={() => removeFromProduction(selectedQuote.id)} className="border-slate-200 text-xs hover:bg-white/[0.04]">
+                    <Button size="sm" variant="outline" onClick={() => removeFromProduction(selectedQuote.id)} className="border-slate-200 text-xs hover:bg-slate-100">
                       <CheckCircle2 className="mr-2 h-3.5 w-3.5" />
                       Production Complete
                     </Button>

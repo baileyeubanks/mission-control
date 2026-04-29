@@ -49,7 +49,7 @@ export function StripeCheckout() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-100">
+      <div className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-900">
         <div className="flex flex-col items-center gap-3">
           <Loader2 className="h-8 w-8 animate-spin text-emerald-500" />
           <p className="text-sm text-zinc-400">Preparing secure checkout...</p>
@@ -60,10 +60,10 @@ export function StripeCheckout() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-100 p-6">
+      <div className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-900 p-6">
         <div className="w-full max-w-md rounded-xl border border-red-500/20 bg-red-950/20 p-6 text-center">
           <AlertCircle className="mx-auto h-8 w-8 text-red-400" />
-          <h2 className="mt-3 text-lg font-semibold text-white">Checkout Unavailable</h2>
+          <h2 className="mt-3 text-lg font-semibold text-slate-900">Checkout Unavailable</h2>
           <p className="mt-2 text-sm text-zinc-400">{error}</p>
           <button
             onClick={() => navigate(-1)}
@@ -78,11 +78,11 @@ export function StripeCheckout() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 p-6">
+    <div className="min-h-screen bg-slate-50 text-slate-900 p-6">
       <div className="mx-auto max-w-2xl">
         <button
           onClick={() => navigate(-1)}
-          className="mb-6 inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors"
+          className="mb-6 inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-slate-900 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
@@ -95,7 +95,7 @@ export function StripeCheckout() {
                 <Receipt className="h-5 w-5 text-emerald-500" />
               </div>
               <div>
-                <h1 className="text-lg font-semibold text-white">{invoice.title}</h1>
+                <h1 className="text-lg font-semibold text-slate-900">{invoice.title}</h1>
                 <p className="text-xs text-zinc-400">{invoice.invoiceNumber} &middot; {invoice.client.name}</p>
               </div>
               <div className="ml-auto text-lg font-bold text-emerald-400">{formatCents(invoice.totalCents)}</div>

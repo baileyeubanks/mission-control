@@ -58,7 +58,7 @@ function tone(status: LaneStatus | string) {
   if (status === "healthy") return "border-success/20 bg-success/10 text-success";
   if (status === "degraded") return "border-warning/20 bg-warning/10 text-warning";
   if (status === "broken") return "border-destructive/20 bg-destructive/10 text-destructive";
-  return "border-white/10 bg-white/5 text-muted-foreground";
+  return "border-slate-200 bg-white/5 text-muted-foreground";
 }
 
 function humanLabel(value: string | null | undefined, fallback = "Not set") {
@@ -99,7 +99,7 @@ export function OperatorMap() {
 
   return (
     <div className="space-y-5">
-      <section className="flex flex-col gap-3 rounded-sm border border-white/5 bg-black/20 p-5 md:flex-row md:items-center md:justify-between">
+      <section className="flex flex-col gap-3 rounded-sm border border-slate-200 bg-slate-100 p-5 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="flex items-center gap-2">
             <Map className="h-4 w-4 text-primary" />
@@ -116,7 +116,7 @@ export function OperatorMap() {
       </section>
 
       {!report ? (
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardContent className="p-6">
             <div className="flex items-center gap-3 text-warning">
               <ShieldAlert className="h-4 w-4" />
@@ -137,7 +137,7 @@ export function OperatorMap() {
               { label: "Broken", value: report.summary.broken, status: "broken" },
               { label: "Unknown", value: report.summary.unknown, status: "unknown" },
             ].map((item) => (
-              <Card key={item.label} className="glass border-white/5">
+              <Card key={item.label} className="glass border-slate-200">
                 <CardContent className="flex items-center justify-between p-4">
                   <div>
                     <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{item.label}</p>
@@ -149,7 +149,7 @@ export function OperatorMap() {
             ))}
           </div>
 
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm">Priority lanes</CardTitle>
             </CardHeader>
@@ -161,7 +161,7 @@ export function OperatorMap() {
                 </div>
               ) : (
                 priorityLanes.map((lane) => (
-                  <div key={lane.id} className="grid gap-3 rounded-sm border border-white/5 bg-black/20 p-3 lg:grid-cols-[180px_120px_1fr] lg:items-start">
+                  <div key={lane.id} className="grid gap-3 rounded-sm border border-slate-200 bg-slate-100 p-3 lg:grid-cols-[180px_120px_1fr] lg:items-start">
                     <div>
                       <p className="text-sm font-medium">{lane.label}</p>
                       <p className="mt-1 text-[10px] font-mono uppercase text-muted-foreground">{lane.kind}</p>
@@ -179,13 +179,13 @@ export function OperatorMap() {
             </CardContent>
           </Card>
 
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm">All lanes</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-3 p-4 pt-0">
               {lanes.map((lane) => (
-                <div key={lane.id} className="rounded-sm border border-white/5 bg-black/20 p-4">
+                <div key={lane.id} className="rounded-sm border border-slate-200 bg-slate-100 p-4">
                   <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
@@ -214,7 +214,7 @@ export function OperatorMap() {
                     </div>
                   </div>
 
-                  <div className="mt-4 rounded-sm border border-white/5 bg-black/20 p-3">
+                  <div className="mt-4 rounded-sm border border-slate-200 bg-slate-100 p-3">
                     <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
                       <AlertTriangle className="h-3 w-3" />
                       Reasons
@@ -236,7 +236,7 @@ export function OperatorMap() {
             </CardContent>
           </Card>
 
-          <div className="rounded-sm border border-white/5 bg-black/20 p-3 text-[11px] text-muted-foreground">
+          <div className="rounded-sm border border-slate-200 bg-slate-100 p-3 text-[11px] text-muted-foreground">
             Latest report: <span className="font-mono">{payload?.report_path}</span>. Generated{" "}
             <span className="font-mono">{report.generated_at}</span>. Network probes:{" "}
             <span className="font-mono">{report.no_network ? "skipped" : "enabled"}</span>.
@@ -249,7 +249,7 @@ export function OperatorMap() {
 
 function ActionList({ title, items }: { title: string; items: string[] }) {
   return (
-    <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+    <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
       <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{title}</p>
       <ul className="mt-2 grid gap-1">
         {(items.length > 0 ? items : ["None recorded."]).slice(0, 5).map((item) => (

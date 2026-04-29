@@ -12,7 +12,7 @@ export function Layout() {
 
   if (!isAuthReady) {
     return (
-      <div className="flex h-screen items-center justify-center bg-brand-base text-white/40 font-mono uppercase tracking-widest">
+      <div className="flex h-screen items-center justify-center bg-slate-50 text-slate-500 font-mono uppercase tracking-widest">
         <Activity className="h-4 w-4 animate-pulse mr-3 text-brand-accent-glow" />
         Initialising_Mission_Control...
       </div>
@@ -21,10 +21,10 @@ export function Layout() {
 
   if (!user) {
     return (
-      <div className="flex h-screen items-center justify-center bg-brand-base relative overflow-hidden">
+      <div className="flex h-screen items-center justify-center bg-slate-50 relative overflow-hidden">
         {/* Ambient glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(61,125,216,0.08)_0%,transparent_60%)]" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle_at_top_right,rgba(61,125,216,0.04)_0%,transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(61,125,216,0.04)_0%,transparent_60%)]" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle_at_top_right,rgba(61,125,216,0.03)_0%,transparent_50%)]" />
 
         <div className="relative z-10 text-center space-y-8 max-w-sm p-6 md:p-12 glass-panel">
           <div className="space-y-3">
@@ -32,18 +32,18 @@ export function Layout() {
               <Zap className="h-8 w-8 text-brand-accent-glow" />
             </div>
             <h1 className="text-3xl md:text-4xl font-display tracking-[0.1em]">MISSION CONTROL</h1>
-            <p className="text-[10px] font-mono text-white/40 uppercase tracking-[0.3em]">
+            <p className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em]">
               ACS Operations — CCO OS
             </p>
           </div>
-          <div className="h-px w-16 bg-brand-accent-glow/30 mx-auto" />
+          <div className="h-px w-16 bg-brand-accent-glow/40 mx-auto" />
           <Button
             onClick={signInWithGoogle}
             className="w-full btn-mission"
           >
             Establish Authority
           </Button>
-          <p className="text-[9px] font-mono text-white/20 uppercase tracking-[0.2em]">
+          <p className="text-[9px] font-mono text-slate-400 uppercase tracking-[0.2em]">
             Local recovery available
           </p>
         </div>
@@ -52,14 +52,14 @@ export function Layout() {
   }
 
   return (
-    <div className="flex h-screen w-full flex-col overflow-hidden bg-brand-base selection:bg-brand-accent-glow/30">
+    <div className="flex h-screen w-full flex-col overflow-hidden bg-slate-50 selection:bg-brand-accent-glow/20">
       {/* Title bar */}
-      <div className="h-7 w-full bg-black/40 border-b border-white/5 flex items-center justify-between px-3 md:px-4 z-50">
+      <div className="h-7 w-full bg-white border-b border-slate-200 flex items-center justify-between px-3 md:px-4 z-50">
         <div className="flex items-center gap-2">
           <Activity className="h-3 w-3 text-success" />
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-success">Local</span>
         </div>
-        <span className="truncate text-[10px] font-mono text-white/30 uppercase tracking-wider">
+        <span className="truncate text-[10px] font-mono text-slate-400 uppercase tracking-wider">
           Mission Control — ACS + CCO
         </span>
       </div>
@@ -68,7 +68,7 @@ export function Layout() {
         {/* Mobile overlay */}
         {mobileMenuOpen && (
           <div
-            className="absolute inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+            className="absolute inset-0 z-40 bg-slate-900/30 backdrop-blur-sm md:hidden"
             onClick={() => setMobileMenuOpen(false)}
           />
         )}

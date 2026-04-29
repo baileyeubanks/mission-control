@@ -135,7 +135,7 @@ export function ClientDocumentPortal({ companyAccount }: ClientDocumentPortalPro
   return (
     <div className="min-h-screen bg-background text-foreground">
       <main className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-6 md:py-10">
-        <header className="flex flex-col gap-3 rounded-sm border border-white/5 bg-black/20 p-4 md:flex-row md:items-center md:justify-between">
+        <header className="flex flex-col gap-3 rounded-sm border border-slate-200 bg-slate-100 p-4 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-primary">{companyLabel(companyAccount)}</p>
             <h1 className="mt-1 text-2xl font-display tracking-normal">{portalLanguage.portal}</h1>
@@ -154,7 +154,7 @@ export function ClientDocumentPortal({ companyAccount }: ClientDocumentPortalPro
 
         <div className="grid gap-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(420px,1.15fr)]">
           <section className="space-y-4">
-            <Card className="glass border-white/5">
+            <Card className="glass border-slate-200">
               <CardHeader className="py-4">
                 <CardTitle className="text-sm">{quote?.kind === "proposal" ? "Proposal" : "Quote"}</CardTitle>
               </CardHeader>
@@ -173,7 +173,7 @@ export function ClientDocumentPortal({ companyAccount }: ClientDocumentPortalPro
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <a href={`/api/root/quotes/${quote.id}/pdf`} target="_blank" rel="noreferrer">
-                        <Button size="sm" variant="outline" className="border-white/10 text-xs">
+                        <Button size="sm" variant="outline" className="border-slate-200 text-xs">
                           <Download className="mr-2 h-3.5 w-3.5" />
                           PDF
                         </Button>
@@ -183,7 +183,7 @@ export function ClientDocumentPortal({ companyAccount }: ClientDocumentPortalPro
                         Approve
                       </Button>
                     </div>
-                    <form className="grid gap-2 rounded-sm border border-white/5 bg-black/20 p-3" onSubmit={(event) => void requestChanges(event)}>
+                    <form className="grid gap-2 rounded-sm border border-slate-200 bg-slate-100 p-3" onSubmit={(event) => void requestChanges(event)}>
                       <label className="text-[9px] uppercase text-muted-foreground" htmlFor="change-note">Request changes</label>
                       <textarea
                         id="change-note"
@@ -192,7 +192,7 @@ export function ClientDocumentPortal({ companyAccount }: ClientDocumentPortalPro
                         placeholder="Describe the change needed"
                         className="min-h-20 rounded-md border border-input bg-transparent px-3 py-2 text-sm"
                       />
-                      <Button size="sm" variant="outline" disabled={!quote || quote.status === "invoiced"} className="w-fit border-white/10 text-xs">
+                      <Button size="sm" variant="outline" disabled={!quote || quote.status === "invoiced"} className="w-fit border-slate-200 text-xs">
                         <MessageSquare className="mr-2 h-3.5 w-3.5" />
                         Submit request
                       </Button>
@@ -204,7 +204,7 @@ export function ClientDocumentPortal({ companyAccount }: ClientDocumentPortalPro
               </CardContent>
             </Card>
 
-            <Card className="glass border-white/5">
+            <Card className="glass border-slate-200">
               <CardHeader className="py-4">
                 <CardTitle className="text-sm">Invoice</CardTitle>
               </CardHeader>
@@ -218,7 +218,7 @@ export function ClientDocumentPortal({ companyAccount }: ClientDocumentPortalPro
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <a href={`/api/root/invoices/${invoice.id}/pdf`} target="_blank" rel="noreferrer">
-                        <Button size="sm" variant="outline" className="border-white/10 text-xs">
+                        <Button size="sm" variant="outline" className="border-slate-200 text-xs">
                           <Download className="mr-2 h-3.5 w-3.5" />
                           Invoice PDF
                         </Button>
@@ -235,7 +235,7 @@ export function ClientDocumentPortal({ companyAccount }: ClientDocumentPortalPro
               </CardContent>
             </Card>
 
-            <Card className="glass border-white/5">
+            <Card className="glass border-slate-200">
               <CardContent className="grid gap-3 p-4">
                 {portalLanguage.stages.map((stage) => (
                   <div key={stage} className="flex items-center gap-3">
@@ -248,18 +248,18 @@ export function ClientDocumentPortal({ companyAccount }: ClientDocumentPortalPro
             </Card>
           </section>
 
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="flex flex-row items-center justify-between py-4">
               <CardTitle className="text-sm">Document Preview</CardTitle>
               <FileText className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent className="p-3 pt-0">
               {quote?.previewHtml ? (
-                <iframe title="Client document preview" srcDoc={quote.previewHtml} className="h-[720px] w-full rounded-sm border border-white/10 bg-white" />
+                <iframe title="Client document preview" srcDoc={quote.previewHtml} className="h-[720px] w-full rounded-sm border border-slate-200 bg-white" />
               ) : invoice?.previewHtml ? (
-                <iframe title="Client invoice preview" srcDoc={invoice.previewHtml} className="h-[720px] w-full rounded-sm border border-white/10 bg-white" />
+                <iframe title="Client invoice preview" srcDoc={invoice.previewHtml} className="h-[720px] w-full rounded-sm border border-slate-200 bg-white" />
               ) : (
-                <div className="flex h-[480px] items-center justify-center rounded-sm border border-white/5 bg-black/20 text-sm text-muted-foreground">
+                <div className="flex h-[480px] items-center justify-center rounded-sm border border-slate-200 bg-slate-100 text-sm text-muted-foreground">
                   No preview available.
                 </div>
               )}
@@ -267,7 +267,7 @@ export function ClientDocumentPortal({ companyAccount }: ClientDocumentPortalPro
           </Card>
         </div>
 
-        <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-white/5 py-4 text-[10px] uppercase text-muted-foreground">
+        <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 py-4 text-[10px] uppercase text-muted-foreground">
           <span>Mission Control secure portal</span>
           <Link to="/admin/onboarding" className="text-primary">Access matrix</Link>
         </footer>
@@ -278,7 +278,7 @@ export function ClientDocumentPortal({ companyAccount }: ClientDocumentPortalPro
 
 function Metric({ label, value, tone = "" }: { label: string; value: string; tone?: string }) {
   return (
-    <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+    <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
       <p className="text-[9px] uppercase text-muted-foreground">{label}</p>
       <p className={`mt-1 break-words text-sm font-medium ${tone}`}>{value}</p>
     </div>

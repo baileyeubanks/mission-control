@@ -16,7 +16,7 @@ function approvalTone(status: ApprovalRequest["status"]) {
   if (status === "approved") return "bg-success/10 border-success/20 text-success";
   if (status === "rejected") return "bg-destructive/10 border-destructive/20 text-destructive";
   if (status === "requested") return "bg-warning/10 border-warning/20 text-warning";
-  return "bg-white/5 border-white/10 text-muted-foreground";
+  return "bg-white/5 border-slate-200 text-muted-foreground";
 }
 
 export function Approvals() {
@@ -66,7 +66,7 @@ export function Approvals() {
       <section className="glass-panel p-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-display tracking-[0.06em]">Approvals & Governance</h1>
-          <div className="flex items-center gap-2 text-[10px] font-mono text-white/30 uppercase mt-1">
+          <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400 uppercase mt-1">
             <Database className="h-3 w-3 text-success" />
             Authority: Recovery_Governance
           </div>
@@ -89,10 +89,10 @@ export function Approvals() {
         ) : requests.length === 0 ? (
           <div className="col-span-full text-center py-12 text-muted-foreground font-mono text-xs uppercase tracking-widest">Queue_Clear: No_Pending_Approvals</div>
         ) : requests.map((req) => (
-          <Card key={req.id} className="flex flex-col glass border-white/5 group hover:border-white/10 transition-colors">
-            <CardHeader className="pb-3 border-b border-white/5 bg-black/20">
+          <Card key={req.id} className="flex flex-col glass border-slate-200 group hover:border-slate-200 transition-colors">
+            <CardHeader className="pb-3 border-b border-slate-200 bg-slate-100">
               <div className="flex items-center justify-between mb-1">
-                <Badge variant="outline" className="text-[9px] font-mono uppercase tracking-tighter bg-black/40 border-white/10">{req.id}</Badge>
+                <Badge variant="outline" className="text-[9px] font-mono uppercase tracking-tighter bg-white border-slate-200">{req.id}</Badge>
                 <span className="text-[10px] font-mono text-muted-foreground uppercase flex items-center">
                   <Clock className="h-3 w-3 mr-1" /> 
                   {approvalAgeLabel(req)}
@@ -122,7 +122,7 @@ export function Approvals() {
               <div className="flex gap-2 pt-2">
                 <Button
                   variant="outline"
-                  className="flex-1 h-9 font-mono text-[10px] uppercase border-white/10 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                  className="flex-1 h-9 font-mono text-[10px] uppercase border-slate-200 text-destructive hover:bg-destructive/10 hover:text-destructive"
                   aria-label={`Reject ${req.subject}`}
                   onClick={() => void decideApproval(req.id, "rejected")}
                   disabled={req.status !== "requested" || Boolean(activeDecision)}

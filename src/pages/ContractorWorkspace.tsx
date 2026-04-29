@@ -40,14 +40,14 @@ export function ContractorWorkspace() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <main className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-6 md:py-10">
-        <header className="rounded-sm border border-white/5 bg-black/20 p-4">
+        <header className="rounded-sm border border-slate-200 bg-slate-100 p-4">
           <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-primary">Content Co-op</p>
           <h1 className="mt-1 text-2xl font-display tracking-normal">Contractor Workspace</h1>
           <p className="mt-1 text-sm text-muted-foreground">Assigned production work, review status, deliverables, and handoff gates.</p>
         </header>
 
         <div className="grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(360px,1.1fr)]">
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm">Assignments</CardTitle>
             </CardHeader>
@@ -69,7 +69,7 @@ export function ContractorWorkspace() {
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2">
                     <a href={`/api/root/quotes/${activeProposal.id}/pdf`} target="_blank" rel="noreferrer">
-                      <Button size="sm" variant="outline" className="border-white/10 text-xs">
+                      <Button size="sm" variant="outline" className="border-slate-200 text-xs">
                         <Download className="mr-2 h-3.5 w-3.5" />
                         Scope PDF
                       </Button>
@@ -81,7 +81,7 @@ export function ContractorWorkspace() {
                   </div>
                 </article>
               ) : (
-                <div className="rounded-sm border border-white/5 bg-black/20 p-4 text-sm text-muted-foreground">
+                <div className="rounded-sm border border-slate-200 bg-slate-100 p-4 text-sm text-muted-foreground">
                   No CCO assignments are staged yet.
                 </div>
               )}
@@ -89,7 +89,7 @@ export function ContractorWorkspace() {
           </Card>
 
           <div className="grid gap-4">
-            <Card className="glass border-white/5">
+            <Card className="glass border-slate-200">
               <CardHeader className="py-4">
                 <CardTitle className="text-sm">Production Gates</CardTitle>
               </CardHeader>
@@ -100,7 +100,7 @@ export function ContractorWorkspace() {
                   ["Review link", "Co-Deliver link attaches after app promotion.", FileVideo],
                   ["Due date", "Timeline rolls up to Mission Control tasks.", CalendarClock],
                 ].map(([title, detail, Icon]) => (
-                  <div key={title as string} className="flex gap-3 rounded-sm border border-white/5 bg-black/20 p-3">
+                  <div key={title as string} className="flex gap-3 rounded-sm border border-slate-200 bg-slate-100 p-3">
                     <Icon className="mt-0.5 h-4 w-4 text-primary" />
                     <div>
                       <p className="text-sm font-medium">{title as string}</p>
@@ -111,7 +111,7 @@ export function ContractorWorkspace() {
               </CardContent>
             </Card>
 
-            <Card className="glass border-white/5">
+            <Card className="glass border-slate-200">
               <CardContent className="p-4 text-xs text-muted-foreground">
                 Contractor workspace is intentionally focused: assigned work, current scope, review links, upload gates, and handoff status. It should not expose Root admin controls.
               </CardContent>
@@ -125,7 +125,7 @@ export function ContractorWorkspace() {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+    <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
       <p className="text-[9px] uppercase text-muted-foreground">{label}</p>
       <p className="mt-1 break-words text-sm font-medium">{value}</p>
     </div>

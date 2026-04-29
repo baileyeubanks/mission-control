@@ -17,7 +17,7 @@ function statusTone(status: Packet["status"]): string {
     case "queued":
       return "bg-warning/10 border-warning/20 text-warning";
     default:
-      return "bg-muted/10 border-white/10 text-muted-foreground";
+      return "bg-muted/10 border-slate-200 text-muted-foreground";
   }
 }
 
@@ -87,7 +87,7 @@ export function Packets() {
             Authority: Packet_Runtime
           </div>
         </div>
-        <Button variant="outline" size="sm" className="h-9 font-mono uppercase text-[10px] border-white/10" onClick={() => void refreshPackets()}>
+        <Button variant="outline" size="sm" className="h-9 font-mono uppercase text-[10px] border-slate-200" onClick={() => void refreshPackets()}>
           <RefreshCcw className="mr-2 h-3.5 w-3.5" />
           Refresh_Queue
         </Button>
@@ -100,7 +100,7 @@ export function Packets() {
           { label: "Succeeded", value: counts.succeeded || 0, tone: "text-success" },
           { label: "Failed", value: counts.failed || 0, tone: "text-destructive" },
         ].map((item) => (
-          <Card key={item.label} className="glass border-white/5">
+          <Card key={item.label} className="glass border-slate-200">
             <CardHeader className="pb-2">
               <CardTitle className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">{item.label}</CardTitle>
             </CardHeader>
@@ -111,8 +111,8 @@ export function Packets() {
         ))}
       </div>
 
-      <Card className="flex-1 glass border-white/5 overflow-hidden">
-        <CardHeader className="border-b border-white/5 bg-black/20">
+      <Card className="flex-1 glass border-slate-200 overflow-hidden">
+        <CardHeader className="border-b border-slate-200 bg-slate-100">
           <CardTitle className="text-xs font-display tracking-widest text-muted-foreground">Queue Ledger</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
@@ -169,7 +169,7 @@ export function Packets() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-8 font-mono text-[9px] uppercase border-white/10"
+                        className="h-8 font-mono text-[9px] uppercase border-slate-200"
                         onClick={() => void handleRetry(packet.id)}
                         disabled={actingOn === packet.id}
                       >
@@ -181,7 +181,7 @@ export function Packets() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-8 font-mono text-[9px] uppercase border-white/10 text-destructive"
+                        className="h-8 font-mono text-[9px] uppercase border-slate-200 text-destructive"
                         onClick={() => void handleCancel(packet.id)}
                         disabled={actingOn === packet.id}
                       >

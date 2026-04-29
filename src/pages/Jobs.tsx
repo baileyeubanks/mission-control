@@ -155,7 +155,7 @@ export function Jobs() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center border border-white/5 rounded-sm p-1 bg-black/20">
+          <div className="flex items-center border border-slate-200 rounded-sm p-1 bg-slate-100">
             <Button variant="ghost" size="sm" className="h-7 px-2 bg-white/5" aria-label="List view" title="List view is active." disabled><List className="h-3.5 w-3.5" /></Button>
             <Button
               variant="ghost"
@@ -186,7 +186,7 @@ export function Jobs() {
           { label: "Scheduled", value: scheduledJobs.length, detail: "Have a service window" },
           { label: "Readiness blocked", value: readinessBlockedJobs.length, detail: "Needs ACS crew readiness" },
         ].map((item) => (
-          <Card key={item.label} className="glass border-white/5 p-4">
+          <Card key={item.label} className="glass border-slate-200 p-4">
             <p className="text-xs text-muted-foreground">{item.label}</p>
             <div className="mt-2 flex items-end justify-between gap-3">
               <p className="text-2xl font-display">{item.value}</p>
@@ -197,7 +197,7 @@ export function Jobs() {
       </div>
 
       {selectedJob && (
-        <Card className="glass border-white/5 p-4">
+        <Card className="glass border-slate-200 p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
@@ -210,10 +210,10 @@ export function Jobs() {
                   {selectedJob.clientName || selectedJob.clientEmail || "Unassigned client"} • {humanLabel(selectedJob.status)}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <span className="rounded-sm border border-white/10 bg-black/20 px-2 py-1 text-[11px] text-muted-foreground">
+                  <span className="rounded-sm border border-slate-200 bg-slate-100 px-2 py-1 text-[11px] text-muted-foreground">
                     {selectedJob.scheduledStart ? new Date(selectedJob.scheduledStart).toLocaleString() : "Needs scheduling"}
                   </span>
-                  <span className="rounded-sm border border-white/10 bg-black/20 px-2 py-1 text-[11px] text-muted-foreground">
+                  <span className="rounded-sm border border-slate-200 bg-slate-100 px-2 py-1 text-[11px] text-muted-foreground">
                     {typeof selectedJob.totalPrice === "number" ? `$${(selectedJob.totalPrice / 100).toFixed(2)}` : "No price yet"}
                   </span>
                   {selectedJob.assignedTeam === "blocked_by_readiness" && (
@@ -231,7 +231,7 @@ export function Jobs() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-9 text-xs border-white/10"
+                className="h-9 text-xs border-slate-200"
                 onClick={() => void handleDraftUpdate()}
                 disabled={isDraftingUpdate}
                 aria-label="Queue_Update_Draft"
@@ -240,7 +240,7 @@ export function Jobs() {
                 Draft update
               </Button>
               {latestDraftPacket && (
-                <div className="max-w-xl rounded-sm border border-white/5 bg-black/20 p-3">
+                <div className="max-w-xl rounded-sm border border-slate-200 bg-slate-100 p-3">
                   <div className="flex items-center justify-between gap-3">
                     <p className="text-xs font-medium">Latest draft</p>
                     <Badge variant="outline" className="text-[10px]">
@@ -258,8 +258,8 @@ export function Jobs() {
         </Card>
       )}
 
-      <Card className="glass border-white/5">
-        <div className="p-4 border-b border-white/5 bg-black/20">
+      <Card className="glass border-slate-200">
+        <div className="p-4 border-b border-slate-200 bg-slate-100">
           <div className="flex items-center gap-3">
             <div className="relative flex-1">
               <SearchInput value={searchQuery} onChange={setSearchQuery} />
@@ -267,7 +267,7 @@ export function Jobs() {
             <Button
               variant="outline"
               size="sm"
-              className="h-9 font-mono uppercase text-[10px] border-white/10"
+              className="h-9 font-mono uppercase text-[10px] border-slate-200"
               disabled
               title="Advanced job filters are not wired yet. Search is active."
             >
@@ -279,7 +279,7 @@ export function Jobs() {
 
         <Table>
           <TableHeader>
-            <TableRow className="border-white/5 hover:bg-transparent">
+            <TableRow className="border-slate-200 hover:bg-transparent">
               <TableHead className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Job</TableHead>
               <TableHead className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Client</TableHead>
               <TableHead className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Status</TableHead>
@@ -289,13 +289,13 @@ export function Jobs() {
           </TableHeader>
           <TableBody>
             {loading ? (
-              <TableRow className="border-white/5 hover:bg-transparent">
+              <TableRow className="border-slate-200 hover:bg-transparent">
                 <TableCell colSpan={5} className="py-16 text-center">
                   <Loader2 className="h-5 w-5 animate-spin mx-auto text-muted-foreground/30" />
                 </TableCell>
               </TableRow>
             ) : filteredJobs.length === 0 ? (
-              <TableRow className="border-white/5 hover:bg-transparent">
+              <TableRow className="border-slate-200 hover:bg-transparent">
                 <TableCell colSpan={5} className="py-16 text-center text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
                   No jobs found
                 </TableCell>
@@ -304,7 +304,7 @@ export function Jobs() {
               filteredJobs.map((job) => (
                 <TableRow
                   key={job.id}
-                  className={`border-white/5 cursor-pointer ${selectedJobId === job.id ? "bg-white/5" : "hover:bg-white/5"}`}
+                  className={`border-slate-200 cursor-pointer ${selectedJobId === job.id ? "bg-white/5" : "hover:bg-white/5"}`}
                   onClick={() => setSelectedJobId(job.id)}
                 >
                   <TableCell>
@@ -350,7 +350,7 @@ function SearchInput({ value, onChange }: { value: string; onChange: (value: str
   return (
     <Input
       placeholder="Search jobs"
-      className="bg-black/20 border-white/5 text-xs h-9"
+      className="bg-slate-100 border-slate-200 text-xs h-9"
       value={value}
       onChange={(event) => onChange(event.target.value)}
     />

@@ -224,7 +224,7 @@ export function VideoDashboard() {
             <Crosshair className="h-5 w-5 text-brand-accent-glow" />
             <h1 className="text-2xl font-display tracking-[0.06em]">War Room</h1>
           </div>
-          <p className="mt-1 text-xs text-white/40 font-mono uppercase tracking-widest">
+          <p className="mt-1 text-xs text-slate-500 font-mono uppercase tracking-widest">
             Tactical Video Operations Center
           </p>
         </div>
@@ -233,8 +233,8 @@ export function VideoDashboard() {
             <Zap className="mr-1 h-3 w-3" />
             {cutterReady ? "Phantom Cutter Online" : "Phantom Cutter Offline"}
           </Badge>
-          <Button variant="ghost" size="icon" onClick={() => void refresh()} title="Refresh" className="hover:bg-white/[0.04]">
-            <RefreshCcw className="h-4 w-4 text-white/30" />
+          <Button variant="ghost" size="icon" onClick={() => void refresh()} title="Refresh" className="hover:bg-slate-100">
+            <RefreshCcw className="h-4 w-4 text-slate-400" />
           </Button>
         </div>
       </section>
@@ -251,11 +251,11 @@ export function VideoDashboard() {
             key={action.path}
             type="button"
             onClick={() => navigate(action.path)}
-            className="flex items-center justify-between gap-3 glass-panel p-4 text-left transition-colors hover:border-white/10 hover:bg-white/[0.04]"
+            className="flex items-center justify-between gap-3 glass-panel p-4 text-left transition-colors hover:border-slate-200 hover:bg-slate-100"
           >
             <div>
-              <p className="text-sm font-medium text-white/80">{action.label}</p>
-              <p className="mt-1 text-xs text-white/30">{action.detail}</p>
+              <p className="text-sm font-medium text-slate-700">{action.label}</p>
+              <p className="mt-1 text-xs text-slate-400">{action.detail}</p>
             </div>
             <action.icon className="h-4 w-4 text-brand-accent-glow" />
           </button>
@@ -309,7 +309,7 @@ export function VideoDashboard() {
                     className={`flex items-center gap-2 rounded-sm border px-3 py-2 text-xs transition-colors ${
                       processMode === m.id
                         ? "border-primary/30 bg-primary/10 text-primary"
-                        : "border-white/5 bg-black/20 text-muted-foreground hover:bg-white/5"
+                        : "border-slate-200 bg-slate-100 text-muted-foreground hover:bg-white/5"
                     }`}
                   >
                     <m.icon className="h-3.5 w-3.5" />
@@ -321,7 +321,7 @@ export function VideoDashboard() {
               {/* Drop Zone */}
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="cursor-pointer rounded-sm border-2 border-dashed border-white/10 bg-black/20 p-8 text-center transition-colors hover:border-primary/30 hover:bg-white/5"
+                className="cursor-pointer rounded-sm border-2 border-dashed border-slate-200 bg-slate-100 p-8 text-center transition-colors hover:border-primary/30 hover:bg-white/5"
               >
                 <UploadCloud className="mx-auto h-8 w-8 text-muted-foreground/40" />
                 <p className="mt-3 text-sm text-muted-foreground">
@@ -339,7 +339,7 @@ export function VideoDashboard() {
                     <span>Processing</span>
                     <span>{Math.round(processProgress.ratio * 100)}%</span>
                   </div>
-                  <div className="h-1.5 w-full rounded-full bg-black/40">
+                  <div className="h-1.5 w-full rounded-full bg-white">
                     <div
                       className="h-full rounded-full bg-primary transition-all"
                       style={{ width: `${processProgress.ratio * 100}%` }}
@@ -356,7 +356,7 @@ export function VideoDashboard() {
                     { label: "Resolution", value: `${videoInfo.width}x${videoInfo.height}` },
                     { label: "FPS", value: String(videoInfo.fps) },
                   ].map((i) => (
-                    <div key={i.label} className="rounded-sm border border-white/5 bg-black/20 p-2 text-center">
+                    <div key={i.label} className="rounded-sm border border-slate-200 bg-slate-100 p-2 text-center">
                       <p className="text-[9px] font-mono uppercase text-muted-foreground">{i.label}</p>
                       <p className="text-sm font-display">{i.value}</p>
                     </div>
@@ -368,7 +368,7 @@ export function VideoDashboard() {
               {processResult.length > 0 && (
                 <div className="grid gap-2 sm:grid-cols-3">
                   {processResult.map((r, i) => (
-                    <div key={i} className="relative rounded-sm border border-white/5 bg-black/20 overflow-hidden">
+                    <div key={i} className="relative rounded-sm border border-slate-200 bg-slate-100 overflow-hidden">
                       {r.type.startsWith("video") ? (
                         <video src={r.url} className="w-full h-24 object-cover" controls />
                       ) : (
@@ -396,7 +396,7 @@ export function VideoDashboard() {
           </Card>
 
           {/* Projects */}
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <div className="flex items-center justify-between gap-3">
                 <CardTitle className="text-sm flex items-center gap-2">
@@ -414,7 +414,7 @@ export function VideoDashboard() {
                   key={p.id}
                   type="button"
                   onClick={() => navigate(`/admin/video/edit?projectId=${p.id}`)}
-                  className="flex flex-col gap-2 rounded-sm border border-white/5 bg-black/20 p-3 text-left transition-colors hover:border-primary/30 hover:bg-white/5"
+                  className="flex flex-col gap-2 rounded-sm border border-slate-200 bg-slate-100 p-3 text-left transition-colors hover:border-primary/30 hover:bg-white/5"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <p className="truncate text-sm font-medium">{p.name}</p>
@@ -425,7 +425,7 @@ export function VideoDashboard() {
                   <p className="line-clamp-1 text-xs text-muted-foreground">{p.description}</p>
                   <div className="flex items-center gap-1.5">
                     {p.tags.slice(0, 3).map((t) => (
-                      <span key={t} className="rounded-sm bg-black/30 px-1.5 py-0.5 text-[9px] font-mono uppercase text-muted-foreground">
+                      <span key={t} className="rounded-sm bg-slate-100 px-1.5 py-0.5 text-[9px] font-mono uppercase text-muted-foreground">
                         {t}
                       </span>
                     ))}
@@ -433,7 +433,7 @@ export function VideoDashboard() {
                 </button>
               ))}
               {projects.length === 0 && (
-                <div className="col-span-full rounded-sm border border-white/5 bg-black/20 p-6 text-center text-xs text-muted-foreground">
+                <div className="col-span-full rounded-sm border border-slate-200 bg-slate-100 p-6 text-center text-xs text-muted-foreground">
                   No active missions. Create one in the field.
                 </div>
               )}
@@ -444,7 +444,7 @@ export function VideoDashboard() {
         {/* RIGHT COLUMN — Intel & Comms */}
         <div className="space-y-5">
           {/* Competitor URL Analyzer */}
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm flex items-center gap-2">
                 <Globe className="h-4 w-4 text-primary" />
@@ -458,7 +458,7 @@ export function VideoDashboard() {
                   placeholder="Paste competitor video URL..."
                   value={competitorUrl}
                   onChange={(e) => setCompetitorUrl(e.target.value)}
-                  className="flex-1 rounded-sm border border-white/10 bg-black/30 px-3 py-2 text-xs text-foreground outline-none focus:border-primary/50"
+                  className="flex-1 rounded-sm border border-slate-200 bg-slate-100 px-3 py-2 text-xs text-foreground outline-none focus:border-primary/50"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") void handleCompetitorAnalyze();
                   }}
@@ -468,7 +468,7 @@ export function VideoDashboard() {
                 </Button>
               </div>
               {urlAnalysis && (
-                <div className="max-h-64 overflow-y-auto rounded-sm border border-white/5 bg-black/20 p-3 text-xs whitespace-pre-wrap text-muted-foreground">
+                <div className="max-h-64 overflow-y-auto rounded-sm border border-slate-200 bg-slate-100 p-3 text-xs whitespace-pre-wrap text-muted-foreground">
                   {urlAnalysis}
                 </div>
               )}
@@ -476,7 +476,7 @@ export function VideoDashboard() {
           </Card>
 
           {/* Active Agents */}
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm flex items-center gap-2">
                 <Radio className="h-4 w-4 text-primary" />
@@ -486,7 +486,7 @@ export function VideoDashboard() {
             <CardContent className="space-y-2 p-4 pt-0">
               {activeAgents.length > 0 ? (
                 activeAgents.map((a) => (
-                  <div key={a.id} className="flex items-start justify-between gap-2 rounded-sm border border-white/5 bg-black/20 p-2.5">
+                  <div key={a.id} className="flex items-start justify-between gap-2 rounded-sm border border-slate-200 bg-slate-100 p-2.5">
                     <div className="min-w-0">
                       <p className="truncate text-xs font-medium">{a.prompt.slice(0, 50)}...</p>
                       <p className="mt-0.5 text-[9px] font-mono uppercase text-muted-foreground">{a.agentRole.replace(/_/g, "-")}</p>
@@ -504,7 +504,7 @@ export function VideoDashboard() {
           </Card>
 
           {/* Deliveries */}
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm flex items-center gap-2">
                 <Rocket className="h-4 w-4 text-primary" />
@@ -514,7 +514,7 @@ export function VideoDashboard() {
             <CardContent className="space-y-2 p-4 pt-0">
               {deliveries.length > 0 ? (
                 deliveries.map((d) => (
-                  <div key={d.id} className="flex items-start justify-between gap-2 rounded-sm border border-white/5 bg-black/20 p-2.5">
+                  <div key={d.id} className="flex items-start justify-between gap-2 rounded-sm border border-slate-200 bg-slate-100 p-2.5">
                     <div className="min-w-0">
                       <p className="truncate text-xs font-medium">{d.title}</p>
                       <p className="mt-0.5 text-[9px] font-mono uppercase text-muted-foreground">{d.platform.replace(/_/g, " ")}</p>
@@ -536,7 +536,7 @@ export function VideoDashboard() {
           </Card>
 
           {/* Status Board */}
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm flex items-center gap-2">
                 <Terminal className="h-4 w-4 text-primary" />
@@ -562,7 +562,7 @@ export function VideoDashboard() {
 
 function StatusRow({ label, active }: { label: string; active: boolean }) {
   return (
-    <div className="flex items-center justify-between rounded-sm border border-white/5 bg-black/20 px-3 py-2">
+    <div className="flex items-center justify-between rounded-sm border border-slate-200 bg-slate-100 px-3 py-2">
       <span className="text-xs text-muted-foreground">{label}</span>
       <div className="flex items-center gap-1.5">
         <div className={`h-1.5 w-1.5 rounded-full ${active ? "bg-success animate-pulse" : "bg-destructive"}`} />
@@ -594,7 +594,7 @@ function IntelReportCard({ report }: { report: VideoIntelReport }) {
           <div className="space-y-1">
             {report.shotList.slice(0, 5).map((shot, i) => (
               <div key={i} className="flex items-center gap-2 text-xs">
-                <span className="shrink-0 rounded-sm bg-black/30 px-1.5 py-0.5 text-[9px] font-mono text-muted-foreground">
+                <span className="shrink-0 rounded-sm bg-slate-100 px-1.5 py-0.5 text-[9px] font-mono text-muted-foreground">
                   {Math.floor(shot.timeStart)}s
                 </span>
                 <span className="truncate">
@@ -611,7 +611,7 @@ function IntelReportCard({ report }: { report: VideoIntelReport }) {
         <div className="space-y-1.5">
           <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Viral Moments</p>
           {report.viralMoments.map((vm, i) => (
-            <div key={i} className="rounded-sm border border-white/5 bg-black/20 p-2">
+            <div key={i} className="rounded-sm border border-slate-200 bg-slate-100 p-2">
               <div className="flex items-center gap-2">
                 <Flame className="h-3 w-3 text-warning" />
                 <span className="text-[10px] font-mono text-warning">{Math.floor(vm.timestamp)}s</span>

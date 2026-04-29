@@ -217,22 +217,22 @@ export function CreativeBriefIntake() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col">
       {/* Top bar */}
-      <div className="border-b border-white/5 bg-black/20 px-6 py-4 flex items-center justify-between">
+      <div className="border-b border-slate-200 bg-slate-100 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Film className="h-5 w-5 text-emerald-400" />
-          <span className="text-sm font-semibold tracking-wide text-white">Content Co-op</span>
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">Creative Brief</span>
+          <span className="text-sm font-semibold tracking-wide $1text-slate-900">Content Co-op</span>
+          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider hidden sm:inline">Creative Brief</span>
         </div>
         <div className="flex items-center gap-3">
-          {saving && <Loader2 className="h-3.5 w-3.5 animate-spin text-zinc-500" />}
-          <span className="text-[10px] font-mono text-zinc-500">{step + 1} / {totalSteps}</span>
+          {saving && <Loader2 className="h-3.5 w-3.5 animate-spin text-slate-500" />}
+          <span className="text-[10px] font-mono text-slate-500">{step + 1} / {totalSteps}</span>
         </div>
       </div>
 
       {/* Progress */}
-      <div className="h-0.5 bg-zinc-900">
+      <div className="h-0.5 bg-slate-200">
         <motion.div className="h-full bg-emerald-500" animate={{ width: `${progress}%` }} transition={{ duration: 0.4 }} />
       </div>
 
@@ -265,7 +265,7 @@ export function CreativeBriefIntake() {
             <button
               onClick={prevStep}
               disabled={step === 0}
-              className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-zinc-400 hover:text-white disabled:opacity-30 transition-colors"
+              className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-slate-400 hover:$1text-slate-900 disabled:opacity-30 transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
               Back
@@ -274,7 +274,7 @@ export function CreativeBriefIntake() {
               <button
                 onClick={nextStep}
                 disabled={!canProceed || saving}
-                className="flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-500 disabled:opacity-40 transition-colors"
+                className="flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium $1text-slate-900 hover:bg-emerald-500 disabled:opacity-40 transition-colors"
               >
                 Continue
                 <ArrowRight className="h-4 w-4" />
@@ -293,8 +293,8 @@ function StepIntent({ form, setForm }: { form: FormState; setForm: React.Dispatc
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold text-white">What kind of video are you thinking about?</h2>
-        <p className="mt-1 text-sm text-zinc-400">We&apos;ll help shape it into a clear production brief.</p>
+        <h2 className="text-2xl font-semibold $1text-slate-900">What kind of video are you thinking about?</h2>
+        <p className="mt-1 text-sm text-slate-400">We&apos;ll help shape it into a clear production brief.</p>
       </div>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
         {VIDEO_TYPES.map((vt) => (
@@ -305,7 +305,7 @@ function StepIntent({ form, setForm }: { form: FormState; setForm: React.Dispatc
               "flex flex-col items-center gap-2 rounded-xl border px-3 py-4 text-center transition-all",
               form.videoType === vt.id
                 ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-400"
-                : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
+                : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700 hover:text-zinc-200"
             )}
           >
             <vt.icon className="h-5 w-5" />
@@ -320,26 +320,26 @@ function StepIntent({ form, setForm }: { form: FormState; setForm: React.Dispatc
           onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
           rows={3}
           placeholder="We need a video that..."
-          className="w-full rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="w-full rounded-xl border border-zinc-800 bg-slate-200/60 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
         />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">What prompted this project?</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">What prompted this project?</label>
           <input
             value={form.whyNow}
             onChange={(e) => setForm((f) => ({ ...f, whyNow: e.target.value }))}
             placeholder="New product launch, leadership change, etc."
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">What problem should this solve?</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">What problem should this solve?</label>
           <input
             value={form.businessProblem}
             onChange={(e) => setForm((f) => ({ ...f, businessProblem: e.target.value }))}
             placeholder="Customers don't understand our new service..."
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
           />
         </div>
       </div>
@@ -351,58 +351,58 @@ function StepContact({ form, setForm }: { form: FormState; setForm: React.Dispat
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-semibold text-white">Who should we send the brief to?</h2>
-        <p className="mt-1 text-sm text-zinc-400">We&apos;ll send a summary once your project is shaped.</p>
+        <h2 className="text-2xl font-semibold $1text-slate-900">Who should we send the brief to?</h2>
+        <p className="mt-1 text-sm text-slate-400">We&apos;ll send a summary once your project is shaped.</p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">First name *</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">First name *</label>
           <input
             value={form.firstName}
             onChange={(e) => setForm((f) => ({ ...f, firstName: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Last name</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Last name</label>
           <input
             value={form.lastName}
             onChange={(e) => setForm((f) => ({ ...f, lastName: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Company *</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Company *</label>
           <input
             value={form.company}
             onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Role / Title</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Role / Title</label>
           <input
             value={form.role}
             onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Email *</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Email *</label>
           <input
             type="email"
             value={form.email}
             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Phone</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Phone</label>
           <input
             type="tel"
             value={form.phone}
             onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           />
         </div>
       </div>
@@ -414,27 +414,27 @@ function StepBusiness({ form, setForm }: { form: FormState; setForm: React.Dispa
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-semibold text-white">What would make this a win?</h2>
-        <p className="mt-1 text-sm text-zinc-400">Start with the business goal. What needs to change after this video exists?</p>
+        <h2 className="text-2xl font-semibold $1text-slate-900">What would make this a win?</h2>
+        <p className="mt-1 text-sm text-slate-400">Start with the business goal. What needs to change after this video exists?</p>
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-zinc-400">Business problem</label>
+        <label className="mb-1.5 block text-xs font-medium text-slate-400">Business problem</label>
         <textarea
           value={form.businessProblem}
           onChange={(e) => setForm((f) => ({ ...f, businessProblem: e.target.value }))}
           rows={3}
           placeholder="We need stakeholders to approve the new initiative..."
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
         />
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-zinc-400">Desired outcome</label>
+        <label className="mb-1.5 block text-xs font-medium text-slate-400">Desired outcome</label>
         <textarea
           value={form.desiredOutcome}
           onChange={(e) => setForm((f) => ({ ...f, desiredOutcome: e.target.value }))}
           rows={3}
           placeholder="After watching, the audience should understand X and feel Y..."
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
         />
       </div>
     </div>
@@ -445,25 +445,25 @@ function StepAudience({ form, setForm }: { form: FormState; setForm: React.Dispa
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-semibold text-white">Who needs to see this?</h2>
-        <p className="mt-1 text-sm text-zinc-400">Who needs to understand, believe, or act on this message?</p>
+        <h2 className="text-2xl font-semibold $1text-slate-900">Who needs to see this?</h2>
+        <p className="mt-1 text-sm text-slate-400">Who needs to understand, believe, or act on this message?</p>
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-zinc-400">Primary audience</label>
+        <label className="mb-1.5 block text-xs font-medium text-slate-400">Primary audience</label>
         <input
           value={form.primaryAudience}
           onChange={(e) => setForm((f) => ({ ...f, primaryAudience: e.target.value }))}
           placeholder="Senior executives, field technicians, new hires..."
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
         />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Internal or external?</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Internal or external?</label>
           <select
             value={form.internalExternal}
             onChange={(e) => setForm((f) => ({ ...f, internalExternal: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           >
             <option value="">Select...</option>
             <option value="internal">Internal only</option>
@@ -472,11 +472,11 @@ function StepAudience({ form, setForm }: { form: FormState; setForm: React.Dispa
           </select>
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Audience knowledge level</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Audience knowledge level</label>
           <select
             value={form.knowledgeLevel}
             onChange={(e) => setForm((f) => ({ ...f, knowledgeLevel: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           >
             <option value="">Select...</option>
             <option value="expert">Expert — they know the subject</option>
@@ -487,21 +487,21 @@ function StepAudience({ form, setForm }: { form: FormState; setForm: React.Dispa
         </div>
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-zinc-400">Core message</label>
+        <label className="mb-1.5 block text-xs font-medium text-slate-400">Core message</label>
         <input
           value={form.coreMessage}
           onChange={(e) => setForm((f) => ({ ...f, coreMessage: e.target.value }))}
           placeholder="The single most important thing they should remember..."
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
         />
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-zinc-400">Desired response</label>
+        <label className="mb-1.5 block text-xs font-medium text-slate-400">Desired response</label>
         <input
           value={form.desiredResponse}
           onChange={(e) => setForm((f) => ({ ...f, desiredResponse: e.target.value }))}
           placeholder="Feel informed, take action, approve budget, share internally..."
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
         />
       </div>
     </div>
@@ -524,26 +524,26 @@ function StepDeliverables({ form, setForm }: { form: FormState; setForm: React.D
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-semibold text-white">What do you need produced?</h2>
-        <p className="mt-1 text-sm text-zinc-400">One strong video, or a package of related assets?</p>
+        <h2 className="text-2xl font-semibold $1text-slate-900">What do you need produced?</h2>
+        <p className="mt-1 text-sm text-slate-400">One strong video, or a package of related assets?</p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Number of videos</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Number of videos</label>
           <input
             type="number"
             min={1}
             value={form.numberOfVideos}
             onChange={(e) => setForm((f) => ({ ...f, numberOfVideos: Math.max(1, parseInt(e.target.value) || 1) }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Main video length</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Main video length</label>
           <select
             value={form.mainVideoLength}
             onChange={(e) => setForm((f) => ({ ...f, mainVideoLength: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           >
             <option value="">Select...</option>
             <option value="30s">~30 seconds</option>
@@ -557,7 +557,7 @@ function StepDeliverables({ form, setForm }: { form: FormState; setForm: React.D
         </div>
       </div>
       <div>
-        <label className="mb-2 block text-xs font-medium text-zinc-400">Deliverables</label>
+        <label className="mb-2 block text-xs font-medium text-slate-400">Deliverables</label>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {toggles.map((t) => (
             <button
@@ -567,7 +567,7 @@ function StepDeliverables({ form, setForm }: { form: FormState; setForm: React.D
                 "flex items-center gap-2 rounded-lg border px-3 py-2.5 text-left text-xs transition-all",
                 form[t.key]
                   ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                  : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
+                  : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700"
               )}
             >
               <div className={cn("h-3.5 w-3.5 rounded-sm border", form[t.key] ? "border-emerald-500 bg-emerald-500" : "border-zinc-600")}>
@@ -586,46 +586,46 @@ function StepProduction({ form, setForm }: { form: FormState; setForm: React.Dis
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-semibold text-white">Production reality</h2>
-        <p className="mt-1 text-sm text-zinc-400">Where, when, and what resources are involved?</p>
+        <h2 className="text-2xl font-semibold $1text-slate-900">Production reality</h2>
+        <p className="mt-1 text-sm text-slate-400">Where, when, and what resources are involved?</p>
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-zinc-400">Filming location(s)</label>
+        <label className="mb-1.5 block text-xs font-medium text-slate-400">Filming location(s)</label>
         <input
           value={form.locations}
           onChange={(e) => setForm((f) => ({ ...f, locations: e.target.value }))}
           placeholder="Houston office, client site, studio..."
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
         />
       </div>
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Filming days</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Filming days</label>
           <input
             type="number"
             min={0}
             value={form.filmingDays}
             onChange={(e) => setForm((f) => ({ ...f, filmingDays: Math.max(0, parseInt(e.target.value) || 0) }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Interview subjects</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Interview subjects</label>
           <input
             type="number"
             min={0}
             value={form.interviewSubjects}
             onChange={(e) => setForm((f) => ({ ...f, interviewSubjects: Math.max(0, parseInt(e.target.value) || 0) }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-zinc-400">Deadline</label>
+          <label className="mb-1.5 block text-xs font-medium text-slate-400">Deadline</label>
           <input
             type="date"
             value={form.deadline}
             onChange={(e) => setForm((f) => ({ ...f, deadline: e.target.value }))}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
+            className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 focus:border-emerald-500 focus:outline-none"
           />
         </div>
       </div>
@@ -642,7 +642,7 @@ function StepProduction({ form, setForm }: { form: FormState; setForm: React.Dis
               "flex items-center gap-2 rounded-lg border px-3 py-2.5 text-left text-xs transition-all",
               form[item.key]
                 ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
+                : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700"
             )}
           >
             <item.icon className="h-3.5 w-3.5" />
@@ -658,11 +658,11 @@ function StepCreative({ form, setForm }: { form: FormState; setForm: React.Dispa
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-semibold text-white">Creative direction</h2>
-        <p className="mt-1 text-sm text-zinc-400">What should this feel like?</p>
+        <h2 className="text-2xl font-semibold $1text-slate-900">Creative direction</h2>
+        <p className="mt-1 text-sm text-slate-400">What should this feel like?</p>
       </div>
       <div>
-        <label className="mb-2 block text-xs font-medium text-zinc-400">Tone</label>
+        <label className="mb-2 block text-xs font-medium text-slate-400">Tone</label>
         <div className="flex flex-wrap gap-2">
           {TONE_OPTIONS.map((t) => (
             <button
@@ -672,7 +672,7 @@ function StepCreative({ form, setForm }: { form: FormState; setForm: React.Dispa
                 "rounded-full border px-3 py-1.5 text-xs transition-all",
                 form.tone === t
                   ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                  : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
+                  : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700"
               )}
             >
               {t}
@@ -681,7 +681,7 @@ function StepCreative({ form, setForm }: { form: FormState; setForm: React.Dispa
         </div>
       </div>
       <div>
-        <label className="mb-2 block text-xs font-medium text-zinc-400">Visual style</label>
+        <label className="mb-2 block text-xs font-medium text-slate-400">Visual style</label>
         <div className="flex flex-wrap gap-2">
           {STYLE_OPTIONS.map((s) => (
             <button
@@ -691,7 +691,7 @@ function StepCreative({ form, setForm }: { form: FormState; setForm: React.Dispa
                 "rounded-full border px-3 py-1.5 text-xs transition-all",
                 form.visualStyle === s
                   ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                  : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
+                  : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700"
               )}
             >
               {s}
@@ -700,22 +700,22 @@ function StepCreative({ form, setForm }: { form: FormState; setForm: React.Dispa
         </div>
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-zinc-400">Reference videos (URLs or descriptions)</label>
+        <label className="mb-1.5 block text-xs font-medium text-slate-400">Reference videos (URLs or descriptions)</label>
         <textarea
           value={form.referenceVideos}
           onChange={(e) => setForm((f) => ({ ...f, referenceVideos: e.target.value }))}
           rows={2}
           placeholder="Links or descriptions of videos that feel close to what you want..."
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
         />
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-zinc-400">Words or topics to avoid</label>
+        <label className="mb-1.5 block text-xs font-medium text-slate-400">Words or topics to avoid</label>
         <input
           value={form.wordsToAvoid}
           onChange={(e) => setForm((f) => ({ ...f, wordsToAvoid: e.target.value }))}
           placeholder="Jargon, competitor names, sensitive terms..."
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
         />
       </div>
     </div>
@@ -726,11 +726,11 @@ function StepBudget({ form, setForm }: { form: FormState; setForm: React.Dispatc
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-semibold text-white">Budget & approvals</h2>
-        <p className="mt-1 text-sm text-zinc-400">Help us understand the buying reality.</p>
+        <h2 className="text-2xl font-semibold $1text-slate-900">Budget & approvals</h2>
+        <p className="mt-1 text-sm text-slate-400">Help us understand the buying reality.</p>
       </div>
       <div>
-        <label className="mb-2 block text-xs font-medium text-zinc-400">Do you have a budget range in mind?</label>
+        <label className="mb-2 block text-xs font-medium text-slate-400">Do you have a budget range in mind?</label>
         <div className="grid gap-2 sm:grid-cols-2">
           {BUDGET_OPTIONS.map((opt) => (
             <button
@@ -740,7 +740,7 @@ function StepBudget({ form, setForm }: { form: FormState; setForm: React.Dispatc
                 "rounded-lg border px-3 py-2.5 text-left text-xs transition-all",
                 form.budgetRange === opt.value
                   ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                  : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-700"
+                  : "border-zinc-800 bg-slate-200/40 text-slate-400 hover:border-zinc-700"
               )}
             >
               {opt.label}
@@ -749,22 +749,22 @@ function StepBudget({ form, setForm }: { form: FormState; setForm: React.Dispatc
         </div>
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-zinc-400">Who is the decision maker?</label>
+        <label className="mb-1.5 block text-xs font-medium text-slate-400">Who is the decision maker?</label>
         <input
           value={form.decisionMaker}
           onChange={(e) => setForm((f) => ({ ...f, decisionMaker: e.target.value }))}
           placeholder="CEO, VP of Marketing, committee..."
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
         />
       </div>
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-zinc-400">Approval process</label>
+        <label className="mb-1.5 block text-xs font-medium text-slate-400">Approval process</label>
         <textarea
           value={form.approvalProcess}
           onChange={(e) => setForm((f) => ({ ...f, approvalProcess: e.target.value }))}
           rows={2}
           placeholder="Single approver, legal review, brand committee..."
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
+          className="w-full rounded-lg border border-zinc-800 bg-slate-200/60 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 focus:border-emerald-500 focus:outline-none"
         />
       </div>
     </div>
@@ -775,10 +775,10 @@ function StepReview({ form, onSubmit, saving }: { form: FormState; onSubmit: () 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold text-white">Review your brief</h2>
-        <p className="mt-1 text-sm text-zinc-400">Submit this for internal review and we&apos;ll shape a proposal.</p>
+        <h2 className="text-2xl font-semibold $1text-slate-900">Review your brief</h2>
+        <p className="mt-1 text-sm text-slate-400">Submit this for internal review and we&apos;ll shape a proposal.</p>
       </div>
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 space-y-4">
+      <div className="rounded-xl border border-zinc-800 bg-slate-200/40 p-5 space-y-4">
         <ReviewRow label="Project" value={`${VIDEO_TYPES.find((v) => v.id === form.videoType)?.label ?? form.videoType} — ${form.description.slice(0, 80)}${form.description.length > 80 ? "..." : ""}`} />
         <ReviewRow label="Contact" value={`${form.firstName} ${form.lastName} — ${form.company} — ${form.email}`} />
         <ReviewRow label="Audience" value={`${form.primaryAudience} (${form.internalExternal})`} />
@@ -790,7 +790,7 @@ function StepReview({ form, onSubmit, saving }: { form: FormState; onSubmit: () 
       <button
         onClick={onSubmit}
         disabled={saving}
-        className="w-full flex items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white hover:bg-emerald-500 disabled:opacity-50 transition-colors"
+        className="w-full flex items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3 text-sm font-semibold $1text-slate-900 hover:bg-emerald-500 disabled:opacity-50 transition-colors"
       >
         {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
         {saving ? "Processing..." : "Submit Brief for Review"}
@@ -802,7 +802,7 @@ function StepReview({ form, onSubmit, saving }: { form: FormState; onSubmit: () 
 function ReviewRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
-      <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-500 w-24 shrink-0">{label}</span>
+      <span className="text-[10px] font-medium uppercase tracking-wider text-slate-500 w-24 shrink-0">{label}</span>
       <span className="text-sm text-zinc-200">{value || "—"}</span>
     </div>
   );
@@ -813,7 +813,7 @@ function SubmittedView({ brief }: { brief: any }) {
   const ai = brief.aiEnrichment;
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col items-center justify-center p-6">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -823,47 +823,47 @@ function SubmittedView({ brief }: { brief: any }) {
           <div className="mx-auto h-12 w-12 rounded-full bg-emerald-500/10 flex items-center justify-center mb-4">
             <CheckCircle2 className="h-6 w-6 text-emerald-500" />
           </div>
-          <h1 className="text-2xl font-semibold text-white">Brief submitted</h1>
-          <p className="mt-2 text-sm text-zinc-400">
+          <h1 className="text-2xl font-semibold $1text-slate-900">Brief submitted</h1>
+          <p className="mt-2 text-sm text-slate-400">
             We&apos;ve shaped your project into a working production brief. Our team will review and follow up within one business day.
           </p>
         </div>
 
         {estimate && (
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 mb-4">
-            <h3 className="text-xs font-medium uppercase tracking-wider text-zinc-500 mb-3">Estimated Investment</h3>
+          <div className="rounded-xl border border-zinc-800 bg-slate-200/40 p-5 mb-4">
+            <h3 className="text-xs font-medium uppercase tracking-wider text-slate-500 mb-3">Estimated Investment</h3>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-zinc-400">Essential</span>
+                <span className="text-slate-400">Essential</span>
                 <span className="text-zinc-200">{formatCents(estimate.minimalCents)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-zinc-400">Recommended</span>
+                <span className="text-slate-400">Recommended</span>
                 <span className="text-emerald-400 font-medium">{formatCents(estimate.recommendedCents)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-zinc-400">Premium</span>
+                <span className="text-slate-400">Premium</span>
                 <span className="text-zinc-200">{formatCents(estimate.premiumCents)}</span>
               </div>
             </div>
-            <p className="mt-3 text-[10px] text-zinc-500">{estimate.explanation} Confidence: {estimate.confidence}.</p>
+            <p className="mt-3 text-[10px] text-slate-500">{estimate.explanation} Confidence: {estimate.confidence}.</p>
           </div>
         )}
 
         {ai && (
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
-            <h3 className="text-xs font-medium uppercase tracking-wider text-zinc-500 mb-2">What happens next</h3>
+          <div className="rounded-xl border border-zinc-800 bg-slate-200/40 p-5">
+            <h3 className="text-xs font-medium uppercase tracking-wider text-slate-500 mb-2">What happens next</h3>
             <ul className="space-y-1.5 text-sm text-zinc-300">
               <li className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 text-zinc-500 mt-0.5 shrink-0" />
+                <Clock className="h-3.5 w-3.5 text-slate-500 mt-0.5 shrink-0" />
                 Internal review of your brief
               </li>
               <li className="flex items-start gap-2">
-                <Sparkles className="h-3.5 w-3.5 text-zinc-500 mt-0.5 shrink-0" />
+                <Sparkles className="h-3.5 w-3.5 text-slate-500 mt-0.5 shrink-0" />
                 Proposal scoped to your needs
               </li>
               <li className="flex items-start gap-2">
-                <MessageSquare className="h-3.5 w-3.5 text-zinc-500 mt-0.5 shrink-0" />
+                <MessageSquare className="h-3.5 w-3.5 text-slate-500 mt-0.5 shrink-0" />
                 Strategy call to align on scope
               </li>
             </ul>

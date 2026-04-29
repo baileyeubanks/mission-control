@@ -9,14 +9,14 @@ function statusTone(status: string) {
   if (status === "wired") return "border-success/20 bg-success/10 text-success";
   if (status === "disabled") return "border-warning/20 bg-warning/10 text-warning";
   if (status === "fake" || status === "missing") return "border-destructive/20 bg-destructive/10 text-destructive";
-  return "border-white/10 bg-white/5 text-muted-foreground";
+  return "border-slate-200 bg-white/5 text-muted-foreground";
 }
 
 function classTone(value: string) {
   if (value === "root-candidate") return "border-primary/20 bg-primary/10 text-primary";
   if (value.includes("authority")) return "border-success/20 bg-success/10 text-success";
   if (value === "parked" || value === "discard") return "border-warning/20 bg-warning/10 text-warning";
-  return "border-white/10 bg-white/5 text-muted-foreground";
+  return "border-slate-200 bg-white/5 text-muted-foreground";
 }
 
 export function Audit() {
@@ -76,7 +76,7 @@ export function Audit() {
 
   return (
     <div className="flex flex-col gap-5">
-      <section className="rounded-sm border border-white/5 bg-black/20 p-5">
+      <section className="rounded-sm border border-slate-200 bg-slate-100 p-5">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <h1 className="text-2xl font-display tracking-normal">Root Audit</h1>
@@ -97,7 +97,7 @@ export function Audit() {
           { label: "P0 breaks", value: interactions.summary.p0_breaks, icon: AlertTriangle },
           { label: "P1 breaks", value: interactions.summary.p1_breaks, icon: Workflow },
         ].map((item) => (
-          <Card key={item.label} className="glass border-white/5">
+          <Card key={item.label} className="glass border-slate-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{item.label}</CardTitle>
               <item.icon className="h-3.5 w-3.5 text-primary/50" />
@@ -109,7 +109,7 @@ export function Audit() {
         ))}
       </div>
 
-      <Card className="glass border-white/5">
+      <Card className="glass border-slate-200">
         <CardHeader className="py-4">
           <CardTitle className="text-sm">Canon Lock</CardTitle>
         </CardHeader>
@@ -120,7 +120,7 @@ export function Audit() {
             ["Company scope", "Astro and Content Co-op are separated workspaces with shared infrastructure."],
             ["Public sites", "Conversion/intake authorities that feed Root; not admin backends."],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-sm border border-white/5 bg-black/20 p-3">
+            <div key={label} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
               <p className="text-[10px] uppercase text-muted-foreground">{label}</p>
               <p className="mt-2 text-sm">{value}</p>
             </div>
@@ -129,13 +129,13 @@ export function Audit() {
       </Card>
 
       <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <CardTitle className="text-sm">Repo Authority Sample</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 p-4 pt-0">
             {ecosystem.records.slice(0, 12).map((record) => (
-              <div key={record.id} className="rounded-sm border border-white/5 bg-black/20 p-3">
+              <div key={record.id} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{record.name}</p>
@@ -156,13 +156,13 @@ export function Audit() {
           </CardContent>
         </Card>
 
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="py-4">
             <CardTitle className="text-sm">Highest Risk Interaction Breaks</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 p-4 pt-0">
             {topInteractionBreaks.map((record) => (
-              <div key={record.id} className="rounded-sm border border-white/5 bg-black/20 p-3">
+              <div key={record.id} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge variant="outline" className="text-[8px] uppercase text-primary">{record.priority}</Badge>
                   <Badge variant="outline" className={`text-[8px] uppercase ${statusTone(record.status)}`}>{record.status}</Badge>

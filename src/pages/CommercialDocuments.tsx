@@ -549,7 +549,7 @@ export function CommercialDocuments({ mode }: CommercialDocumentsProps) {
               <Plus className="mr-2 h-3.5 w-3.5" />
               {mode === "quotes" ? "New quote" : "New invoice"}
             </Button>
-            <Button size="sm" variant="outline" onClick={() => void load()} className="h-8 border-slate-200 text-xs hover:bg-white/[0.04]">
+            <Button size="sm" variant="outline" onClick={() => void load()} className="h-8 border-slate-200 text-xs hover:bg-slate-100">
               <RefreshCw className="mr-2 h-3.5 w-3.5" />
               Refresh
             </Button>

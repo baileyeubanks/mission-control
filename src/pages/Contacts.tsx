@@ -99,7 +99,7 @@ export function Contacts() {
       </div>
 
       {showForm && (
-        <Card className="p-4 glass border-white/5">
+        <Card className="p-4 glass border-slate-200">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium">New Contact</h3>
             <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setShowForm(false)}>
@@ -119,13 +119,13 @@ export function Contacts() {
         </Card>
       )}
 
-      <Card className="flex-1 flex flex-col overflow-hidden glass border-white/5">
-        <div className="p-4 border-b border-white/5 flex items-center gap-4 bg-black/20">
+      <Card className="flex-1 flex flex-col overflow-hidden glass border-slate-200">
+        <div className="p-4 border-b border-slate-200 flex items-center gap-4 bg-slate-100">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <Input 
               placeholder="SEARCH_BY_NAME_OR_ID..." 
-              className="pl-10 bg-black/20 border-white/5 font-mono text-[10px] uppercase tracking-wider h-9"
+              className="pl-10 bg-slate-100 border-slate-200 font-mono text-[10px] uppercase tracking-wider h-9"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Search contacts"
@@ -134,7 +134,7 @@ export function Contacts() {
           <Button
             variant="outline"
             size="sm"
-            className="h-9 font-mono uppercase text-[10px] border-white/10"
+            className="h-9 font-mono uppercase text-[10px] border-slate-200"
             aria-label="Filter contacts"
             disabled
             title="Advanced contact filters are not wired yet. Search is active."
@@ -145,8 +145,8 @@ export function Contacts() {
         </div>
         <div className="flex-1 overflow-auto">
           <Table>
-            <TableHeader className="bg-black/40 sticky top-0 z-10">
-              <TableRow className="hover:bg-transparent border-white/5">
+            <TableHeader className="bg-white sticky top-0 z-10">
+              <TableRow className="hover:bg-transparent border-slate-200">
                 <TableHead className="w-[100px] md:w-[120px] font-mono text-[10px] uppercase tracking-widest">System_ID</TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">Entity_Name</TableHead>
                 <TableHead className="hidden sm:table-cell font-mono text-[10px] uppercase tracking-widest">Type</TableHead>
@@ -166,11 +166,11 @@ export function Contacts() {
                   <TableCell colSpan={7} className="text-center py-12 text-muted-foreground font-mono text-xs uppercase tracking-widest">No_Records_Found</TableCell>
                 </TableRow>
               ) : filteredContacts.map((contact) => (
-                <TableRow key={contact.id} className="group hover:bg-white/5 border-white/5 transition-colors">
+                <TableRow key={contact.id} className="group hover:bg-white/5 border-slate-200 transition-colors">
                   <TableCell className="font-mono text-[10px] text-muted-foreground/60">{contact.id.slice(0, 8)}...</TableCell>
                   <TableCell className="font-medium text-sm">{contact.name}</TableCell>
                   <TableCell className="hidden sm:table-cell">
-                    <Badge variant="outline" className="text-[9px] uppercase tracking-tighter bg-white/5 border-white/10">{contact.type}</Badge>
+                    <Badge variant="outline" className="text-[9px] uppercase tracking-tighter bg-white/5 border-slate-200">{contact.type}</Badge>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">

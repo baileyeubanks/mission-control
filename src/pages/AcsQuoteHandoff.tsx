@@ -82,7 +82,7 @@ function roleTone(role: HandoffProbe["role"]) {
   if (role === "source") return "border-primary/20 bg-primary/10 text-primary";
   if (role === "target") return "border-success/20 bg-success/10 text-success";
   if (role === "shell") return "border-warning/20 bg-warning/10 text-warning";
-  return "border-white/10 bg-white/5 text-muted-foreground";
+  return "border-slate-200 bg-white/5 text-muted-foreground";
 }
 
 function formatCents(cents: number) {
@@ -116,7 +116,7 @@ export function AcsQuoteHandoff() {
 
   return (
     <div className="min-w-0 space-y-5 overflow-hidden">
-      <section className="flex min-w-0 flex-col gap-3 rounded-sm border border-white/5 bg-black/20 p-5 md:flex-row md:items-start md:justify-between">
+      <section className="flex min-w-0 flex-col gap-3 rounded-sm border border-slate-200 bg-slate-100 p-5 md:flex-row md:items-start md:justify-between">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
             <FileText className="h-4 w-4 text-primary" />
@@ -133,7 +133,7 @@ export function AcsQuoteHandoff() {
       </section>
 
       {!payload ? (
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardContent className="p-6">
             <div className="flex items-center gap-3 text-warning">
               <AlertTriangle className="h-4 w-4" />
@@ -151,7 +151,7 @@ export function AcsQuoteHandoff() {
             <Metric label="Missing" value={String(payload.summary.missing_count)} status={payload.summary.missing_count > 0 ? "blocked" : "ready"} />
           </div>
 
-          <Card className="min-w-0 border-white/5 glass">
+          <Card className="min-w-0 border-slate-200 glass">
             <CardContent className="grid gap-4 p-5 xl:grid-cols-[1.2fr_0.8fr]">
               <div className="min-w-0">
                 <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">V1 decision</p>
@@ -159,7 +159,7 @@ export function AcsQuoteHandoff() {
                 <p className="mt-4 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Next safe action</p>
                 <p className="mt-2 break-words text-sm">{payload.next_safe_action}</p>
               </div>
-              <div className="min-w-0 rounded-sm border border-white/5 bg-black/20 p-4">
+              <div className="min-w-0 rounded-sm border border-slate-200 bg-slate-100 p-4">
                 <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Storage boundary</p>
                 <p className="mt-2 break-words text-xs text-muted-foreground">{payload.firebase_boundary}</p>
               </div>
@@ -173,7 +173,7 @@ export function AcsQuoteHandoff() {
 
           <div className="grid gap-3 xl:grid-cols-2">
             {payload.gates.map((gate) => (
-              <Card key={gate.id} className="min-w-0 border-white/5 glass">
+              <Card key={gate.id} className="min-w-0 border-slate-200 glass">
                 <CardHeader className="flex flex-row items-start justify-between gap-3 py-4">
                   <div>
                     <CardTitle className="text-sm">{gate.label}</CardTitle>
@@ -184,7 +184,7 @@ export function AcsQuoteHandoff() {
                   </Badge>
                 </CardHeader>
                 <CardContent className="space-y-3 p-4 pt-0">
-                  <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+                  <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
                     <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
                       <ArrowRight className="h-3 w-3" />
                       Next
@@ -193,7 +193,7 @@ export function AcsQuoteHandoff() {
                   </div>
                   <div className="grid gap-2">
                     {gate.evidence.map((item) => (
-                      <div key={item.path} className="flex items-start justify-between gap-3 rounded-sm border border-white/5 bg-black/20 p-2">
+                      <div key={item.path} className="flex items-start justify-between gap-3 rounded-sm border border-slate-200 bg-slate-100 p-2">
                         <div className="min-w-0">
                           <div className="flex flex-wrap items-center gap-2">
                             <p className="text-xs font-medium">{item.label}</p>
@@ -232,7 +232,7 @@ function ContractCard({
   adapterProof: AcsQuoteHandoffPayload["adapter_proof"];
 }) {
   return (
-    <Card className="min-w-0 border-white/5 glass">
+    <Card className="min-w-0 border-slate-200 glass">
       <CardHeader className="py-4">
         <CardTitle className="flex items-center gap-2 text-sm">
           <ClipboardList className="h-4 w-4 text-primary" />
@@ -257,7 +257,7 @@ function ContractCard({
           <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Required fields</p>
           <div className="mt-2 flex flex-wrap gap-1.5">
             {contract.requiredFields.map((field) => (
-              <Badge key={field} variant="outline" className="border-white/10 bg-black/20 text-[9px] text-muted-foreground">
+              <Badge key={field} variant="outline" className="border-slate-200 bg-slate-100 text-[9px] text-muted-foreground">
                 {field}
               </Badge>
             ))}
@@ -287,7 +287,7 @@ function SampleHandoffCard({
   targetPreview: AcsQuoteHandoffPayload["target_write_preview"];
 }) {
   return (
-    <Card className="min-w-0 border-white/5 glass">
+    <Card className="min-w-0 border-slate-200 glass">
       <CardHeader className="py-4">
         <CardTitle className="flex items-center gap-2 text-sm">
           <Database className="h-4 w-4 text-primary" />
@@ -300,7 +300,7 @@ function SampleHandoffCard({
           <MiniFact label="Review" value={handoff.adminReview.status} toneClass="text-success" />
           <MiniFact label="Total" value={formatCents(handoff.estimate.totalCents)} toneClass="text-success" />
         </div>
-        <div className="rounded-sm border border-white/5 bg-black/20 p-3">
+        <div className="rounded-sm border border-slate-200 bg-slate-100 p-3">
           <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Source to target</p>
           <div className="mt-3 grid gap-2 text-xs text-muted-foreground md:grid-cols-2">
             <p>
@@ -319,7 +319,7 @@ function SampleHandoffCard({
         </div>
         <div className="grid gap-2">
           {handoff.estimate.lineItems.map((item) => (
-            <div key={item.id} className="flex items-center justify-between gap-3 rounded-sm border border-white/5 bg-black/20 p-2">
+            <div key={item.id} className="flex items-center justify-between gap-3 rounded-sm border border-slate-200 bg-slate-100 p-2">
               <div className="min-w-0">
                 <p className="truncate text-xs font-medium">{item.label}</p>
                 <p className="text-[10px] font-mono uppercase text-muted-foreground">{item.source}</p>
@@ -359,7 +359,7 @@ function SampleHandoffCard({
 
 function MiniFact({ label, value, toneClass = "text-foreground" }: { label: string; value: string; toneClass?: string }) {
   return (
-    <div className="min-w-0 rounded-sm border border-white/5 bg-black/20 p-3">
+    <div className="min-w-0 rounded-sm border border-slate-200 bg-slate-100 p-3">
       <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{label}</p>
       <p className={`mt-1 truncate text-xs font-medium ${toneClass}`}>{value}</p>
     </div>
@@ -368,7 +368,7 @@ function MiniFact({ label, value, toneClass = "text-foreground" }: { label: stri
 
 function Metric({ label, value, status = "partial" }: { label: string; value: string; status?: GateStatus }) {
   return (
-    <Card className="min-w-0 border-white/5 glass">
+    <Card className="min-w-0 border-slate-200 glass">
       <CardContent className="flex items-center justify-between p-4">
         <div>
           <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{label}</p>
@@ -382,7 +382,7 @@ function Metric({ label, value, status = "partial" }: { label: string; value: st
 
 function ListCard({ icon, title, items }: { icon: ReactNode; title: string; items: string[] }) {
   return (
-    <Card className="min-w-0 border-white/5 glass">
+    <Card className="min-w-0 border-slate-200 glass">
       <CardHeader className="py-4">
         <CardTitle className="flex items-center gap-2 text-sm">
           {icon}
@@ -391,7 +391,7 @@ function ListCard({ icon, title, items }: { icon: ReactNode; title: string; item
       </CardHeader>
       <CardContent className="grid gap-2 p-4 pt-0">
         {items.map((item) => (
-          <div key={item} className="rounded-sm border border-white/5 bg-black/20 p-3 text-xs text-muted-foreground">
+          <div key={item} className="rounded-sm border border-slate-200 bg-slate-100 p-3 text-xs text-muted-foreground">
             {item}
           </div>
         ))}

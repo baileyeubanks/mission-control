@@ -75,7 +75,7 @@ export function Files() {
           <Button
             variant="outline"
             size="sm"
-            className="h-9 font-mono uppercase text-[10px] border-white/10"
+            className="h-9 font-mono uppercase text-[10px] border-slate-200"
             aria-label="Create new folder"
             disabled
             title="Folder creation is disabled until storage authority is selected."
@@ -95,13 +95,13 @@ export function Files() {
         </div>
       </div>
 
-      <Card className="flex-1 flex flex-col overflow-hidden glass border-white/5">
-        <div className="p-4 border-b border-white/5 flex items-center gap-4 bg-black/20">
+      <Card className="flex-1 flex flex-col overflow-hidden glass border-slate-200">
+        <div className="p-4 border-b border-slate-200 flex items-center gap-4 bg-slate-100">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <Input 
               placeholder="SEARCH_BY_NAME_OR_ID..." 
-              className="pl-10 bg-black/20 border-white/5 font-mono text-[10px] uppercase tracking-wider h-9"
+              className="pl-10 bg-slate-100 border-slate-200 font-mono text-[10px] uppercase tracking-wider h-9"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Search files"
@@ -110,8 +110,8 @@ export function Files() {
         </div>
         <div className="flex-1 overflow-auto">
           <Table>
-            <TableHeader className="bg-black/40 sticky top-0 z-10">
-              <TableRow className="hover:bg-transparent border-white/5">
+            <TableHeader className="bg-white sticky top-0 z-10">
+              <TableRow className="hover:bg-transparent border-slate-200">
                 <TableHead className="w-[40px] md:w-[50px]"></TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">File_Name</TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">Size</TableHead>
@@ -130,7 +130,7 @@ export function Files() {
                   <TableCell colSpan={6} className="text-center py-12 text-muted-foreground font-mono text-xs uppercase tracking-widest">No_Records_Found</TableCell>
                 </TableRow>
               ) : filteredFiles.map((file) => (
-                <TableRow key={file.id} className="group hover:bg-white/5 border-white/5 transition-colors">
+                <TableRow key={file.id} className="group hover:bg-white/5 border-slate-200 transition-colors">
                   <TableCell>
                     {getFileIcon(file.type)}
                   </TableCell>

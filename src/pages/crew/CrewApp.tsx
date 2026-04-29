@@ -902,16 +902,16 @@ export function CrewApp() {
 
   if (!isAuthReady) {
     return (
-      <div className="flex h-screen items-center justify-center bg-black">
+      <div className="flex h-screen items-center justify-center bg-slate-50">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#050607] text-white md:px-6 md:py-6">
-      <div className="relative mx-auto flex h-screen min-h-0 w-full max-w-[940px] flex-col bg-[#091014] md:h-[calc(100vh-48px)] md:overflow-hidden md:rounded-[28px] md:border md:border-white/10 md:shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
-        <header className="sticky top-0 z-50 border-b border-white/10 bg-[#091014]/95 px-4 pb-3 pt-[calc(env(safe-area-inset-top)+12px)] backdrop-blur">
+    <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 md:px-6 md:py-6">
+      <div className="relative mx-auto flex h-screen min-h-0 w-full max-w-[940px] flex-col bg-[#091014] md:h-[calc(100vh-48px)] md:overflow-hidden md:rounded-[28px] md:border md:border-slate-200 md:shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
+        <header className="sticky top-0 z-50 border-b border-slate-200 bg-[#091014]/95 px-4 pb-3 pt-[calc(env(safe-area-inset-top)+12px)] backdrop-blur">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-[9px] font-mono uppercase tracking-[0.25em] text-primary">Astro Crew</p>
@@ -1095,7 +1095,7 @@ export function CrewApp() {
           )}
         </main>
 
-        <nav className="z-50 grid h-[72px] shrink-0 grid-cols-5 border-t border-white/10 bg-[#091014]/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
+        <nav className="z-50 grid h-[72px] shrink-0 grid-cols-5 border-t border-slate-200 bg-[#091014]/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
           {[
             ["route", Route, "Route"],
             ["job", Navigation, "Job"],
@@ -1158,7 +1158,7 @@ function CommandCard({
         <Button data-testid="crew-primary-action" disabled={primaryAction.disabled} onClick={onRun} className="h-12 justify-center text-sm font-semibold">
           {primaryAction.label}
         </Button>
-        <Button variant="outline" onClick={onOpenSync} className="h-12 w-12 border-white/10 px-0 text-muted-foreground" title="Open sync queue">
+        <Button variant="outline" onClick={onOpenSync} className="h-12 w-12 border-slate-200 px-0 text-muted-foreground" title="Open sync queue">
           <RefreshCcw className="h-4 w-4" />
         </Button>
       </div>
@@ -1180,7 +1180,7 @@ function CommandCard({
 
 function OutcomeCell({ label, value, tone }: { label: string; value: string; tone: string }) {
   return (
-    <div className="min-w-0 rounded-sm border border-white/10 bg-black/20 p-2">
+    <div className="min-w-0 rounded-sm border border-slate-200 bg-slate-100 p-2">
       <p className="text-[8px] uppercase text-muted-foreground">{label}</p>
       <p className={`mt-1 truncate text-[11px] font-semibold ${tone}`}>{value}</p>
     </div>
@@ -1209,7 +1209,7 @@ function StopHeroCard({
   const proofDone = job.proofRequirements.filter((type) => progress.proofs.some((proof) => proof.type === type)).length;
 
   return (
-    <section className="rounded-md border border-white/10 bg-white/[0.045] p-3">
+    <section className="rounded-md border border-slate-200 bg-white/[0.045] p-3">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-[9px] uppercase text-muted-foreground">Stop {job.stop} · {job.scheduledWindow}</p>
@@ -1237,7 +1237,7 @@ function StopHeroCard({
 
 function StatusPill({ icon: Icon, label, value, tone }: { icon: typeof Activity; label: string; value: string; tone: string }) {
   return (
-    <div className="rounded-sm border border-white/10 bg-black/20 p-2">
+    <div className="rounded-sm border border-slate-200 bg-slate-100 p-2">
       <div className="flex items-center gap-1.5 text-[8px] uppercase text-muted-foreground">
         <Icon className="h-3 w-3" />
         {label}
@@ -1270,7 +1270,7 @@ function ShiftBriefCard({
   const crewLabel = selectedJob?.crew.join(" + ") || "Crew";
 
   return (
-    <section className="rounded-md border border-white/10 bg-white/[0.035] p-3">
+    <section className="rounded-md border border-slate-200 bg-white/[0.035] p-3">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-[9px] font-mono uppercase tracking-widest text-primary">Shift</p>
@@ -1312,10 +1312,10 @@ function ShiftBriefCard({
                 key={item.id}
                 type="button"
                 onClick={() => onTogglePreflight(item)}
-                className={`rounded-sm border p-2 text-left transition ${checked ? "border-success/30 bg-success/10" : "border-white/10 bg-black/20 hover:border-primary/30"}`}
+                className={`rounded-sm border p-2 text-left transition ${checked ? "border-success/30 bg-success/10" : "border-slate-200 bg-slate-100 hover:border-primary/30"}`}
               >
                 <div className="flex flex-col gap-2">
-                  <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border ${checked ? "border-success bg-success text-white" : "border-white/20"}`}>
+                  <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border ${checked ? "border-success bg-success text-white" : "border-slate-300"}`}>
                     {checked && <CheckCircle2 className="h-3.5 w-3.5" />}
                   </span>
                   <span className="truncate text-xs font-semibold">{item.label}</span>
@@ -1350,14 +1350,14 @@ function CrewDesktopTabs({ activeTab, onChange }: { activeTab: CrewTab; onChange
   ];
 
   return (
-    <div className="hidden rounded-md border border-white/10 bg-black/20 p-1 md:grid md:grid-cols-5">
+    <div className="hidden rounded-md border border-slate-200 bg-slate-100 p-1 md:grid md:grid-cols-5">
       {tabs.map(([id, Icon, label]) => (
         <button
           key={id}
           type="button"
           data-testid={`crew-desktop-tab-${id}`}
           onClick={() => onChange(id)}
-          className={`flex h-11 items-center justify-center gap-2 rounded-sm text-xs font-medium transition ${activeTab === id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-white/[0.04] hover:text-white"}`}
+          className={`flex h-11 items-center justify-center gap-2 rounded-sm text-xs font-medium transition ${activeTab === id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-slate-100 hover:text-white"}`}
         >
           <Icon className="h-3.5 w-3.5" />
           {label}
@@ -1403,7 +1403,7 @@ interface CrewJourneyStep {
 function journeyTone(status: JourneyStatus) {
   if (status === "done") return "border-success/25 bg-success/10 text-success";
   if (status === "now") return "border-primary/40 bg-primary/15 text-primary";
-  return "border-white/10 bg-black/20 text-muted-foreground";
+  return "border-slate-200 bg-slate-100 text-muted-foreground";
 }
 
 function CrewJourneyCard({
@@ -1493,7 +1493,7 @@ function CrewJourneyCard({
   ];
 
   return (
-    <section className="rounded-md border border-white/10 bg-white/[0.035] p-3">
+    <section className="rounded-md border border-slate-200 bg-white/[0.035] p-3">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="text-[9px] font-mono uppercase tracking-widest text-primary">End-to-end</p>
@@ -1510,12 +1510,12 @@ function CrewJourneyCard({
         ))}
       </div>
 
-      <div className="mt-3 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-1.5 rounded-sm border border-white/10 bg-black/20 p-2 text-center text-[10px] text-muted-foreground">
-        <span className="truncate text-white/80">Crew closeout</span>
+      <div className="mt-3 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-1.5 rounded-sm border border-slate-200 bg-slate-100 p-2 text-center text-[10px] text-muted-foreground">
+        <span className="truncate text-slate-700">Crew closeout</span>
         <SendHorizontal className="h-3 w-3 text-primary" />
-        <span className="truncate text-white/80">Admin review</span>
+        <span className="truncate text-slate-700">Admin review</span>
         <SendHorizontal className="h-3 w-3 text-primary" />
-        <span className="truncate text-white/80">Client invoice</span>
+        <span className="truncate text-slate-700">Client invoice</span>
       </div>
     </section>
   );
@@ -1610,20 +1610,20 @@ function AudienceLensCard({
   ];
 
   return (
-    <section className="rounded-md border border-white/10 bg-white/[0.035] p-3">
+    <section className="rounded-md border border-slate-200 bg-white/[0.035] p-3">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="text-[9px] font-mono uppercase tracking-widest text-primary">End-user lens</p>
           <h2 className="mt-1 truncate text-sm font-semibold">What this means</h2>
         </div>
-        <div className="grid grid-cols-3 rounded-sm border border-white/10 bg-black/20 p-0.5">
+        <div className="grid grid-cols-3 rounded-sm border border-slate-200 bg-slate-100 p-0.5">
           {modes.map(([id, label]) => (
             <button
               key={id}
               type="button"
               data-testid={`crew-audience-${id}`}
               onClick={() => onModeChange(id)}
-              className={`h-8 rounded-[3px] px-2 text-[10px] font-medium transition ${mode === id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-white/[0.04] hover:text-white"}`}
+              className={`h-8 rounded-[3px] px-2 text-[10px] font-medium transition ${mode === id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-slate-100 hover:text-white"}`}
             >
               {label}
             </button>
@@ -1631,7 +1631,7 @@ function AudienceLensCard({
         </div>
       </div>
 
-      <div className="mt-3 rounded-sm border border-white/10 bg-black/20 p-3">
+      <div className="mt-3 rounded-sm border border-slate-200 bg-slate-100 p-3">
         <p className="text-[8px] uppercase text-muted-foreground">{lens.eyebrow}</p>
         <p className={`mt-1 text-sm font-semibold ${lens.tone}`}>{lens.title}</p>
         <div className="mt-3 grid gap-1.5 sm:grid-cols-3">
@@ -1646,7 +1646,7 @@ function AudienceLensCard({
 
 function LensFact({ label, value }: { label: string; value: string }) {
   return (
-    <div className="min-w-0 rounded-sm border border-white/10 bg-white/[0.03] p-2">
+    <div className="min-w-0 rounded-sm border border-slate-200 bg-slate-50 p-2">
       <p className="text-[8px] uppercase text-muted-foreground">{label}</p>
       <p className="mt-1 line-clamp-3 text-[11px] leading-relaxed text-white/82">{value}</p>
     </div>
@@ -1670,7 +1670,7 @@ function RoutePanel({
 }) {
   return (
     <section className="space-y-3">
-      <div className="rounded-md border border-white/10 bg-black/20 p-3">
+      <div className="rounded-md border border-slate-200 bg-slate-100 p-3">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <TimerReset className="h-4 w-4 text-primary" />
@@ -1682,7 +1682,7 @@ function RoutePanel({
           {jobs.map((job) => (
             <article
               key={job.id}
-              className={`rounded-sm border p-3 ${selectedJobId === job.id ? "border-primary/40 bg-primary/10" : "border-white/10 bg-white/[0.035]"}`}
+              className={`rounded-sm border p-3 ${selectedJobId === job.id ? "border-primary/40 bg-primary/10" : "border-slate-200 bg-white/[0.035]"}`}
             >
               <button type="button" className="flex w-full items-center gap-3 text-left" onClick={() => onSelect(job)}>
                 <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border text-xs font-semibold ${job.state === "completed" ? "border-success bg-success text-white" : selectedJobId === job.id ? "border-primary text-primary" : "border-white/15 text-muted-foreground"}`}>
@@ -1706,10 +1706,10 @@ function RoutePanel({
                     <MiniFact label="Risk" value={job.riskLevel} tone={riskTone(job.riskLevel)} />
                   </div>
                   <div className="mt-3 grid grid-cols-2 gap-1.5">
-                    <Button size="sm" variant="outline" onClick={() => onSelect(job)} className="h-9 border-white/10 text-xs">
+                    <Button size="sm" variant="outline" onClick={() => onSelect(job)} className="h-9 border-slate-200 text-xs">
                       Details
                     </Button>
-                    <Button size="sm" variant="outline" onClick={() => onNavigate(job)} className="h-9 border-white/10 text-xs">
+                    <Button size="sm" variant="outline" onClick={() => onNavigate(job)} className="h-9 border-slate-200 text-xs">
                       <Navigation className="mr-2 h-3.5 w-3.5" />
                       Maps
                     </Button>
@@ -1763,9 +1763,9 @@ function InvoiceHandoffCard({ job, progress }: { job: CrewJob; progress: CrewJob
         <MiniFact label="Proof" value={`${proofDone}/${job.proofRequirements.length}`} tone={proofDone === job.proofRequirements.length ? "text-success" : "text-warning"} />
       </div>
 
-      <div className="mt-3 rounded-sm border border-white/10 bg-black/20 p-2">
+      <div className="mt-3 rounded-sm border border-slate-200 bg-slate-100 p-2">
         <p className="text-[8px] uppercase text-muted-foreground">Billing link</p>
-        <p className="mt-1 text-xs leading-relaxed text-white/80">{job.billingLink}</p>
+        <p className="mt-1 text-xs leading-relaxed text-slate-700">{job.billingLink}</p>
       </div>
     </section>
   );
@@ -1779,7 +1779,7 @@ function HandoffChain({ ready }: { ready: boolean }) {
   ];
 
   return (
-    <div className="mt-3 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-1.5 rounded-sm border border-white/10 bg-black/20 p-2 text-center">
+    <div className="mt-3 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-1.5 rounded-sm border border-slate-200 bg-slate-100 p-2 text-center">
       {items.map(([label, detail], index) => (
         <Fragment key={label}>
           <div className="min-w-0">
@@ -1829,7 +1829,7 @@ function JobPanel({
 
   return (
     <section className="space-y-3">
-      <div className="rounded-md border border-white/10 bg-white/[0.035] p-3">
+      <div className="rounded-md border border-slate-200 bg-white/[0.035] p-3">
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-[9px] uppercase text-muted-foreground">{job.customer}</p>
@@ -1859,7 +1859,7 @@ function JobPanel({
         <QuickButton icon={Copy} label="Access" onClick={onCopyAccess} />
       </div>
 
-      <div className="rounded-md border border-white/10 bg-white/[0.035] p-3">
+      <div className="rounded-md border border-slate-200 bg-white/[0.035] p-3">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
@@ -1891,7 +1891,7 @@ function JobPanel({
         </div>
       </div>
 
-      <div className="rounded-md border border-white/10 bg-white/[0.035] p-3">
+      <div className="rounded-md border border-slate-200 bg-white/[0.035] p-3">
         <p className="text-[9px] uppercase text-muted-foreground">Field notes</p>
         <div className="mt-2 divide-y divide-white/10">
           <NoteRow icon={MessageSquare} label="Client updates" value={job.customerNoticePolicy} />
@@ -1950,7 +1950,7 @@ function ChecklistPanel({
 }) {
   return (
     <section className="space-y-3">
-      <div className="rounded-sm border border-white/5 bg-white/[0.03] p-3">
+      <div className="rounded-sm border border-slate-200 bg-slate-50 p-3">
         <p className="text-[10px] uppercase text-muted-foreground">Required checklist</p>
         <p className="mt-1 text-lg font-semibold">{completedRequiredCount} / {requiredCount} complete</p>
       </div>
@@ -1964,9 +1964,9 @@ function ChecklistPanel({
                 key={item.id}
                 type="button"
                 onClick={() => onToggle(item)}
-                className={`flex w-full items-start gap-3 rounded-sm border p-3 text-left ${checked ? "border-success/30 bg-success/10" : "border-white/5 bg-white/[0.03]"}`}
+                className={`flex w-full items-start gap-3 rounded-sm border p-3 text-left ${checked ? "border-success/30 bg-success/10" : "border-slate-200 bg-slate-50"}`}
               >
-                <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border ${checked ? "border-success bg-success text-white" : "border-white/20"}`}>
+                <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border ${checked ? "border-success bg-success text-white" : "border-slate-300"}`}>
                   {checked && <CheckCircle2 className="h-3.5 w-3.5" />}
                 </div>
                 <div>
@@ -2016,14 +2016,14 @@ function ProofPanel({
         value={proofNote}
         onChange={(event) => onProofNoteChange(event.target.value)}
         placeholder="Proof note, room note, or issue context"
-        className="min-h-20 w-full rounded-md border border-white/10 bg-black/20 px-3 py-2 text-sm outline-none"
+        className="min-h-20 w-full rounded-md border border-slate-200 bg-slate-100 px-3 py-2 text-sm outline-none"
       />
 
       <div className="grid gap-2">
         {job.proofRequirements.map((type) => {
           const exists = progress.proofs.some((proof) => proof.type === type);
           return (
-            <Button key={type} variant={exists ? "secondary" : "outline"} onClick={() => onAddProof(type)} className="h-11 justify-start border-white/10 text-xs">
+            <Button key={type} variant={exists ? "secondary" : "outline"} onClick={() => onAddProof(type)} className="h-11 justify-start border-slate-200 text-xs">
               <Camera className="mr-2 h-4 w-4" />
               {exists ? `${proofLabel(type)} added` : `Add ${proofLabel(type)}`}
             </Button>
@@ -2031,14 +2031,14 @@ function ProofPanel({
         })}
       </div>
 
-      <div className="rounded-sm border border-white/5 bg-white/[0.03] p-3">
+      <div className="rounded-sm border border-slate-200 bg-slate-50 p-3">
         <p className="text-[10px] uppercase text-muted-foreground">Proof history</p>
         <div className="mt-2 grid gap-2">
           {progress.proofs.length === 0 ? (
             <p className="text-sm text-muted-foreground">No proof markers yet.</p>
           ) : (
             progress.proofs.map((proof) => (
-              <div key={proof.id} className="rounded-sm border border-white/5 bg-black/20 p-2">
+              <div key={proof.id} className="rounded-sm border border-slate-200 bg-slate-100 p-2">
                 <p className="text-sm font-medium">{proofLabel(proof.type)}</p>
                 <p className="text-xs text-muted-foreground">{proof.note}</p>
               </div>
@@ -2058,7 +2058,7 @@ function ProofPanel({
               key={label}
               type="button"
               onClick={() => onQuickIssue(label)}
-              className="rounded-sm border border-destructive/20 bg-black/20 px-3 py-3 text-left text-xs font-medium text-destructive transition hover:bg-destructive/10"
+              className="rounded-sm border border-destructive/20 bg-slate-100 px-3 py-3 text-left text-xs font-medium text-destructive transition hover:bg-destructive/10"
             >
               {label}
             </button>
@@ -2068,7 +2068,7 @@ function ProofPanel({
           value={issueNote}
           onChange={(event) => onIssueNoteChange(event.target.value)}
           placeholder="What is blocked, damaged, missing, unsafe, or unclear?"
-          className="min-h-20 w-full rounded-md border border-destructive/20 bg-black/20 px-3 py-2 text-sm outline-none"
+          className="min-h-20 w-full rounded-md border border-destructive/20 bg-slate-100 px-3 py-2 text-sm outline-none"
         />
         <Button disabled={!issueNote.trim()} onClick={onReportIssue} className="mt-2 h-10 w-full bg-destructive text-xs hover:bg-destructive/90">
           <MessageSquare className="mr-2 h-4 w-4" />
@@ -2102,7 +2102,7 @@ function SyncPanel({
         <MiniFact label="Failed" value={String(failed)} tone={failed ? "text-destructive" : "text-muted-foreground"} />
         <MiniFact label="Acked" value={String(acked)} tone="text-success" />
       </div>
-      <div className="rounded-sm border border-white/5 bg-white/[0.03] p-3">
+      <div className="rounded-sm border border-slate-200 bg-slate-50 p-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-[10px] uppercase text-muted-foreground">Sync center</p>
@@ -2110,14 +2110,14 @@ function SyncPanel({
               Local actions stay visible so offline work never looks magically complete before replay.
             </p>
           </div>
-          <Button variant="outline" onClick={onResetLocalRoute} className="h-9 border-white/10 text-xs">
+          <Button variant="outline" onClick={onResetLocalRoute} className="h-9 border-slate-200 text-xs">
             Reset local route
           </Button>
         </div>
       </div>
       <div className="grid gap-2">
         {actions.map((action) => (
-          <div key={action.id} className="rounded-sm border border-white/5 bg-black/20 p-3">
+          <div key={action.id} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-sm font-medium">{action.label}</p>
@@ -2164,7 +2164,7 @@ function AdminHandoffPreview({ job, progress }: { job: CrewJob; progress: CrewJo
         <MiniFact label="Proof" value={`${proofDone}/${job.proofRequirements.length}`} tone={proofDone === job.proofRequirements.length ? "text-success" : "text-warning"} />
       </div>
 
-      <div className="mt-3 rounded-sm border border-white/10 bg-black/20 p-3">
+      <div className="mt-3 rounded-sm border border-slate-200 bg-slate-100 p-3">
         <p className={`text-xs font-medium ${ready ? "text-success" : "text-warning"}`}>
           {ready ? "Admin can turn this closeout into an invoice review item." : `Before admin billing: ${blockers.join(", ")} left.`}
         </p>
@@ -2186,13 +2186,13 @@ function SyncMiniPanel({ actions, onOpen }: { actions: SyncAction[]; onOpen: () 
   const latest = actions[0];
 
   return (
-    <section className="rounded-md border border-white/10 bg-white/[0.035] p-3">
+    <section className="rounded-md border border-slate-200 bg-white/[0.035] p-3">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground">Offline ledger</p>
           <h2 className="mt-1 text-base font-semibold">Sync queue</h2>
         </div>
-        <Button variant="outline" onClick={onOpen} className="h-8 border-white/10 px-2 text-xs">
+        <Button variant="outline" onClick={onOpen} className="h-8 border-slate-200 px-2 text-xs">
           Open
         </Button>
       </div>
@@ -2203,8 +2203,8 @@ function SyncMiniPanel({ actions, onOpen }: { actions: SyncAction[]; onOpen: () 
       </div>
 
       {latest && (
-        <div className="mt-3 rounded-sm border border-white/10 bg-black/20 p-2">
-          <p className="line-clamp-2 text-xs leading-relaxed text-white/80">{latest.label}</p>
+        <div className="mt-3 rounded-sm border border-slate-200 bg-slate-100 p-2">
+          <p className="line-clamp-2 text-xs leading-relaxed text-slate-700">{latest.label}</p>
           <p className="mt-1 text-[9px] uppercase text-muted-foreground">{latest.retryState} · {formatShortTime(latest.createdAt)}</p>
         </div>
       )}
@@ -2214,7 +2214,7 @@ function SyncMiniPanel({ actions, onOpen }: { actions: SyncAction[]; onOpen: () 
 
 function WorkOrderRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="min-w-0 rounded-sm border border-white/10 bg-black/20 p-2">
+    <div className="min-w-0 rounded-sm border border-slate-200 bg-slate-100 p-2">
       <p className="text-[8px] uppercase text-muted-foreground">{label}</p>
       <p className="mt-1 truncate text-xs font-medium leading-snug text-white">{value}</p>
     </div>
@@ -2223,7 +2223,7 @@ function WorkOrderRow({ label, value }: { label: string; value: string }) {
 
 function FieldSignal({ label, value, tone }: { label: string; value: string; tone: string }) {
   return (
-    <div className="min-w-0 rounded-sm border border-white/10 bg-black/20 p-2">
+    <div className="min-w-0 rounded-sm border border-slate-200 bg-slate-100 p-2">
       <p className="text-[8px] uppercase text-muted-foreground">{label}</p>
       <p className={`mt-1 truncate text-xs font-semibold ${tone}`}>{value}</p>
     </div>
@@ -2232,7 +2232,7 @@ function FieldSignal({ label, value, tone }: { label: string; value: string; ton
 
 function QuickButton({ icon: Icon, label, onClick }: { icon: typeof Activity; label: string; onClick: () => void }) {
   return (
-    <button type="button" onClick={onClick} className="flex h-14 flex-col items-center justify-center gap-1 rounded-sm border border-white/10 bg-white/[0.035] text-[10px] font-medium text-muted-foreground transition hover:border-primary/30 hover:text-white">
+    <button type="button" onClick={onClick} className="flex h-14 flex-col items-center justify-center gap-1 rounded-sm border border-slate-200 bg-white/[0.035] text-[10px] font-medium text-muted-foreground transition hover:border-primary/30 hover:text-white">
       <Icon className="h-4 w-4" />
       {label}
     </button>
@@ -2253,7 +2253,7 @@ function NoteRow({ icon: Icon, label, value }: { icon: typeof Activity; label: s
 
 function InfoCard({ icon: Icon, title, detail }: { icon: typeof Activity; title: string; detail: string }) {
   return (
-    <div className="rounded-md border border-white/10 bg-white/[0.035] p-3">
+    <div className="rounded-md border border-slate-200 bg-white/[0.035] p-3">
       <div className="flex gap-3">
         <Icon className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
         <div>
@@ -2267,7 +2267,7 @@ function InfoCard({ icon: Icon, title, detail }: { icon: typeof Activity; title:
 
 function MiniFact({ label, value, tone = "text-foreground" }: { label: string; value: string; tone?: string }) {
   return (
-    <div className="min-w-0 rounded-sm border border-white/5 bg-black/20 p-2">
+    <div className="min-w-0 rounded-sm border border-slate-200 bg-slate-100 p-2">
       <p className="text-[9px] uppercase text-muted-foreground">{label}</p>
       <p className={`mt-1 truncate text-xs font-semibold ${tone}`}>{value}</p>
     </div>

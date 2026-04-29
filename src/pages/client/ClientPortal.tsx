@@ -53,10 +53,10 @@ export function ClientPortal() {
     fetchJobByToken();
   }, [token]);
 
-  if (loading) return <div className="flex h-screen items-center justify-center bg-black"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
+  if (loading) return <div className="flex h-screen items-center justify-center bg-slate-50"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
 
   if (!job) return (
-    <div className="flex flex-col h-screen items-center justify-center bg-black p-6 text-center">
+    <div className="flex flex-col h-screen items-center justify-center bg-slate-50 p-6 text-center">
       <div className="glass p-8 rounded-lg border border-destructive/20 max-w-sm">
         <h1 className="text-xl font-display font-bold text-destructive mb-2 uppercase">Invalid_Access_Token</h1>
         <p className="text-sm text-muted-foreground">The link you followed is expired or incorrect. Please contact support.</p>
@@ -75,7 +75,7 @@ export function ClientPortal() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-black text-white font-sans p-4 md:p-8 items-center">
+    <div className="flex flex-col min-h-screen font-sans bg-slate-50 text-slate-900 font-sans p-4 md:p-8 items-center">
       <div className="max-w-2xl w-full space-y-8">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -92,8 +92,8 @@ export function ClientPortal() {
           </Badge>
         </div>
 
-        <Card className="glass border-white/5 overflow-hidden">
-          <CardHeader className="bg-white/5 border-b border-white/5">
+        <Card className="glass border-slate-200 overflow-hidden">
+          <CardHeader className="bg-white/5 border-b border-slate-200">
             <CardTitle className="text-2xl font-display tracking-tight">{job.title}</CardTitle>
             <p className="text-sm text-muted-foreground">{job.description}</p>
           </CardHeader>

@@ -22,7 +22,7 @@ function tone(status: string) {
   if (["canonical", "preserve", "enabled", "configured", "succeeded", "health_ok", "boots", "builds", "installs", "passed"].includes(status)) return "text-success border-success/20 bg-success/10";
   if (["extract", "queued", "running", "missing_config", "not_checked", "skipped"].includes(status)) return "text-warning border-warning/20 bg-warning/10";
   if (["blocked", "failed", "missing"].includes(status)) return "text-destructive border-destructive/20 bg-destructive/10";
-  return "text-muted-foreground border-white/10 bg-white/5";
+  return "text-muted-foreground border-slate-200 bg-white/5";
 }
 
 function humanLabel(value: string | null | undefined, fallback = "Not set") {
@@ -83,7 +83,7 @@ export function Runtime() {
 
   return (
     <div className="space-y-5">
-      <section className="flex flex-col gap-3 rounded-sm border border-white/5 bg-black/20 p-5 md:flex-row md:items-center md:justify-between">
+      <section className="flex flex-col gap-3 rounded-sm border border-slate-200 bg-slate-100 p-5 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="flex items-center gap-2">
             <Server className="h-4 w-4 text-primary" />
@@ -104,7 +104,7 @@ export function Runtime() {
           { label: "Healthy", value: proofCounts.health_ok || 0, icon: CheckCircle2 },
           { label: "Blocked", value: blockedProof.length || packetCounts.failed || 0, icon: RefreshCcw },
         ].map((item) => (
-          <Card key={item.label} className="glass border-white/5">
+          <Card key={item.label} className="glass border-slate-200">
             <CardContent className="flex items-center justify-between p-4">
               <div>
                 <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{item.label}</p>
@@ -116,7 +116,7 @@ export function Runtime() {
         ))}
       </div>
 
-      <Card className="glass border-white/5">
+      <Card className="glass border-slate-200">
         <CardHeader className="py-4">
           <CardTitle className="text-sm">Fleet</CardTitle>
         </CardHeader>
@@ -129,7 +129,7 @@ export function Runtime() {
               const status = runtimeProof?.proofStatus || runtime.status;
 
               return (
-                <div key={runtime.id} className="grid gap-3 rounded-sm border border-white/5 bg-black/20 p-3 md:grid-cols-[1fr_auto_auto] md:items-center">
+                <div key={runtime.id} className="grid gap-3 rounded-sm border border-slate-200 bg-slate-100 p-3 md:grid-cols-[1fr_auto_auto] md:items-center">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{runtime.label}</p>
                     <p className="truncate text-xs text-muted-foreground">{runtimeProof?.blocker || runtime.path}</p>
@@ -145,7 +145,7 @@ export function Runtime() {
         </CardContent>
       </Card>
 
-      <Card className="glass border-white/5">
+      <Card className="glass border-slate-200">
         <CardHeader className="py-4">
           <CardTitle className="text-sm">Local proof</CardTitle>
         </CardHeader>
@@ -162,7 +162,7 @@ export function Runtime() {
               ];
 
               return (
-                <div key={record.runtimeId} className="rounded-sm border border-white/5 bg-black/20 p-3">
+                <div key={record.runtimeId} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
                   <div className="flex items-center justify-between gap-3">
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium">{record.label}</p>
@@ -187,7 +187,7 @@ export function Runtime() {
         </CardContent>
       </Card>
 
-      <Card className="glass border-white/5">
+      <Card className="glass border-slate-200">
         <CardHeader className="py-4">
           <CardTitle className="text-sm">Services</CardTitle>
         </CardHeader>
@@ -196,7 +196,7 @@ export function Runtime() {
             <p className="py-8 text-center text-xs text-muted-foreground sm:col-span-4">Health service data is unavailable.</p>
           ) : (
             Object.entries(health?.services || {}).map(([name, value]) => (
-              <div key={name} className="rounded-sm border border-white/5 bg-black/20 p-3">
+              <div key={name} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
                 <p className="text-xs text-muted-foreground">{humanLabel(name)}</p>
                 <Badge variant="outline" className={`mt-2 text-[10px] ${tone(value)}`}>
                   {humanLabel(value)}

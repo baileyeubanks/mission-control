@@ -163,7 +163,7 @@ export function VideoRapidFire() {
             <Bomb className="h-5 w-5 text-brand-accent-glow" />
             <h1 className="text-2xl font-display tracking-[0.06em]">Rapid Fire</h1>
           </div>
-          <p className="mt-1 text-xs text-white/40 font-mono uppercase tracking-widest">
+          <p className="mt-1 text-xs text-slate-500 font-mono uppercase tracking-widest">
             One upload. One click. Full tactical package.
           </p>
         </div>
@@ -193,7 +193,7 @@ export function VideoRapidFire() {
               {!file ? (
                 <div
                   onClick={() => fileInputRef.current?.click()}
-                  className="cursor-pointer rounded-sm border-2 border-dashed border-white/10 bg-black/20 p-10 text-center transition-colors hover:border-primary/30 hover:bg-white/5"
+                  className="cursor-pointer rounded-sm border-2 border-dashed border-slate-200 bg-slate-100 p-10 text-center transition-colors hover:border-primary/30 hover:bg-white/5"
                 >
                   <UploadCloud className="mx-auto h-10 w-10 text-muted-foreground/40" />
                   <p className="mt-3 text-sm text-muted-foreground">Drop mission footage or click to arm</p>
@@ -204,8 +204,8 @@ export function VideoRapidFire() {
               ) : (
                 <div className="space-y-3">
                   {previewUrl && (
-                    <div className="relative rounded-sm overflow-hidden border border-white/5">
-                      <video src={previewUrl} className="w-full max-h-48 object-contain bg-black/40" controls />
+                    <div className="relative rounded-sm overflow-hidden border border-slate-200">
+                      <video src={previewUrl} className="w-full max-h-48 object-contain bg-white" controls />
                     </div>
                   )}
                   {videoInfo && (
@@ -240,7 +240,7 @@ export function VideoRapidFire() {
 
           {/* Phase Tracker */}
           {file && (
-            <Card className="glass border-white/5">
+            <Card className="glass border-slate-200">
               <CardHeader className="py-4">
                 <CardTitle className="text-sm">Phase Tracker</CardTitle>
               </CardHeader>
@@ -255,14 +255,14 @@ export function VideoRapidFire() {
                         ? "border-warning/20 bg-warning/5"
                         : phase.status === "error"
                         ? "border-destructive/20 bg-destructive/5"
-                        : "border-white/5 bg-black/20"
+                        : "border-slate-200 bg-slate-100"
                     }`}
                   >
                     <div className="flex items-center gap-2">
                       {phase.status === "done" && <CheckCircle2 className="h-3.5 w-3.5 text-success" />}
                       {phase.status === "running" && <Loader2 className="h-3.5 w-3.5 animate-spin text-warning" />}
                       {phase.status === "error" && <AlertTriangle className="h-3.5 w-3.5 text-destructive" />}
-                      {phase.status === "idle" && <div className="h-3.5 w-3.5 rounded-full border border-white/20" />}
+                      {phase.status === "idle" && <div className="h-3.5 w-3.5 rounded-full border border-slate-300" />}
                       <span className={`text-xs capitalize ${phase.status === "done" ? "text-success" : phase.status === "running" ? "text-warning" : "text-muted-foreground"}`}>
                         {key}
                       </span>
@@ -279,7 +279,7 @@ export function VideoRapidFire() {
             <>
               {/* Thumbnails */}
               {results.thumbnails.length > 0 && (
-                <Card className="glass border-white/5">
+                <Card className="glass border-slate-200">
                   <CardHeader className="py-4">
                     <CardTitle className="text-sm flex items-center gap-2">
                       <ImageIcon className="h-4 w-4 text-primary" />
@@ -288,9 +288,9 @@ export function VideoRapidFire() {
                   </CardHeader>
                   <CardContent className="grid grid-cols-5 gap-2 p-4 pt-0">
                     {results.thumbnails.map((t, i) => (
-                      <div key={i} className="relative rounded-sm overflow-hidden border border-white/5">
+                      <div key={i} className="relative rounded-sm overflow-hidden border border-slate-200">
                         <img src={t.url} alt="" className="w-full h-16 object-cover" />
-                        <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-[9px] font-mono text-center py-0.5">
+                        <span className="absolute bottom-0 left-0 right-0 bg-slate-900/30 text-[9px] font-mono text-center py-0.5">
                           {t.time}s
                         </span>
                       </div>
@@ -301,7 +301,7 @@ export function VideoRapidFire() {
 
               {/* Clips */}
               {results.clips.length > 0 && (
-                <Card className="glass border-white/5">
+                <Card className="glass border-slate-200">
                   <CardHeader className="py-4">
                     <CardTitle className="text-sm flex items-center gap-2">
                       <MonitorPlay className="h-4 w-4 text-primary" />
@@ -310,7 +310,7 @@ export function VideoRapidFire() {
                   </CardHeader>
                   <CardContent className="grid gap-2 p-4 pt-0 sm:grid-cols-2">
                     {results.clips.map((c, i) => (
-                      <div key={i} className="rounded-sm border border-white/5 bg-black/20 overflow-hidden">
+                      <div key={i} className="rounded-sm border border-slate-200 bg-slate-100 overflow-hidden">
                         <video src={c.url} className="w-full h-24 object-cover" controls />
                         <div className="p-2">
                           <p className="text-[10px] font-mono uppercase text-primary">{c.label}</p>
@@ -338,7 +338,7 @@ export function VideoRapidFire() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-4 pt-0">
-                    <div className="max-h-96 overflow-y-auto rounded-sm border border-white/5 bg-black/20 p-4 text-xs whitespace-pre-wrap text-muted-foreground">
+                    <div className="max-h-96 overflow-y-auto rounded-sm border border-slate-200 bg-slate-100 p-4 text-xs whitespace-pre-wrap text-muted-foreground">
                       {results.battlePlan}
                     </div>
                     <Button
@@ -379,21 +379,21 @@ export function VideoRapidFire() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 p-4 pt-0">
-                <div className="flex items-center justify-between rounded-sm border border-white/5 bg-black/20 p-3">
+                <div className="flex items-center justify-between rounded-sm border border-slate-200 bg-slate-100 p-3">
                   <span className="text-xs text-muted-foreground">Hook Score</span>
                   <span className={`text-sm font-display ${results.intel.hookScore >= 70 ? "text-success" : results.intel.hookScore >= 40 ? "text-warning" : "text-destructive"}`}>
                     {results.intel.hookScore}/100
                   </span>
                 </div>
-                <div className="flex items-center justify-between rounded-sm border border-white/5 bg-black/20 p-3">
+                <div className="flex items-center justify-between rounded-sm border border-slate-200 bg-slate-100 p-3">
                   <span className="text-xs text-muted-foreground">Shots Detected</span>
                   <span className="text-sm font-display">{results.intel.shotList.length}</span>
                 </div>
-                <div className="flex items-center justify-between rounded-sm border border-white/5 bg-black/20 p-3">
+                <div className="flex items-center justify-between rounded-sm border border-slate-200 bg-slate-100 p-3">
                   <span className="text-xs text-muted-foreground">Viral Moments</span>
                   <span className="text-sm font-display">{results.intel.viralMoments.length}</span>
                 </div>
-                <div className="flex items-center justify-between rounded-sm border border-white/5 bg-black/20 p-3">
+                <div className="flex items-center justify-between rounded-sm border border-slate-200 bg-slate-100 p-3">
                   <span className="text-xs text-muted-foreground">Text Patterns</span>
                   <span className="text-sm font-display">{results.intel.textPatterns.length}</span>
                 </div>
@@ -403,7 +403,7 @@ export function VideoRapidFire() {
                     <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-1">Color Palette</p>
                     <div className="flex gap-1">
                       {results.intel.colorPalette.slice(0, 6).map((c, i) => (
-                        <div key={i} className="h-6 w-6 rounded-sm border border-white/10" style={{ backgroundColor: c }} title={c} />
+                        <div key={i} className="h-6 w-6 rounded-sm border border-slate-200" style={{ backgroundColor: c }} title={c} />
                       ))}
                     </div>
                   </div>
@@ -424,7 +424,7 @@ export function VideoRapidFire() {
             </Card>
           )}
 
-          <Card className="glass border-white/5">
+          <Card className="glass border-slate-200">
             <CardHeader className="py-4">
               <CardTitle className="text-sm">What Rapid Fire Does</CardTitle>
             </CardHeader>

@@ -66,7 +66,7 @@ export function Security() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">Active_Session</CardTitle>
             <Lock className="h-3.5 w-3.5 text-primary/50" />
@@ -78,7 +78,7 @@ export function Security() {
             </p>
           </CardContent>
         </Card>
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">Authority_Level</CardTitle>
             <UserCheck className="h-3.5 w-3.5 text-success/50" />
@@ -90,7 +90,7 @@ export function Security() {
             </p>
           </CardContent>
         </Card>
-        <Card className="glass border-white/5">
+        <Card className="glass border-slate-200">
           <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">Runtime_Security</CardTitle>
             <Shield className="h-3.5 w-3.5 text-primary/50" />
@@ -102,13 +102,13 @@ export function Security() {
         </Card>
       </div>
 
-      <Card className="flex-1 flex flex-col overflow-hidden glass border-white/5">
-        <div className="p-4 border-b border-white/5 bg-black/20 flex items-center justify-between">
+      <Card className="flex-1 flex flex-col overflow-hidden glass border-slate-200">
+        <div className="p-4 border-b border-slate-200 bg-slate-100 flex items-center justify-between">
           <h2 className="text-[10px] font-mono font-bold uppercase tracking-widest">System_Audit_Logs</h2>
           <Button
             variant="outline"
             size="sm"
-            className="h-7 font-mono text-[9px] uppercase border-white/10"
+            className="h-7 font-mono text-[9px] uppercase border-slate-200"
             onClick={() => {
               const payload = JSON.stringify({
                 data_source: "security_audit_logs",
@@ -132,8 +132,8 @@ export function Security() {
         </div>
         <div className="flex-1 overflow-auto">
           <Table>
-            <TableHeader className="bg-black/40 sticky top-0 z-10">
-              <TableRow className="hover:bg-transparent border-white/5">
+            <TableHeader className="bg-white sticky top-0 z-10">
+              <TableRow className="hover:bg-transparent border-slate-200">
                 <TableHead className="hidden md:table-cell w-[160px] md:w-[180px] font-mono text-[10px] uppercase tracking-widest">Timestamp</TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">Action</TableHead>
                 <TableHead className="font-mono text-[10px] uppercase tracking-widest">Actor</TableHead>
@@ -151,7 +151,7 @@ export function Security() {
                   <TableCell colSpan={5} className="text-center py-12 text-muted-foreground font-mono text-xs uppercase tracking-widest">No_Audit_Records_Found</TableCell>
                 </TableRow>
               ) : logs.map((log) => (
-                <TableRow key={log.id} className="group hover:bg-white/5 border-white/5 transition-colors">
+                <TableRow key={log.id} className="group hover:bg-white/5 border-slate-200 transition-colors">
                   <TableCell className="hidden md:table-cell font-mono text-[10px] text-muted-foreground/60">
                     {new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(log.created_at))}
                   </TableCell>
@@ -163,7 +163,7 @@ export function Security() {
                       log.severity === 'critical' ? 'bg-destructive/20 border-destructive/30 text-destructive' :
                       log.severity === 'high' ? 'bg-warning/20 border-warning/30 text-warning' :
                       log.severity === 'medium' ? 'bg-primary/20 border-primary/30 text-primary' :
-                      'bg-white/5 border-white/10 text-muted-foreground'
+                      'bg-white/5 border-slate-200 text-muted-foreground'
                     }`}>
                       {log.severity}
                     </Badge>

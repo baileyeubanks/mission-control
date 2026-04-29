@@ -119,7 +119,7 @@ export function Health() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {metrics.map((m) => (
-          <Card key={m.label} className="glass border-white/5">
+          <Card key={m.label} className="glass border-slate-200">
             <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0">
               <CardTitle className="text-xs font-medium text-muted-foreground">{m.label}</CardTitle>
               <m.icon className="h-3.5 w-3.5 text-primary/50" />
@@ -138,8 +138,8 @@ export function Health() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 flex-1 min-h-0">
-        <Card className="flex flex-col glass border-white/5 overflow-hidden">
-          <CardHeader className="py-4 border-b border-white/5 bg-black/20">
+        <Card className="flex flex-col glass border-slate-200 overflow-hidden">
+          <CardHeader className="py-4 border-b border-slate-200 bg-slate-100">
             <CardTitle className="text-xs font-medium text-muted-foreground">Services</CardTitle>
           </CardHeader>
           <CardContent className="p-4 space-y-4">
@@ -151,7 +151,7 @@ export function Health() {
               { name: "Packet runtime", status: (health?.services.packets === "enabled" ? "Online" : "Offline") as HealthStatus, load: health?.services.packets === "enabled" ? "Queue aware" : "Missing config" },
               { name: "Auth governance", status: "Online", load: "Nominal" },
             ].map((s) => (
-              <div key={s.name} className="flex items-center justify-between p-3 border border-white/5 rounded-sm bg-white/5">
+              <div key={s.name} className="flex items-center justify-between p-3 border border-slate-200 rounded-sm bg-white/5">
                 <div className="space-y-1">
                   <p className="text-sm font-medium">{s.name}</p>
                   <p className="text-[11px] text-muted-foreground">State: {s.load}</p>
@@ -169,8 +169,8 @@ export function Health() {
           </CardContent>
         </Card>
 
-        <Card className="flex flex-col glass border-white/5 overflow-hidden">
-          <CardHeader className="py-4 border-b border-white/5 bg-black/20">
+        <Card className="flex flex-col glass border-slate-200 overflow-hidden">
+          <CardHeader className="py-4 border-b border-slate-200 bg-slate-100">
             <CardTitle className="text-xs font-medium text-muted-foreground">Repair queue</CardTitle>
           </CardHeader>
           <CardContent className="p-4 flex flex-col items-center justify-center flex-1 text-center space-y-4">

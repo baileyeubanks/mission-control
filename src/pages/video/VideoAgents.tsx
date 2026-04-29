@@ -113,17 +113,17 @@ export function VideoAgents() {
             <Cpu className="h-5 w-5 text-brand-accent-glow" />
             <h1 className="text-2xl font-display tracking-[0.06em]">Agent Fleet</h1>
           </div>
-          <p className="mt-1 text-xs text-white/40">Dispatch AI co-producers, co-scripters, co-editors, and co-deliverers</p>
+          <p className="mt-1 text-xs text-slate-500">Dispatch AI co-producers, co-scripters, co-editors, and co-deliverers</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <Button variant="ghost" size="icon" onClick={() => void refresh()} title="Refresh" className="hover:bg-white/[0.04]">
-            <RefreshCcw className="h-4 w-4 text-white/30" />
+          <Button variant="ghost" size="icon" onClick={() => void refresh()} title="Refresh" className="hover:bg-slate-100">
+            <RefreshCcw className="h-4 w-4 text-slate-400" />
           </Button>
         </div>
       </section>
 
       {/* Dispatch Panel */}
-      <Card className="glass border-white/5">
+      <Card className="glass border-slate-200">
         <CardHeader className="py-4">
           <CardTitle className="text-sm flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-primary" />
@@ -135,7 +135,7 @@ export function VideoAgents() {
             <div className="space-y-2">
               <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Project</label>
               <select
-                className="w-full rounded-sm border border-white/10 bg-black/30 px-3 py-2 text-xs text-foreground outline-none"
+                className="w-full rounded-sm border border-slate-200 bg-slate-100 px-3 py-2 text-xs text-foreground outline-none"
                 value={projectId || ""}
                 onChange={(e) => setSearchParams(e.target.value ? { projectId: e.target.value } : {})}
               >
@@ -156,7 +156,7 @@ export function VideoAgents() {
                     className={`flex items-center gap-2 rounded-sm border px-3 py-2 text-xs transition-colors ${
                       selectedRole === agent.role
                         ? "border-primary/30 bg-primary/10 text-primary"
-                        : "border-white/5 bg-black/20 text-muted-foreground hover:bg-white/5"
+                        : "border-slate-200 bg-slate-100 text-muted-foreground hover:bg-white/5"
                     }`}
                   >
                     <agent.icon className="h-3.5 w-3.5" />
@@ -171,7 +171,7 @@ export function VideoAgents() {
               placeholder="Enter task prompt... e.g. 'Extract 5 viral clips with captions'"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              className="flex-1 bg-black/30 border-white/10 text-xs"
+              className="flex-1 bg-slate-100 border-slate-200 text-xs"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
@@ -205,7 +205,7 @@ export function VideoAgents() {
             const group = grouped[status] || [];
             if (group.length === 0) return null;
             return (
-              <Card key={status} className="glass border-white/5">
+              <Card key={status} className="glass border-slate-200">
                 <CardHeader className="py-4">
                   <div className="flex items-center gap-2">
                     {status === "running" && <Loader2 className="h-4 w-4 text-warning animate-spin" />}
@@ -220,7 +220,7 @@ export function VideoAgents() {
                 </CardHeader>
                 <CardContent className="grid gap-2 p-4 pt-0 md:grid-cols-2">
                   {group.map((task) => (
-                    <div key={task.id} className="rounded-sm border border-white/5 bg-black/20 p-3">
+                    <div key={task.id} className="rounded-sm border border-slate-200 bg-slate-100 p-3">
                       <div className="flex items-start justify-between gap-2">
                         <p className="text-sm font-medium">{task.prompt.slice(0, 80)}{task.prompt.length > 80 ? "..." : ""}</p>
                         <Badge variant="outline" className={`shrink-0 text-[8px] uppercase ${statusTone[task.status]}`}>
@@ -233,7 +233,7 @@ export function VideoAgents() {
                         <span>{new Date(task.createdAt).toLocaleDateString()}</span>
                       </div>
                       {task.result && (
-                        <p className="mt-2 text-xs text-muted-foreground border-t border-white/5 pt-2">{task.result}</p>
+                        <p className="mt-2 text-xs text-muted-foreground border-t border-slate-200 pt-2">{task.result}</p>
                       )}
                     </div>
                   ))}
@@ -242,7 +242,7 @@ export function VideoAgents() {
             );
           })}
           {tasks.length === 0 && (
-            <div className="rounded-sm border border-white/5 bg-black/20 p-12 text-center">
+            <div className="rounded-sm border border-slate-200 bg-slate-100 p-12 text-center">
               <Cpu className="mx-auto h-8 w-8 text-muted-foreground/30" />
               <p className="mt-3 text-sm text-muted-foreground">No agent tasks yet.</p>
               <p className="mt-1 text-xs text-muted-foreground">Select a project and agent, then dispatch a task.</p>
