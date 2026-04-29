@@ -81,7 +81,7 @@ export function Health() {
     return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
-  const metrics = health ? [
+  const metrics = health?.system ? [
     { label: "CPU load", value: `${health.system.cpu_load_percent}%`, status: health.system.cpu_load_percent < 80 ? "optimal" : "warning", icon: Cpu },
     { label: "Memory use", value: `${health.system.memory_used_gb} / ${health.system.memory_total_gb} GB`, status: health.system.memory_used_percent < 85 ? "optimal" : "warning", icon: HardDrive },
     { label: "Network latency", value: health.probes?.supabase_latency_ms ? `${health.probes.supabase_latency_ms}ms` : "N/A", status: health.probes?.supabase_latency_ms && health.probes.supabase_latency_ms < 500 ? "optimal" : "warning", icon: Wifi },
