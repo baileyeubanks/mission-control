@@ -9,7 +9,9 @@ services:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 4300
+        value: 10000
+      - key: CHROME_PATH
+        value: /opt/render/project/src/node_modules/@sparticuz/chromium/bin
       - key: GEMINI_API_KEY
         sync: false
       - key: SUPABASE_URL
