@@ -1,819 +1,912 @@
 {
   "quotes": [
     {
+      "id": "quote-1777442416027-0sp85n",
+      "kind": "quote",
+      "terms": "Draft terms pending approval.",
+      "title": "Supabase Sync Test 2",
+      "client": {
+        "name": "Sync Test Client",
+        "email": null,
+        "phone": null,
+        "address": null,
+        "company": null
+      },
+      "source": "manual",
+      "status": "draft",
+      "history": [
+        {
+          "id": "history-1777442416027-juumh8",
+          "actor": "local-operator",
+          "summary": "Quote created in Root document engine.",
+          "createdAt": "2026-04-29T06:00:16.027Z",
+          "eventType": "quote.created"
+        }
+      ],
+      "taxCents": 0,
+      "artifacts": [],
+      "createdAt": "2026-04-29T06:00:16.027Z",
+      "lineItems": [
+        {
+          "id": "line-1777442416027-9y7zro",
+          "name": "Sync item",
+          "taxable": false,
+          "category": "service",
+          "metadata": {},
+          "quantity": 1,
+          "description": "Testing supabase sync after restart",
+          "unitPriceCents": 7500
+        }
+      ],
+      "updatedAt": "2026-04-29T06:00:16.043Z",
+      "dataSource": "local_recovery_store",
+      "totalCents": 7500,
+      "clientNotes": "",
+      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; color: #18181b; margin: 0; background: #fafafa; -webkit-font-smoothing: antialiased; }\n        .doc { max-width: 800px; margin: 0 auto; padding: 48px; background: #fff; min-height: 100vh; box-shadow: 0 0 0 1px #e4e4e7; }\n        .topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 40px; }\n        .brand { font-size: 13px; font-weight: 600; color: #18181b; letter-spacing: 0.02em; }\n        .brand-sub { font-size: 11px; color: #a1a1aa; margin-top: 2px; }\n        .doc-type { text-align: right; }\n        .doc-type-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #71717a; }\n        .doc-number { font-size: 22px; font-weight: 700; color: #18181b; margin-top: 4px; }\n        .status-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; color: #fff; background: #f59e0b; }\n        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }\n        .block-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 8px; }\n        .block-value { font-size: 13px; color: #27272a; line-height: 1.6; }\n        .block-value strong { color: #18181b; font-weight: 600; }\n        .scope { background: #fafafa; border-radius: 8px; padding: 16px; margin-bottom: 32px; }\n        .scope-title { font-size: 13px; font-weight: 600; color: #18181b; margin-bottom: 6px; }\n        .scope-body { font-size: 12px; color: #52525b; line-height: 1.6; }\n        table { border-collapse: collapse; width: 100%; margin-top: 4px; }\n        th { text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #a1a1aa; border-bottom: 1.5px solid #e4e4e7; padding: 10px 8px; }\n        td { border-bottom: 1px solid #f4f4f5; padding: 12px 8px; vertical-align: top; font-size: 12px; color: #27272a; }\n        td .item-desc { color: #71717a; font-size: 11px; margin-top: 3px; line-height: 1.4; }\n        .td-right { text-align: right; }\n        .totals-wrap { display: flex; justify-content: flex-end; margin-top: 24px; }\n        .totals { width: 280px; }\n        .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; color: #52525b; }\n        .totals-row.grand { border-top: 1.5px solid #18181b; margin-top: 6px; padding-top: 10px; font-size: 15px; font-weight: 700; color: #18181b; }\n        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e4e4e7; }\n        .footer-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 6px; }\n        .footer-body { font-size: 11px; color: #52525b; line-height: 1.6; }\n        .pay-box { background: #fafafa; border: 1px solid #e4e4e7; border-radius: 8px; padding: 14px; margin-top: 16px; }\n        .pay-box-title { font-size: 11px; font-weight: 600; color: #18181b; margin-bottom: 4px; }\n        .pay-box-body { font-size: 11px; color: #71717a; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <div class=\"topbar\">\n          <div>\n            <div class=\"brand\">Content Co-op</div>\n            <div class=\"brand-sub\">Creative Production</div>\n          </div>\n          <div class=\"doc-type\">\n            <div class=\"doc-type-label\">Quote</div>\n            <div class=\"doc-number\">CCO-Q-2026-003</div>\n            <div class=\"status-pill\">draft / not required</div>\n          </div>\n        </div>\n\n        <div class=\"grid-2\">\n          <div>\n            <div class=\"block-label\">Bill To</div>\n            <div class=\"block-value\">\n              <strong>Sync Test Client</strong><br />\n              \n              \n              \n              \n            </div>\n          </div>\n          <div>\n            <div class=\"block-label\">Document Details</div>\n            <div class=\"block-value\">\n              Date: 4/29/2026<br />\n              \n              \n              Version: 1\n            </div>\n          </div>\n        </div>\n\n        \n        <div class=\"scope\">\n          <div class=\"scope-title\">Supabase Sync Test 2</div>\n          <div class=\"scope-body\">Scope pending operator refinement.</div>\n        </div>\n        \n\n        \n\n        <table>\n          <thead>\n            <tr>\n              <th style=\"width:50%\">Description</th>\n              <th style=\"width:15%\">Category</th>\n              <th class=\"td-right\" style=\"width:10%\">Qty</th>\n              <th class=\"td-right\" style=\"width:12%\">Rate</th>\n              <th class=\"td-right\" style=\"width:13%\">Amount</th>\n            </tr>\n          </thead>\n          <tbody><tr>\n        <td><strong>Sync item</strong><div class=\"item-desc\">Testing supabase sync after restart</div></td>\n        <td>service</td>\n        <td class=\"td-right\">1</td>\n        <td class=\"td-right\">$75.00</td>\n        <td class=\"td-right\">$75.00</td>\n      </tr></tbody>\n        </table>\n\n        <div class=\"totals-wrap\">\n          <div class=\"totals\">\n            <div class=\"totals-row\"><span>Subtotal</span><span>$75.00</span></div>\n            <div class=\"totals-row\"><span>Discount</span><span>$0.00</span></div>\n            <div class=\"totals-row\"><span>Tax / fees</span><span>$0.00</span></div>\n            <div><span>Deposit</span><strong>$0.00</strong></div>\n            <div class=\"totals-row grand\"><span>Total</span><span>$75.00</span></div>\n          </div>\n        </div>\n\n        <footer>\n          <div class=\"footer-title\">Terms & Conditions</div>\n          <div class=\"footer-body\">Draft terms pending approval.</div>\n          \n          <div class=\"pay-box\">\n            <div class=\"pay-box-title\">How to Pay</div>\n            <div class=\"pay-box-body\">Online payment available via secure checkout. Bank transfer details provided on request. Questions? Reply to this document or contact your account manager.</div>\n          </div>\n        </footer>\n      </main>\n    </body>\n  </html>",
+      "deliverables": [],
+      "depositCents": 0,
+      "scopeSummary": "Scope pending operator refinement.",
+      "discountCents": 0,
+      "internalNotes": "",
+      "servicePeriod": null,
+      "subtotalCents": 7500,
+      "approvalStatus": "not_required",
+      "companyAccount": "content-co-op",
+      "documentNumber": "CCO-Q-2026-003",
+      "expirationDate": null,
+      "sourceEntityId": null,
+      "documentVersion": 1,
+      "projectTimeline": null,
+      "relatedInvoiceId": null
+    },
+    {
+      "id": "quote-1777442355372-4t0aqj",
+      "kind": "quote",
+      "terms": "Draft terms pending approval.",
+      "title": "Supabase Live Sync Test",
+      "client": {
+        "name": "Live Client",
+        "email": null,
+        "phone": null,
+        "address": null,
+        "company": null
+      },
+      "source": "manual",
+      "status": "draft",
+      "history": [
+        {
+          "id": "history-1777442355372-znlonb",
+          "actor": "local-operator",
+          "summary": "Quote created in Root document engine.",
+          "createdAt": "2026-04-29T05:59:15.372Z",
+          "eventType": "quote.created"
+        }
+      ],
+      "taxCents": 0,
+      "artifacts": [],
+      "createdAt": "2026-04-29T05:59:15.372Z",
+      "lineItems": [
+        {
+          "id": "line-1777442355372-0veyz1",
+          "name": "Sync verification",
+          "taxable": false,
+          "category": "service",
+          "metadata": {},
+          "quantity": 1,
+          "description": "Testing live supabase sync",
+          "unitPriceCents": 5000
+        }
+      ],
+      "updatedAt": "2026-04-29T05:59:15.372Z",
+      "dataSource": "local_recovery_store",
+      "totalCents": 5000,
+      "clientNotes": "",
+      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; color: #18181b; margin: 0; background: #fafafa; -webkit-font-smoothing: antialiased; }\n        .doc { max-width: 800px; margin: 0 auto; padding: 48px; background: #fff; min-height: 100vh; box-shadow: 0 0 0 1px #e4e4e7; }\n        .topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 40px; }\n        .brand { font-size: 13px; font-weight: 600; color: #18181b; letter-spacing: 0.02em; }\n        .brand-sub { font-size: 11px; color: #a1a1aa; margin-top: 2px; }\n        .doc-type { text-align: right; }\n        .doc-type-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #71717a; }\n        .doc-number { font-size: 22px; font-weight: 700; color: #18181b; margin-top: 4px; }\n        .status-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; color: #fff; background: #f59e0b; }\n        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }\n        .block-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 8px; }\n        .block-value { font-size: 13px; color: #27272a; line-height: 1.6; }\n        .block-value strong { color: #18181b; font-weight: 600; }\n        .scope { background: #fafafa; border-radius: 8px; padding: 16px; margin-bottom: 32px; }\n        .scope-title { font-size: 13px; font-weight: 600; color: #18181b; margin-bottom: 6px; }\n        .scope-body { font-size: 12px; color: #52525b; line-height: 1.6; }\n        table { border-collapse: collapse; width: 100%; margin-top: 4px; }\n        th { text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #a1a1aa; border-bottom: 1.5px solid #e4e4e7; padding: 10px 8px; }\n        td { border-bottom: 1px solid #f4f4f5; padding: 12px 8px; vertical-align: top; font-size: 12px; color: #27272a; }\n        td .item-desc { color: #71717a; font-size: 11px; margin-top: 3px; line-height: 1.4; }\n        .td-right { text-align: right; }\n        .totals-wrap { display: flex; justify-content: flex-end; margin-top: 24px; }\n        .totals { width: 280px; }\n        .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; color: #52525b; }\n        .totals-row.grand { border-top: 1.5px solid #18181b; margin-top: 6px; padding-top: 10px; font-size: 15px; font-weight: 700; color: #18181b; }\n        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e4e4e7; }\n        .footer-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 6px; }\n        .footer-body { font-size: 11px; color: #52525b; line-height: 1.6; }\n        .pay-box { background: #fafafa; border: 1px solid #e4e4e7; border-radius: 8px; padding: 14px; margin-top: 16px; }\n        .pay-box-title { font-size: 11px; font-weight: 600; color: #18181b; margin-bottom: 4px; }\n        .pay-box-body { font-size: 11px; color: #71717a; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <div class=\"topbar\">\n          <div>\n            <div class=\"brand\">Content Co-op</div>\n            <div class=\"brand-sub\">Creative Production</div>\n          </div>\n          <div class=\"doc-type\">\n            <div class=\"doc-type-label\">Quote</div>\n            <div class=\"doc-number\">CCO-Q-2026-002</div>\n            <div class=\"status-pill\">draft / not required</div>\n          </div>\n        </div>\n\n        <div class=\"grid-2\">\n          <div>\n            <div class=\"block-label\">Bill To</div>\n            <div class=\"block-value\">\n              <strong>Live Client</strong><br />\n              \n              \n              \n              \n            </div>\n          </div>\n          <div>\n            <div class=\"block-label\">Document Details</div>\n            <div class=\"block-value\">\n              Date: 4/29/2026<br />\n              \n              \n              Version: 1\n            </div>\n          </div>\n        </div>\n\n        \n        <div class=\"scope\">\n          <div class=\"scope-title\">Supabase Live Sync Test</div>\n          <div class=\"scope-body\">Scope pending operator refinement.</div>\n        </div>\n        \n\n        \n\n        <table>\n          <thead>\n            <tr>\n              <th style=\"width:50%\">Description</th>\n              <th style=\"width:15%\">Category</th>\n              <th class=\"td-right\" style=\"width:10%\">Qty</th>\n              <th class=\"td-right\" style=\"width:12%\">Rate</th>\n              <th class=\"td-right\" style=\"width:13%\">Amount</th>\n            </tr>\n          </thead>\n          <tbody><tr>\n        <td><strong>Sync verification</strong><div class=\"item-desc\">Testing live supabase sync</div></td>\n        <td>service</td>\n        <td class=\"td-right\">1</td>\n        <td class=\"td-right\">$50.00</td>\n        <td class=\"td-right\">$50.00</td>\n      </tr></tbody>\n        </table>\n\n        <div class=\"totals-wrap\">\n          <div class=\"totals\">\n            <div class=\"totals-row\"><span>Subtotal</span><span>$50.00</span></div>\n            <div class=\"totals-row\"><span>Discount</span><span>$0.00</span></div>\n            <div class=\"totals-row\"><span>Tax / fees</span><span>$0.00</span></div>\n            <div><span>Deposit</span><strong>$0.00</strong></div>\n            <div class=\"totals-row grand\"><span>Total</span><span>$50.00</span></div>\n          </div>\n        </div>\n\n        <footer>\n          <div class=\"footer-title\">Terms & Conditions</div>\n          <div class=\"footer-body\">Draft terms pending approval.</div>\n          \n          <div class=\"pay-box\">\n            <div class=\"pay-box-title\">How to Pay</div>\n            <div class=\"pay-box-body\">Online payment available via secure checkout. Bank transfer details provided on request. Questions? Reply to this document or contact your account manager.</div>\n          </div>\n        </footer>\n      </main>\n    </body>\n  </html>",
+      "deliverables": [],
+      "depositCents": 0,
+      "scopeSummary": "Scope pending operator refinement.",
+      "discountCents": 0,
+      "internalNotes": "",
+      "servicePeriod": null,
+      "subtotalCents": 5000,
+      "approvalStatus": "not_required",
+      "companyAccount": "content-co-op",
+      "documentNumber": "CCO-Q-2026-002",
+      "expirationDate": null,
+      "sourceEntityId": null,
+      "documentVersion": 1,
+      "projectTimeline": null,
+      "relatedInvoiceId": null
+    },
+    {
+      "id": "quote-1777441836773-zdtdt4",
+      "kind": "quote",
+      "terms": "Draft terms pending approval.",
+      "title": "Supabase Sync Test",
+      "client": {
+        "name": "Test Client",
+        "email": null,
+        "phone": null,
+        "address": null,
+        "company": null
+      },
+      "source": "manual",
+      "status": "draft",
+      "history": [
+        {
+          "id": "history-1777441836773-cwr5h8",
+          "actor": "local-operator",
+          "summary": "Quote created in Root document engine.",
+          "createdAt": "2026-04-29T05:50:36.773Z",
+          "eventType": "quote.created"
+        }
+      ],
+      "taxCents": 0,
+      "artifacts": [],
+      "createdAt": "2026-04-29T05:50:36.773Z",
+      "lineItems": [
+        {
+          "id": "line-1777441836773-1mtk76",
+          "name": "Test item",
+          "taxable": false,
+          "category": "service",
+          "metadata": {},
+          "quantity": 1,
+          "description": "Testing supabase sync",
+          "unitPriceCents": 10000
+        }
+      ],
+      "updatedAt": "2026-04-29T05:50:36.773Z",
+      "dataSource": "local_recovery_store",
+      "totalCents": 10000,
+      "clientNotes": "",
+      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; color: #18181b; margin: 0; background: #fafafa; -webkit-font-smoothing: antialiased; }\n        .doc { max-width: 800px; margin: 0 auto; padding: 48px; background: #fff; min-height: 100vh; box-shadow: 0 0 0 1px #e4e4e7; }\n        .topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 40px; }\n        .brand { font-size: 13px; font-weight: 600; color: #18181b; letter-spacing: 0.02em; }\n        .brand-sub { font-size: 11px; color: #a1a1aa; margin-top: 2px; }\n        .doc-type { text-align: right; }\n        .doc-type-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #71717a; }\n        .doc-number { font-size: 22px; font-weight: 700; color: #18181b; margin-top: 4px; }\n        .status-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; color: #fff; background: #f59e0b; }\n        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }\n        .block-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 8px; }\n        .block-value { font-size: 13px; color: #27272a; line-height: 1.6; }\n        .block-value strong { color: #18181b; font-weight: 600; }\n        .scope { background: #fafafa; border-radius: 8px; padding: 16px; margin-bottom: 32px; }\n        .scope-title { font-size: 13px; font-weight: 600; color: #18181b; margin-bottom: 6px; }\n        .scope-body { font-size: 12px; color: #52525b; line-height: 1.6; }\n        table { border-collapse: collapse; width: 100%; margin-top: 4px; }\n        th { text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #a1a1aa; border-bottom: 1.5px solid #e4e4e7; padding: 10px 8px; }\n        td { border-bottom: 1px solid #f4f4f5; padding: 12px 8px; vertical-align: top; font-size: 12px; color: #27272a; }\n        td .item-desc { color: #71717a; font-size: 11px; margin-top: 3px; line-height: 1.4; }\n        .td-right { text-align: right; }\n        .totals-wrap { display: flex; justify-content: flex-end; margin-top: 24px; }\n        .totals { width: 280px; }\n        .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; color: #52525b; }\n        .totals-row.grand { border-top: 1.5px solid #18181b; margin-top: 6px; padding-top: 10px; font-size: 15px; font-weight: 700; color: #18181b; }\n        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e4e4e7; }\n        .footer-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 6px; }\n        .footer-body { font-size: 11px; color: #52525b; line-height: 1.6; }\n        .pay-box { background: #fafafa; border: 1px solid #e4e4e7; border-radius: 8px; padding: 14px; margin-top: 16px; }\n        .pay-box-title { font-size: 11px; font-weight: 600; color: #18181b; margin-bottom: 4px; }\n        .pay-box-body { font-size: 11px; color: #71717a; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <div class=\"topbar\">\n          <div>\n            <div class=\"brand\">Content Co-op</div>\n            <div class=\"brand-sub\">Creative Production</div>\n          </div>\n          <div class=\"doc-type\">\n            <div class=\"doc-type-label\">Quote</div>\n            <div class=\"doc-number\">CCO-Q-2026-001</div>\n            <div class=\"status-pill\">draft / not required</div>\n          </div>\n        </div>\n\n        <div class=\"grid-2\">\n          <div>\n            <div class=\"block-label\">Bill To</div>\n            <div class=\"block-value\">\n              <strong>Test Client</strong><br />\n              \n              \n              \n              \n            </div>\n          </div>\n          <div>\n            <div class=\"block-label\">Document Details</div>\n            <div class=\"block-value\">\n              Date: 4/29/2026<br />\n              \n              \n              Version: 1\n            </div>\n          </div>\n        </div>\n\n        \n        <div class=\"scope\">\n          <div class=\"scope-title\">Supabase Sync Test</div>\n          <div class=\"scope-body\">Scope pending operator refinement.</div>\n        </div>\n        \n\n        \n\n        <table>\n          <thead>\n            <tr>\n              <th style=\"width:50%\">Description</th>\n              <th style=\"width:15%\">Category</th>\n              <th class=\"td-right\" style=\"width:10%\">Qty</th>\n              <th class=\"td-right\" style=\"width:12%\">Rate</th>\n              <th class=\"td-right\" style=\"width:13%\">Amount</th>\n            </tr>\n          </thead>\n          <tbody><tr>\n        <td><strong>Test item</strong><div class=\"item-desc\">Testing supabase sync</div></td>\n        <td>service</td>\n        <td class=\"td-right\">1</td>\n        <td class=\"td-right\">$100.00</td>\n        <td class=\"td-right\">$100.00</td>\n      </tr></tbody>\n        </table>\n\n        <div class=\"totals-wrap\">\n          <div class=\"totals\">\n            <div class=\"totals-row\"><span>Subtotal</span><span>$100.00</span></div>\n            <div class=\"totals-row\"><span>Discount</span><span>$0.00</span></div>\n            <div class=\"totals-row\"><span>Tax / fees</span><span>$0.00</span></div>\n            <div><span>Deposit</span><strong>$0.00</strong></div>\n            <div class=\"totals-row grand\"><span>Total</span><span>$100.00</span></div>\n          </div>\n        </div>\n\n        <footer>\n          <div class=\"footer-title\">Terms & Conditions</div>\n          <div class=\"footer-body\">Draft terms pending approval.</div>\n          \n          <div class=\"pay-box\">\n            <div class=\"pay-box-title\">How to Pay</div>\n            <div class=\"pay-box-body\">Online payment available via secure checkout. Bank transfer details provided on request. Questions? Reply to this document or contact your account manager.</div>\n          </div>\n        </footer>\n      </main>\n    </body>\n  </html>",
+      "deliverables": [],
+      "depositCents": 0,
+      "scopeSummary": "Scope pending operator refinement.",
+      "discountCents": 0,
+      "internalNotes": "",
+      "servicePeriod": null,
+      "subtotalCents": 10000,
+      "approvalStatus": "not_required",
+      "companyAccount": "content-co-op",
+      "documentNumber": "CCO-Q-2026-001",
+      "expirationDate": null,
+      "sourceEntityId": null,
+      "documentVersion": 1,
+      "projectTimeline": null,
+      "relatedInvoiceId": null
+    },
+    {
       "id": "proposal-1777440144257-z85pc9",
       "kind": "proposal",
-      "documentNumber": "CCO-P-2026-002",
-      "companyAccount": "content-co-op",
+      "terms": "50% deposit to begin. Net 15 on delivery.",
+      "title": "Brand Film - Acme Energy",
       "client": {
         "name": "John Smith",
         "email": "john@acme.com",
         "phone": "555-1234",
-        "company": "Acme Energy",
-        "address": null
+        "address": null,
+        "company": "Acme Energy"
       },
       "source": "manual",
-      "sourceEntityId": null,
-      "title": "Brand Film - Acme Energy",
-      "scopeSummary": "Cinematic brand film for energy company product launch",
-      "servicePeriod": null,
-      "projectTimeline": null,
-      "deliverables": [],
+      "status": "draft",
+      "history": [
+        {
+          "id": "history-1777440471170-t2w3a4",
+          "actor": "local-operator",
+          "summary": "CCO-P-2026-002 PDF artifact generated.",
+          "createdAt": "2026-04-29T05:27:51.170Z",
+          "eventType": "proposal.pdf_exported"
+        },
+        {
+          "id": "history-1777440144257-5q1jac",
+          "actor": "local-operator",
+          "summary": "Proposal created in Root document engine.",
+          "createdAt": "2026-04-29T05:22:24.257Z",
+          "eventType": "proposal.created"
+        }
+      ],
+      "taxCents": 0,
+      "artifacts": [
+        {
+          "id": "artifact-1777440471170-50xnxp",
+          "url": "/api/root/quotes/proposal-1777440144257-z85pc9/pdf",
+          "label": "CCO-P-2026-002 v1 PDF",
+          "metadata": {
+            "finality": "draft_artifact",
+            "byte_length": 199820
+          },
+          "createdAt": "2026-04-29T05:27:51.170Z",
+          "dataSource": "local_recovery_store",
+          "artifactType": "pdf",
+          "documentVersion": 1
+        }
+      ],
+      "createdAt": "2026-04-29T05:22:24.257Z",
       "lineItems": [
         {
           "id": "line-1777440144257-cmroo0",
           "name": "Brand Film Production",
-          "description": "Full production",
-          "quantity": 1,
-          "unitPriceCents": 35000,
           "taxable": false,
           "category": "Video",
-          "metadata": {}
+          "metadata": {},
+          "quantity": 1,
+          "description": "Full production",
+          "unitPriceCents": 35000
         }
       ],
-      "discountCents": 0,
-      "taxCents": 0,
-      "depositCents": 0,
-      "subtotalCents": 35000,
-      "totalCents": 35000,
-      "terms": "50% deposit to begin. Net 15 on delivery.",
-      "expirationDate": null,
-      "internalNotes": "",
-      "clientNotes": "",
-      "status": "draft",
-      "approvalStatus": "not_required",
-      "documentVersion": 1,
-      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; color: #18181b; margin: 0; background: #fafafa; -webkit-font-smoothing: antialiased; }\n        .doc { max-width: 800px; margin: 0 auto; padding: 48px; background: #fff; min-height: 100vh; box-shadow: 0 0 0 1px #e4e4e7; }\n        .topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 40px; }\n        .brand { font-size: 13px; font-weight: 600; color: #18181b; letter-spacing: 0.02em; }\n        .brand-sub { font-size: 11px; color: #a1a1aa; margin-top: 2px; }\n        .doc-type { text-align: right; }\n        .doc-type-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #71717a; }\n        .doc-number { font-size: 22px; font-weight: 700; color: #18181b; margin-top: 4px; }\n        .status-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; color: #fff; background: #f59e0b; }\n        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }\n        .block-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 8px; }\n        .block-value { font-size: 13px; color: #27272a; line-height: 1.6; }\n        .block-value strong { color: #18181b; font-weight: 600; }\n        .scope { background: #fafafa; border-radius: 8px; padding: 16px; margin-bottom: 32px; }\n        .scope-title { font-size: 13px; font-weight: 600; color: #18181b; margin-bottom: 6px; }\n        .scope-body { font-size: 12px; color: #52525b; line-height: 1.6; }\n        table { border-collapse: collapse; width: 100%; margin-top: 4px; }\n        th { text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #a1a1aa; border-bottom: 1.5px solid #e4e4e7; padding: 10px 8px; }\n        td { border-bottom: 1px solid #f4f4f5; padding: 12px 8px; vertical-align: top; font-size: 12px; color: #27272a; }\n        td .item-desc { color: #71717a; font-size: 11px; margin-top: 3px; line-height: 1.4; }\n        .td-right { text-align: right; }\n        .totals-wrap { display: flex; justify-content: flex-end; margin-top: 24px; }\n        .totals { width: 280px; }\n        .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; color: #52525b; }\n        .totals-row.grand { border-top: 1.5px solid #18181b; margin-top: 6px; padding-top: 10px; font-size: 15px; font-weight: 700; color: #18181b; }\n        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e4e4e7; }\n        .footer-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 6px; }\n        .footer-body { font-size: 11px; color: #52525b; line-height: 1.6; }\n        .pay-box { background: #fafafa; border: 1px solid #e4e4e7; border-radius: 8px; padding: 14px; margin-top: 16px; }\n        .pay-box-title { font-size: 11px; font-weight: 600; color: #18181b; margin-bottom: 4px; }\n        .pay-box-body { font-size: 11px; color: #71717a; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <div class=\"topbar\">\n          <div>\n            <div class=\"brand\">Content Co-op</div>\n            <div class=\"brand-sub\">Creative Production</div>\n          </div>\n          <div class=\"doc-type\">\n            <div class=\"doc-type-label\">Proposal</div>\n            <div class=\"doc-number\">CCO-P-2026-002</div>\n            <div class=\"status-pill\">draft / not required</div>\n          </div>\n        </div>\n\n        <div class=\"grid-2\">\n          <div>\n            <div class=\"block-label\">Bill To</div>\n            <div class=\"block-value\">\n              <strong>John Smith</strong><br />\n              Acme Energy<br />\n              john@acme.com<br />\n              \n              555-1234\n            </div>\n          </div>\n          <div>\n            <div class=\"block-label\">Document Details</div>\n            <div class=\"block-value\">\n              Date: 4/29/2026<br />\n              \n              \n              Version: 1\n            </div>\n          </div>\n        </div>\n\n        \n        <div class=\"scope\">\n          <div class=\"scope-title\">Brand Film - Acme Energy</div>\n          <div class=\"scope-body\">Cinematic brand film for energy company product launch</div>\n        </div>\n        \n\n        \n\n        <table>\n          <thead>\n            <tr>\n              <th style=\"width:50%\">Description</th>\n              <th style=\"width:15%\">Category</th>\n              <th class=\"td-right\" style=\"width:10%\">Qty</th>\n              <th class=\"td-right\" style=\"width:12%\">Rate</th>\n              <th class=\"td-right\" style=\"width:13%\">Amount</th>\n            </tr>\n          </thead>\n          <tbody><tr>\n        <td><strong>Brand Film Production</strong><div class=\"item-desc\">Full production</div></td>\n        <td>Video</td>\n        <td class=\"td-right\">1</td>\n        <td class=\"td-right\">$350.00</td>\n        <td class=\"td-right\">$350.00</td>\n      </tr></tbody>\n        </table>\n\n        <div class=\"totals-wrap\">\n          <div class=\"totals\">\n            <div class=\"totals-row\"><span>Subtotal</span><span>$350.00</span></div>\n            <div class=\"totals-row\"><span>Discount</span><span>$0.00</span></div>\n            <div class=\"totals-row\"><span>Tax / fees</span><span>$0.00</span></div>\n            <div><span>Deposit</span><strong>$0.00</strong></div>\n            <div class=\"totals-row grand\"><span>Total</span><span>$350.00</span></div>\n          </div>\n        </div>\n\n        <footer>\n          <div class=\"footer-title\">Terms & Conditions</div>\n          <div class=\"footer-body\">50% deposit to begin. Net 15 on delivery.</div>\n          \n          <div class=\"pay-box\">\n            <div class=\"pay-box-title\">How to Pay</div>\n            <div class=\"pay-box-body\">Online payment available via secure checkout. Bank transfer details provided on request. Questions? Reply to this document or contact your account manager.</div>\n          </div>\n        </footer>\n      </main>\n    </body>\n  </html>",
-      "artifacts": [
-        {
-          "id": "artifact-1777440471170-50xnxp",
-          "artifactType": "pdf",
-          "label": "CCO-P-2026-002 v1 PDF",
-          "url": "/api/root/quotes/proposal-1777440144257-z85pc9/pdf",
-          "documentVersion": 1,
-          "createdAt": "2026-04-29T05:27:51.170Z",
-          "dataSource": "local_recovery_store",
-          "metadata": {
-            "byte_length": 199820,
-            "finality": "draft_artifact"
-          }
-        }
-      ],
-      "history": [
-        {
-          "id": "history-1777440471170-t2w3a4",
-          "eventType": "proposal.pdf_exported",
-          "summary": "CCO-P-2026-002 PDF artifact generated.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-29T05:27:51.170Z"
-        },
-        {
-          "id": "history-1777440144257-5q1jac",
-          "eventType": "proposal.created",
-          "summary": "Proposal created in Root document engine.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-29T05:22:24.257Z"
-        }
-      ],
-      "relatedInvoiceId": null,
-      "createdAt": "2026-04-29T05:22:24.257Z",
       "updatedAt": "2026-04-29T05:27:51.170Z",
-      "dataSource": "local_recovery_store"
-    },
-    {
-      "id": "quote-1777071928741-e08qy3",
-      "kind": "quote",
-      "documentNumber": "ACS-Q-2026-002",
-      "companyAccount": "astro-cleaning-services",
-      "client": {
-        "name": "Browser Test Client",
-        "email": "browser-test@example.com",
-        "phone": "(713) 555-0199",
-        "company": null,
-        "address": "Houston, TX"
-      },
-      "source": "manual",
-      "sourceEntityId": null,
-      "title": "Browser verified cleaning quote",
-      "scopeSummary": "Quote created through browser verification. PDF and conversion are checked after save.",
-      "servicePeriod": null,
-      "projectTimeline": null,
-      "deliverables": [],
-      "lineItems": [
-        {
-          "id": "line-1777071928741-odrpo5",
-          "name": "Standard clean",
-          "description": "Kitchen, baths, floors, dusting",
-          "quantity": 1,
-          "unitPriceCents": 22500,
-          "taxable": false,
-          "category": "service",
-          "metadata": {}
-        }
-      ],
-      "discountCents": 0,
-      "taxCents": 0,
-      "depositCents": 0,
-      "subtotalCents": 22500,
-      "totalCents": 22500,
-      "terms": "Valid for 14 days. Approval required before send.",
-      "expirationDate": null,
-      "internalNotes": "",
+      "dataSource": "local_recovery_store",
+      "totalCents": 35000,
       "clientNotes": "",
-      "status": "invoiced",
-      "approvalStatus": "approved",
-      "documentVersion": 1,
-      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: Inter, Arial, sans-serif; color: #101418; margin: 0; background: #fff; }\n        .doc { max-width: 860px; margin: 0 auto; padding: 40px; }\n        header { display: flex; justify-content: space-between; gap: 28px; border-bottom: 1px solid #d8dee5; padding-bottom: 24px; }\n        h1 { font-size: 34px; margin: 0; letter-spacing: 0.02em; }\n        h2 { font-size: 15px; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: 0.08em; }\n        p { line-height: 1.5; }\n        .muted { color: #5c6773; font-size: 12px; }\n        .pill { display: inline-block; border: 1px solid #cfd7df; border-radius: 999px; padding: 4px 10px; font-size: 11px; text-transform: uppercase; }\n        table { border-collapse: collapse; width: 100%; margin-top: 12px; }\n        th { text-align: left; color: #5c6773; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #d8dee5; padding: 10px 8px; }\n        td { border-bottom: 1px solid #eef1f4; padding: 12px 8px; vertical-align: top; font-size: 13px; }\n        td div { color: #6d7782; font-size: 11px; margin-top: 4px; }\n        .totals { margin-left: auto; margin-top: 20px; max-width: 320px; display: grid; gap: 9px; }\n        .totals div { display: flex; justify-content: space-between; gap: 16px; }\n        .grand { border-top: 1px solid #101418; padding-top: 12px; font-size: 18px; }\n        footer { margin-top: 34px; border-top: 1px solid #d8dee5; padding-top: 16px; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <header>\n          <div>\n            <p class=\"muted\">Issued by</p>\n            <h1>Astro Cleaning Services</h1>\n            <p class=\"muted\">Root document engine · local_recovery_store</p>\n          </div>\n          <div>\n            <p class=\"pill\">Quote</p>\n            <p><strong>ACS-Q-2026-002</strong></p>\n            <p class=\"muted\">Version 1 · invoiced / approved</p>\n          </div>\n        </header>\n        <h2>Recipient</h2>\n        <p><strong>Browser Test Client</strong><br /><br />browser-test@example.com<br />Houston, TX</p>\n        <h2>Scope</h2>\n        <p>Browser verified cleaning quote</p>\n        <p class=\"muted\">Quote created through browser verification. PDF and conversion are checked after save.</p>\n        <table>\n          <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Total</th></tr></thead>\n          <tbody><tr>\n        <td>Standard clean<div>Kitchen, baths, floors, dusting</div></td>\n        <td>1</td>\n        <td>$225.00</td>\n        <td>$225.00</td>\n      </tr></tbody>\n        </table>\n        <section class=\"totals\">\n          <div><span>Subtotal</span><strong>$225.00</strong></div>\n          <div><span>Discount</span><strong>$0.00</strong></div>\n          <div><span>Tax / fees</span><strong>$0.00</strong></div>\n          <div><span>Deposit</span><strong>$0.00</strong></div>\n          <div class=\"grand\"><span>Total</span><strong>$225.00</strong></div>\n        </section>\n        <footer>\n          <h2>Terms</h2>\n          <p>Valid for 14 days. Approval required before send.</p>\n          <p class=\"muted\">No client-facing notes.</p>\n        </footer>\n      </main>\n    </body>\n  </html>",
-      "artifacts": [
-        {
-          "id": "artifact-1777366087278-lrc3hd",
-          "artifactType": "pdf",
-          "label": "ACS-Q-2026-002 v1 PDF",
-          "url": "/api/root/quotes/quote-1777071928741-e08qy3/pdf",
-          "documentVersion": 1,
-          "createdAt": "2026-04-28T08:48:07.278Z",
-          "dataSource": "local_recovery_store",
-          "metadata": {
-            "byte_length": 1007,
-            "finality": "approved_artifact"
-          }
-        },
-        {
-          "id": "artifact-1777071951578-i13pkv",
-          "artifactType": "pdf",
-          "label": "ACS-Q-2026-002 v1 PDF",
-          "url": "/api/root/quotes/quote-1777071928741-e08qy3/pdf",
-          "documentVersion": 1,
-          "createdAt": "2026-04-24T23:05:51.578Z",
-          "dataSource": "local_recovery_store",
-          "metadata": {
-            "byte_length": 1012,
-            "finality": "approved_artifact"
-          }
-        }
-      ],
-      "history": [
-        {
-          "id": "history-1777366087278-t25r6c",
-          "eventType": "quote.pdf_exported",
-          "summary": "ACS-Q-2026-002 PDF artifact generated.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-28T08:48:07.278Z"
-        },
-        {
-          "id": "history-1777071964601-eodr51",
-          "eventType": "quote.converted_to_invoice",
-          "summary": "ACS-Q-2026-002 converted to INV-2026-001.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-24T23:06:04.601Z"
-        },
-        {
-          "id": "history-1777071951578-0gzh4a",
-          "eventType": "quote.pdf_exported",
-          "summary": "ACS-Q-2026-002 PDF artifact generated.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-24T23:05:51.578Z"
-        },
-        {
-          "id": "history-1777071950480-mq5z78",
-          "eventType": "quote.approved",
-          "summary": "ACS-Q-2026-002 approved for send/conversion.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-24T23:05:50.480Z"
-        },
-        {
-          "id": "history-1777071928741-wjp5jc",
-          "eventType": "quote.created",
-          "summary": "Quote created in Root document engine.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-24T23:05:28.741Z"
-        }
-      ],
-      "relatedInvoiceId": "invoice-1777071964600-1qv5yy",
-      "createdAt": "2026-04-24T23:05:28.741Z",
-      "updatedAt": "2026-04-28T08:48:07.280Z",
-      "dataSource": "local_recovery_store"
-    },
-    {
-      "id": "quote-acs-local-001",
-      "kind": "quote",
-      "documentNumber": "ACS-Q-2026-001",
-      "companyAccount": "astro-cleaning-services",
-      "client": {
-        "name": "River Oaks Residence",
-        "email": "sarah@example.com",
-        "phone": "(713) 555-0148",
-        "company": null,
-        "address": "River Oaks, Houston, TX"
-      },
-      "source": "local_recovery",
-      "sourceEntityId": "handoff-acs-quote-001",
-      "title": "Recurring deep clean and first-service reset",
-      "scopeSummary": "Initial deep clean followed by recurring weekly maintenance.",
-      "servicePeriod": "First visit plus weekly recurring service",
-      "projectTimeline": null,
-      "deliverables": [
-        "Deep clean",
-        "Recurring service plan",
-        "Service notes"
-      ],
-      "lineItems": [
-        {
-          "id": "line-acs-deep-clean",
-          "name": "Initial deep clean",
-          "description": "Kitchen, bathrooms, floors, dusting, high-touch reset.",
-          "quantity": 1,
-          "unitPriceCents": 42000,
-          "taxable": false,
-          "category": "cleaning"
-        },
-        {
-          "id": "line-acs-recurring",
-          "name": "Weekly maintenance",
-          "description": "Recurring weekly service estimate.",
-          "quantity": 1,
-          "unitPriceCents": 18500,
-          "taxable": false,
-          "category": "recurring"
-        }
-      ],
-      "discountCents": 0,
-      "taxCents": 0,
+      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; color: #18181b; margin: 0; background: #fafafa; -webkit-font-smoothing: antialiased; }\n        .doc { max-width: 800px; margin: 0 auto; padding: 48px; background: #fff; min-height: 100vh; box-shadow: 0 0 0 1px #e4e4e7; }\n        .topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 40px; }\n        .brand { font-size: 13px; font-weight: 600; color: #18181b; letter-spacing: 0.02em; }\n        .brand-sub { font-size: 11px; color: #a1a1aa; margin-top: 2px; }\n        .doc-type { text-align: right; }\n        .doc-type-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #71717a; }\n        .doc-number { font-size: 22px; font-weight: 700; color: #18181b; margin-top: 4px; }\n        .status-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; color: #fff; background: #f59e0b; }\n        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }\n        .block-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 8px; }\n        .block-value { font-size: 13px; color: #27272a; line-height: 1.6; }\n        .block-value strong { color: #18181b; font-weight: 600; }\n        .scope { background: #fafafa; border-radius: 8px; padding: 16px; margin-bottom: 32px; }\n        .scope-title { font-size: 13px; font-weight: 600; color: #18181b; margin-bottom: 6px; }\n        .scope-body { font-size: 12px; color: #52525b; line-height: 1.6; }\n        table { border-collapse: collapse; width: 100%; margin-top: 4px; }\n        th { text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #a1a1aa; border-bottom: 1.5px solid #e4e4e7; padding: 10px 8px; }\n        td { border-bottom: 1px solid #f4f4f5; padding: 12px 8px; vertical-align: top; font-size: 12px; color: #27272a; }\n        td .item-desc { color: #71717a; font-size: 11px; margin-top: 3px; line-height: 1.4; }\n        .td-right { text-align: right; }\n        .totals-wrap { display: flex; justify-content: flex-end; margin-top: 24px; }\n        .totals { width: 280px; }\n        .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; color: #52525b; }\n        .totals-row.grand { border-top: 1.5px solid #18181b; margin-top: 6px; padding-top: 10px; font-size: 15px; font-weight: 700; color: #18181b; }\n        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e4e4e7; }\n        .footer-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 6px; }\n        .footer-body { font-size: 11px; color: #52525b; line-height: 1.6; }\n        .pay-box { background: #fafafa; border: 1px solid #e4e4e7; border-radius: 8px; padding: 14px; margin-top: 16px; }\n        .pay-box-title { font-size: 11px; font-weight: 600; color: #18181b; margin-bottom: 4px; }\n        .pay-box-body { font-size: 11px; color: #71717a; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <div class=\"topbar\">\n          <div>\n            <div class=\"brand\">Content Co-op</div>\n            <div class=\"brand-sub\">Creative Production</div>\n          </div>\n          <div class=\"doc-type\">\n            <div class=\"doc-type-label\">Proposal</div>\n            <div class=\"doc-number\">CCO-P-2026-002</div>\n            <div class=\"status-pill\">draft / not required</div>\n          </div>\n        </div>\n\n        <div class=\"grid-2\">\n          <div>\n            <div class=\"block-label\">Bill To</div>\n            <div class=\"block-value\">\n              <strong>John Smith</strong><br />\n              Acme Energy<br />\n              john@acme.com<br />\n              \n              555-1234\n            </div>\n          </div>\n          <div>\n            <div class=\"block-label\">Document Details</div>\n            <div class=\"block-value\">\n              Date: 4/29/2026<br />\n              \n              \n              Version: 1\n            </div>\n          </div>\n        </div>\n\n        \n        <div class=\"scope\">\n          <div class=\"scope-title\">Brand Film - Acme Energy</div>\n          <div class=\"scope-body\">Cinematic brand film for energy company product launch</div>\n        </div>\n        \n\n        \n\n        <table>\n          <thead>\n            <tr>\n              <th style=\"width:50%\">Description</th>\n              <th style=\"width:15%\">Category</th>\n              <th class=\"td-right\" style=\"width:10%\">Qty</th>\n              <th class=\"td-right\" style=\"width:12%\">Rate</th>\n              <th class=\"td-right\" style=\"width:13%\">Amount</th>\n            </tr>\n          </thead>\n          <tbody><tr>\n        <td><strong>Brand Film Production</strong><div class=\"item-desc\">Full production</div></td>\n        <td>Video</td>\n        <td class=\"td-right\">1</td>\n        <td class=\"td-right\">$350.00</td>\n        <td class=\"td-right\">$350.00</td>\n      </tr></tbody>\n        </table>\n\n        <div class=\"totals-wrap\">\n          <div class=\"totals\">\n            <div class=\"totals-row\"><span>Subtotal</span><span>$350.00</span></div>\n            <div class=\"totals-row\"><span>Discount</span><span>$0.00</span></div>\n            <div class=\"totals-row\"><span>Tax / fees</span><span>$0.00</span></div>\n            <div><span>Deposit</span><strong>$0.00</strong></div>\n            <div class=\"totals-row grand\"><span>Total</span><span>$350.00</span></div>\n          </div>\n        </div>\n\n        <footer>\n          <div class=\"footer-title\">Terms & Conditions</div>\n          <div class=\"footer-body\">50% deposit to begin. Net 15 on delivery.</div>\n          \n          <div class=\"pay-box\">\n            <div class=\"pay-box-title\">How to Pay</div>\n            <div class=\"pay-box-body\">Online payment available via secure checkout. Bank transfer details provided on request. Questions? Reply to this document or contact your account manager.</div>\n          </div>\n        </footer>\n      </main>\n    </body>\n  </html>",
+      "deliverables": [],
       "depositCents": 0,
-      "subtotalCents": 60500,
-      "totalCents": 60500,
-      "terms": "Quote expires in 14 days. Booking requires confirmed schedule and crew readiness.",
-      "expirationDate": null,
-      "internalNotes": "Seeded from local recovery store. Verify property details before send.",
-      "clientNotes": "Final timing depends on schedule confirmation.",
-      "status": "draft",
+      "scopeSummary": "Cinematic brand film for energy company product launch",
+      "discountCents": 0,
+      "internalNotes": "",
+      "servicePeriod": null,
+      "subtotalCents": 35000,
       "approvalStatus": "not_required",
+      "companyAccount": "content-co-op",
+      "documentNumber": "CCO-P-2026-002",
+      "expirationDate": null,
+      "sourceEntityId": null,
       "documentVersion": 1,
-      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: Inter, Arial, sans-serif; color: #101418; margin: 0; background: #fff; }\n        .doc { max-width: 860px; margin: 0 auto; padding: 40px; }\n        header { display: flex; justify-content: space-between; gap: 28px; border-bottom: 1px solid #d8dee5; padding-bottom: 24px; }\n        h1 { font-size: 34px; margin: 0; letter-spacing: 0.02em; }\n        h2 { font-size: 15px; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: 0.08em; }\n        p { line-height: 1.5; }\n        .muted { color: #5c6773; font-size: 12px; }\n        .pill { display: inline-block; border: 1px solid #cfd7df; border-radius: 999px; padding: 4px 10px; font-size: 11px; text-transform: uppercase; }\n        table { border-collapse: collapse; width: 100%; margin-top: 12px; }\n        th { text-align: left; color: #5c6773; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #d8dee5; padding: 10px 8px; }\n        td { border-bottom: 1px solid #eef1f4; padding: 12px 8px; vertical-align: top; font-size: 13px; }\n        td div { color: #6d7782; font-size: 11px; margin-top: 4px; }\n        .totals { margin-left: auto; margin-top: 20px; max-width: 320px; display: grid; gap: 9px; }\n        .totals div { display: flex; justify-content: space-between; gap: 16px; }\n        .grand { border-top: 1px solid #101418; padding-top: 12px; font-size: 18px; }\n        footer { margin-top: 34px; border-top: 1px solid #d8dee5; padding-top: 16px; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <header>\n          <div>\n            <p class=\"muted\">Issued by</p>\n            <h1>Astro Cleaning Services</h1>\n            <p class=\"muted\">Root document engine · local_recovery_store</p>\n          </div>\n          <div>\n            <p class=\"pill\">Quote</p>\n            <p><strong>ACS-Q-2026-001</strong></p>\n            <p class=\"muted\">Version 1 · draft / not required</p>\n          </div>\n        </header>\n        <h2>Recipient</h2>\n        <p><strong>River Oaks Residence</strong><br /><br />sarah@example.com<br />River Oaks, Houston, TX</p>\n        <h2>Scope</h2>\n        <p>Recurring deep clean and first-service reset</p>\n        <p class=\"muted\">Initial deep clean followed by recurring weekly maintenance.</p>\n        <table>\n          <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Total</th></tr></thead>\n          <tbody><tr>\n        <td>Initial deep clean<div>Kitchen, bathrooms, floors, dusting, high-touch reset.</div></td>\n        <td>1</td>\n        <td>$420.00</td>\n        <td>$420.00</td>\n      </tr><tr>\n        <td>Weekly maintenance<div>Recurring weekly service estimate.</div></td>\n        <td>1</td>\n        <td>$185.00</td>\n        <td>$185.00</td>\n      </tr></tbody>\n        </table>\n        <section class=\"totals\">\n          <div><span>Subtotal</span><strong>$605.00</strong></div>\n          <div><span>Discount</span><strong>$0.00</strong></div>\n          <div><span>Tax / fees</span><strong>$0.00</strong></div>\n          <div><span>Deposit</span><strong>$0.00</strong></div>\n          <div class=\"grand\"><span>Total</span><strong>$605.00</strong></div>\n        </section>\n        <footer>\n          <h2>Terms</h2>\n          <p>Quote expires in 14 days. Booking requires confirmed schedule and crew readiness.</p>\n          <p class=\"muted\">Final timing depends on schedule confirmation.</p>\n        </footer>\n      </main>\n    </body>\n  </html>",
-      "artifacts": [
-        {
-          "id": "artifact-1777071857130-e46wnw",
-          "artifactType": "pdf",
-          "label": "ACS-Q-2026-001 v1 PDF",
-          "url": "/api/root/quotes/quote-acs-local-001/pdf",
-          "documentVersion": 1,
-          "createdAt": "2026-04-24T23:04:17.130Z",
-          "dataSource": "local_recovery_store",
-          "metadata": {
-            "byte_length": 1059,
-            "finality": "draft_artifact"
-          }
-        }
-      ],
-      "history": [
-        {
-          "id": "history-1777071857130-17vi1v",
-          "eventType": "quote.pdf_exported",
-          "summary": "ACS-Q-2026-001 PDF artifact generated.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-24T23:04:17.130Z"
-        },
-        {
-          "id": "history-1777071857079-adya3v",
-          "eventType": "quote.created",
-          "summary": "Local ACS quote seed created.",
-          "actor": "system",
-          "createdAt": "2026-04-24T23:04:17.079Z"
-        }
-      ],
-      "relatedInvoiceId": null,
-      "createdAt": "2026-04-24T23:04:17.079Z",
-      "updatedAt": "2026-04-24T23:04:17.131Z",
-      "dataSource": "local_recovery_store"
+      "projectTimeline": null,
+      "relatedInvoiceId": null
     },
     {
       "id": "proposal-cco-local-001",
       "kind": "proposal",
-      "documentNumber": "CCO-P-2026-001",
-      "companyAccount": "content-co-op",
+      "terms": "50% deposit to start. Balance due before final deliverable release.",
+      "title": "Founder video sprint",
       "client": {
         "name": "Founder's Office",
         "email": "founder@example.com",
         "phone": null,
-        "company": "Signal Studio",
-        "address": null
+        "address": null,
+        "company": "Signal Studio"
       },
       "source": "creative_brief",
-      "sourceEntityId": "brief-cco-local-001",
-      "title": "Founder video sprint",
-      "scopeSummary": "Strategy, script, production planning, edit review, and delivery package.",
-      "servicePeriod": null,
-      "projectTimeline": "Two-week sprint after brief acceptance.",
+      "status": "invoiced",
+      "history": [
+        {
+          "id": "history-1777077080330-mcpe5i",
+          "actor": "local-operator",
+          "summary": "CCO-P-2026-001 converted to INV-2026-002.",
+          "createdAt": "2026-04-25T00:31:20.330Z",
+          "eventType": "proposal.converted_to_invoice"
+        },
+        {
+          "id": "history-1777074130443-qwu8zy",
+          "actor": "client-portal",
+          "summary": "CCO-P-2026-001 approved through local client portal.",
+          "createdAt": "2026-04-24T23:42:10.443Z",
+          "eventType": "proposal.client_approved"
+        },
+        {
+          "id": "history-1777074085507-bpsij2",
+          "actor": "client-portal",
+          "summary": "browser preflight change",
+          "createdAt": "2026-04-24T23:41:25.507Z",
+          "eventType": "proposal.changes_requested"
+        },
+        {
+          "id": "history-1777071857094-g84xa5",
+          "actor": "system",
+          "summary": "Local Content Co-op proposal seed created.",
+          "createdAt": "2026-04-24T23:04:17.094Z",
+          "eventType": "proposal.created"
+        }
+      ],
+      "taxCents": 0,
+      "artifacts": [],
+      "createdAt": "2026-04-24T23:04:17.079Z",
+      "lineItems": [
+        {
+          "id": "line-cco-strategy",
+          "name": "Creative strategy + script",
+          "taxable": false,
+          "category": "strategy",
+          "quantity": 1,
+          "description": "Brief enrichment, concept, script, and production outline.",
+          "unitPriceCents": 180000
+        },
+        {
+          "id": "line-cco-edit",
+          "name": "Editorial package",
+          "taxable": false,
+          "category": "post-production",
+          "quantity": 1,
+          "description": "Edit, review, revisions, and delivery handoff.",
+          "unitPriceCents": 260000
+        }
+      ],
+      "updatedAt": "2026-04-25T00:31:20.330Z",
+      "dataSource": "local_recovery_store",
+      "totalCents": 220000,
+      "clientNotes": "Proposal includes one consolidated revision cycle.",
+      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: Inter, Arial, sans-serif; color: #101418; margin: 0; background: #fff; }\n        .doc { max-width: 860px; margin: 0 auto; padding: 40px; }\n        header { display: flex; justify-content: space-between; gap: 28px; border-bottom: 1px solid #d8dee5; padding-bottom: 24px; }\n        h1 { font-size: 34px; margin: 0; letter-spacing: 0.02em; }\n        h2 { font-size: 15px; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: 0.08em; }\n        p { line-height: 1.5; }\n        .muted { color: #5c6773; font-size: 12px; }\n        .pill { display: inline-block; border: 1px solid #cfd7df; border-radius: 999px; padding: 4px 10px; font-size: 11px; text-transform: uppercase; }\n        table { border-collapse: collapse; width: 100%; margin-top: 12px; }\n        th { text-align: left; color: #5c6773; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #d8dee5; padding: 10px 8px; }\n        td { border-bottom: 1px solid #eef1f4; padding: 12px 8px; vertical-align: top; font-size: 13px; }\n        td div { color: #6d7782; font-size: 11px; margin-top: 4px; }\n        .totals { margin-left: auto; margin-top: 20px; max-width: 320px; display: grid; gap: 9px; }\n        .totals div { display: flex; justify-content: space-between; gap: 16px; }\n        .grand { border-top: 1px solid #101418; padding-top: 12px; font-size: 18px; }\n        footer { margin-top: 34px; border-top: 1px solid #d8dee5; padding-top: 16px; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <header>\n          <div>\n            <p class=\"muted\">Issued by</p>\n            <h1>Content Co-op</h1>\n            <p class=\"muted\">Root document engine · local_recovery_store</p>\n          </div>\n          <div>\n            <p class=\"pill\">Proposal</p>\n            <p><strong>CCO-P-2026-001</strong></p>\n            <p class=\"muted\">Version 1 · invoiced / approved</p>\n          </div>\n        </header>\n        <h2>Recipient</h2>\n        <p><strong>Founder&#039;s Office</strong><br />Signal Studio<br />founder@example.com<br /></p>\n        <h2>Scope</h2>\n        <p>Founder video sprint</p>\n        <p class=\"muted\">Strategy, script, production planning, edit review, and delivery package.</p>\n        <table>\n          <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Total</th></tr></thead>\n          <tbody><tr>\n        <td>Creative strategy + script<div>Brief enrichment, concept, script, and production outline.</div></td>\n        <td>1</td>\n        <td>$1,800.00</td>\n        <td>$1,800.00</td>\n      </tr><tr>\n        <td>Editorial package<div>Edit, review, revisions, and delivery handoff.</div></td>\n        <td>1</td>\n        <td>$2,600.00</td>\n        <td>$2,600.00</td>\n      </tr></tbody>\n        </table>\n        <section class=\"totals\">\n          <div><span>Subtotal</span><strong>$4,400.00</strong></div>\n          <div><span>Discount</span><strong>$0.00</strong></div>\n          <div><span>Tax / fees</span><strong>$0.00</strong></div>\n          <div><span>Deposit</span><strong>$2,200.00</strong></div>\n          <div class=\"grand\"><span>Total</span><strong>$2,200.00</strong></div>\n        </section>\n        <footer>\n          <h2>Terms</h2>\n          <p>50% deposit to start. Balance due before final deliverable release.</p>\n          <p class=\"muted\">Proposal includes one consolidated revision cycle.</p>\n        </footer>\n      </main>\n    </body>\n  </html>",
       "deliverables": [
         "Creative strategy",
         "Script",
         "Production plan",
         "Final delivery package"
       ],
-      "lineItems": [
-        {
-          "id": "line-cco-strategy",
-          "name": "Creative strategy + script",
-          "description": "Brief enrichment, concept, script, and production outline.",
-          "quantity": 1,
-          "unitPriceCents": 180000,
-          "taxable": false,
-          "category": "strategy"
-        },
-        {
-          "id": "line-cco-edit",
-          "name": "Editorial package",
-          "description": "Edit, review, revisions, and delivery handoff.",
-          "quantity": 1,
-          "unitPriceCents": 260000,
-          "taxable": false,
-          "category": "post-production"
-        }
-      ],
-      "discountCents": 0,
-      "taxCents": 0,
       "depositCents": 220000,
-      "subtotalCents": 440000,
-      "totalCents": 220000,
-      "terms": "50% deposit to start. Balance due before final deliverable release.",
-      "expirationDate": null,
+      "scopeSummary": "Strategy, script, production planning, edit review, and delivery package.",
+      "discountCents": 0,
       "internalNotes": "Seeded from CCO creative brief workflow.",
-      "clientNotes": "Proposal includes one consolidated revision cycle.",
-      "status": "invoiced",
+      "servicePeriod": null,
+      "subtotalCents": 440000,
       "approvalStatus": "approved",
+      "companyAccount": "content-co-op",
+      "documentNumber": "CCO-P-2026-001",
+      "expirationDate": null,
+      "sourceEntityId": "brief-cco-local-001",
       "documentVersion": 1,
-      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: Inter, Arial, sans-serif; color: #101418; margin: 0; background: #fff; }\n        .doc { max-width: 860px; margin: 0 auto; padding: 40px; }\n        header { display: flex; justify-content: space-between; gap: 28px; border-bottom: 1px solid #d8dee5; padding-bottom: 24px; }\n        h1 { font-size: 34px; margin: 0; letter-spacing: 0.02em; }\n        h2 { font-size: 15px; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: 0.08em; }\n        p { line-height: 1.5; }\n        .muted { color: #5c6773; font-size: 12px; }\n        .pill { display: inline-block; border: 1px solid #cfd7df; border-radius: 999px; padding: 4px 10px; font-size: 11px; text-transform: uppercase; }\n        table { border-collapse: collapse; width: 100%; margin-top: 12px; }\n        th { text-align: left; color: #5c6773; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #d8dee5; padding: 10px 8px; }\n        td { border-bottom: 1px solid #eef1f4; padding: 12px 8px; vertical-align: top; font-size: 13px; }\n        td div { color: #6d7782; font-size: 11px; margin-top: 4px; }\n        .totals { margin-left: auto; margin-top: 20px; max-width: 320px; display: grid; gap: 9px; }\n        .totals div { display: flex; justify-content: space-between; gap: 16px; }\n        .grand { border-top: 1px solid #101418; padding-top: 12px; font-size: 18px; }\n        footer { margin-top: 34px; border-top: 1px solid #d8dee5; padding-top: 16px; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <header>\n          <div>\n            <p class=\"muted\">Issued by</p>\n            <h1>Content Co-op</h1>\n            <p class=\"muted\">Root document engine · local_recovery_store</p>\n          </div>\n          <div>\n            <p class=\"pill\">Proposal</p>\n            <p><strong>CCO-P-2026-001</strong></p>\n            <p class=\"muted\">Version 1 · invoiced / approved</p>\n          </div>\n        </header>\n        <h2>Recipient</h2>\n        <p><strong>Founder&#039;s Office</strong><br />Signal Studio<br />founder@example.com<br /></p>\n        <h2>Scope</h2>\n        <p>Founder video sprint</p>\n        <p class=\"muted\">Strategy, script, production planning, edit review, and delivery package.</p>\n        <table>\n          <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Total</th></tr></thead>\n          <tbody><tr>\n        <td>Creative strategy + script<div>Brief enrichment, concept, script, and production outline.</div></td>\n        <td>1</td>\n        <td>$1,800.00</td>\n        <td>$1,800.00</td>\n      </tr><tr>\n        <td>Editorial package<div>Edit, review, revisions, and delivery handoff.</div></td>\n        <td>1</td>\n        <td>$2,600.00</td>\n        <td>$2,600.00</td>\n      </tr></tbody>\n        </table>\n        <section class=\"totals\">\n          <div><span>Subtotal</span><strong>$4,400.00</strong></div>\n          <div><span>Discount</span><strong>$0.00</strong></div>\n          <div><span>Tax / fees</span><strong>$0.00</strong></div>\n          <div><span>Deposit</span><strong>$2,200.00</strong></div>\n          <div class=\"grand\"><span>Total</span><strong>$2,200.00</strong></div>\n        </section>\n        <footer>\n          <h2>Terms</h2>\n          <p>50% deposit to start. Balance due before final deliverable release.</p>\n          <p class=\"muted\">Proposal includes one consolidated revision cycle.</p>\n        </footer>\n      </main>\n    </body>\n  </html>",
-      "artifacts": [],
+      "projectTimeline": "Two-week sprint after brief acceptance.",
+      "relatedInvoiceId": "invoice-1777077080329-hb8vlr"
+    },
+    {
+      "id": "quote-acs-local-001",
+      "kind": "quote",
+      "terms": "Quote expires in 14 days. Booking requires confirmed schedule and crew readiness.",
+      "title": "Recurring deep clean and first-service reset",
+      "client": {
+        "name": "River Oaks Residence",
+        "email": "sarah@example.com",
+        "phone": "(713) 555-0148",
+        "address": "River Oaks, Houston, TX",
+        "company": null
+      },
+      "source": "local_recovery",
+      "status": "draft",
       "history": [
         {
-          "id": "history-1777077080330-mcpe5i",
-          "eventType": "proposal.converted_to_invoice",
-          "summary": "CCO-P-2026-001 converted to INV-2026-002.",
+          "id": "history-1777071857130-17vi1v",
           "actor": "local-operator",
-          "createdAt": "2026-04-25T00:31:20.330Z"
+          "summary": "ACS-Q-2026-001 PDF artifact generated.",
+          "createdAt": "2026-04-24T23:04:17.130Z",
+          "eventType": "quote.pdf_exported"
         },
         {
-          "id": "history-1777074130443-qwu8zy",
-          "eventType": "proposal.client_approved",
-          "summary": "CCO-P-2026-001 approved through local client portal.",
-          "actor": "client-portal",
-          "createdAt": "2026-04-24T23:42:10.443Z"
-        },
-        {
-          "id": "history-1777074085507-bpsij2",
-          "eventType": "proposal.changes_requested",
-          "summary": "browser preflight change",
-          "actor": "client-portal",
-          "createdAt": "2026-04-24T23:41:25.507Z"
-        },
-        {
-          "id": "history-1777071857094-g84xa5",
-          "eventType": "proposal.created",
-          "summary": "Local Content Co-op proposal seed created.",
+          "id": "history-1777071857079-adya3v",
           "actor": "system",
-          "createdAt": "2026-04-24T23:04:17.094Z"
+          "summary": "Local ACS quote seed created.",
+          "createdAt": "2026-04-24T23:04:17.079Z",
+          "eventType": "quote.created"
         }
       ],
-      "relatedInvoiceId": "invoice-1777077080329-hb8vlr",
+      "taxCents": 0,
+      "artifacts": [
+        {
+          "id": "artifact-1777071857130-e46wnw",
+          "url": "/api/root/quotes/quote-acs-local-001/pdf",
+          "label": "ACS-Q-2026-001 v1 PDF",
+          "metadata": {
+            "finality": "draft_artifact",
+            "byte_length": 1059
+          },
+          "createdAt": "2026-04-24T23:04:17.130Z",
+          "dataSource": "local_recovery_store",
+          "artifactType": "pdf",
+          "documentVersion": 1
+        }
+      ],
       "createdAt": "2026-04-24T23:04:17.079Z",
-      "updatedAt": "2026-04-25T00:31:20.330Z",
-      "dataSource": "local_recovery_store"
+      "lineItems": [
+        {
+          "id": "line-acs-deep-clean",
+          "name": "Initial deep clean",
+          "taxable": false,
+          "category": "cleaning",
+          "quantity": 1,
+          "description": "Kitchen, bathrooms, floors, dusting, high-touch reset.",
+          "unitPriceCents": 42000
+        },
+        {
+          "id": "line-acs-recurring",
+          "name": "Weekly maintenance",
+          "taxable": false,
+          "category": "recurring",
+          "quantity": 1,
+          "description": "Recurring weekly service estimate.",
+          "unitPriceCents": 18500
+        }
+      ],
+      "updatedAt": "2026-04-24T23:04:17.131Z",
+      "dataSource": "local_recovery_store",
+      "totalCents": 60500,
+      "clientNotes": "Final timing depends on schedule confirmation.",
+      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: Inter, Arial, sans-serif; color: #101418; margin: 0; background: #fff; }\n        .doc { max-width: 860px; margin: 0 auto; padding: 40px; }\n        header { display: flex; justify-content: space-between; gap: 28px; border-bottom: 1px solid #d8dee5; padding-bottom: 24px; }\n        h1 { font-size: 34px; margin: 0; letter-spacing: 0.02em; }\n        h2 { font-size: 15px; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: 0.08em; }\n        p { line-height: 1.5; }\n        .muted { color: #5c6773; font-size: 12px; }\n        .pill { display: inline-block; border: 1px solid #cfd7df; border-radius: 999px; padding: 4px 10px; font-size: 11px; text-transform: uppercase; }\n        table { border-collapse: collapse; width: 100%; margin-top: 12px; }\n        th { text-align: left; color: #5c6773; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #d8dee5; padding: 10px 8px; }\n        td { border-bottom: 1px solid #eef1f4; padding: 12px 8px; vertical-align: top; font-size: 13px; }\n        td div { color: #6d7782; font-size: 11px; margin-top: 4px; }\n        .totals { margin-left: auto; margin-top: 20px; max-width: 320px; display: grid; gap: 9px; }\n        .totals div { display: flex; justify-content: space-between; gap: 16px; }\n        .grand { border-top: 1px solid #101418; padding-top: 12px; font-size: 18px; }\n        footer { margin-top: 34px; border-top: 1px solid #d8dee5; padding-top: 16px; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <header>\n          <div>\n            <p class=\"muted\">Issued by</p>\n            <h1>Astro Cleaning Services</h1>\n            <p class=\"muted\">Root document engine · local_recovery_store</p>\n          </div>\n          <div>\n            <p class=\"pill\">Quote</p>\n            <p><strong>ACS-Q-2026-001</strong></p>\n            <p class=\"muted\">Version 1 · draft / not required</p>\n          </div>\n        </header>\n        <h2>Recipient</h2>\n        <p><strong>River Oaks Residence</strong><br /><br />sarah@example.com<br />River Oaks, Houston, TX</p>\n        <h2>Scope</h2>\n        <p>Recurring deep clean and first-service reset</p>\n        <p class=\"muted\">Initial deep clean followed by recurring weekly maintenance.</p>\n        <table>\n          <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Total</th></tr></thead>\n          <tbody><tr>\n        <td>Initial deep clean<div>Kitchen, bathrooms, floors, dusting, high-touch reset.</div></td>\n        <td>1</td>\n        <td>$420.00</td>\n        <td>$420.00</td>\n      </tr><tr>\n        <td>Weekly maintenance<div>Recurring weekly service estimate.</div></td>\n        <td>1</td>\n        <td>$185.00</td>\n        <td>$185.00</td>\n      </tr></tbody>\n        </table>\n        <section class=\"totals\">\n          <div><span>Subtotal</span><strong>$605.00</strong></div>\n          <div><span>Discount</span><strong>$0.00</strong></div>\n          <div><span>Tax / fees</span><strong>$0.00</strong></div>\n          <div><span>Deposit</span><strong>$0.00</strong></div>\n          <div class=\"grand\"><span>Total</span><strong>$605.00</strong></div>\n        </section>\n        <footer>\n          <h2>Terms</h2>\n          <p>Quote expires in 14 days. Booking requires confirmed schedule and crew readiness.</p>\n          <p class=\"muted\">Final timing depends on schedule confirmation.</p>\n        </footer>\n      </main>\n    </body>\n  </html>",
+      "deliverables": [
+        "Deep clean",
+        "Recurring service plan",
+        "Service notes"
+      ],
+      "depositCents": 0,
+      "scopeSummary": "Initial deep clean followed by recurring weekly maintenance.",
+      "discountCents": 0,
+      "internalNotes": "Seeded from local recovery store. Verify property details before send.",
+      "servicePeriod": "First visit plus weekly recurring service",
+      "subtotalCents": 60500,
+      "approvalStatus": "not_required",
+      "companyAccount": "astro-cleaning-services",
+      "documentNumber": "ACS-Q-2026-001",
+      "expirationDate": null,
+      "sourceEntityId": "handoff-acs-quote-001",
+      "documentVersion": 1,
+      "projectTimeline": null,
+      "relatedInvoiceId": null
     }
   ],
   "invoices": [
     {
       "id": "invoice-1777077080329-hb8vlr",
       "kind": "invoice",
-      "invoiceNumber": "INV-2026-002",
-      "companyAccount": "content-co-op",
+      "jobId": null,
+      "title": "Founder video sprint",
       "client": {
         "name": "Founder's Office",
         "email": "founder@example.com",
         "phone": null,
-        "company": "Signal Studio",
-        "address": null
+        "address": null,
+        "company": "Signal Studio"
       },
       "source": "creative_brief",
+      "dueDate": null,
+      "history": [
+        {
+          "id": "history-1777077131800-1quxbo",
+          "actor": "local-operator",
+          "summary": "$2,200.00 manually recorded.",
+          "metadata": {
+            "provider": "manual_verified"
+          },
+          "createdAt": "2026-04-25T00:32:11.800Z",
+          "eventType": "invoice.payment_recorded"
+        },
+        {
+          "id": "history-1777077121339-hnouor",
+          "actor": "local-operator",
+          "summary": "INV-2026-002 issued after final artifact check.",
+          "createdAt": "2026-04-25T00:32:01.339Z",
+          "eventType": "invoice.issued"
+        },
+        {
+          "id": "history-1777077109268-3749yu",
+          "actor": "local-operator",
+          "summary": "INV-2026-002 final PDF artifact generated.",
+          "createdAt": "2026-04-25T00:31:49.268Z",
+          "eventType": "invoice.finalized"
+        },
+        {
+          "id": "history-1777077080329-krt3ug",
+          "actor": "local-operator",
+          "summary": "CCO-P-2026-001 converted into invoice authority.",
+          "metadata": {
+            "quoteId": "proposal-cco-local-001"
+          },
+          "createdAt": "2026-04-25T00:31:20.329Z",
+          "eventType": "invoice.created_from_quote"
+        }
+      ],
       "quoteId": "proposal-cco-local-001",
-      "projectId": "brief-cco-local-001",
-      "jobId": null,
-      "title": "Founder video sprint",
+      "payments": [
+        {
+          "id": "payment-1777077131800-rpus8w",
+          "note": "Verified manual payment entered by operator.",
+          "provider": "manual_verified",
+          "createdAt": "2026-04-25T00:32:11.800Z",
+          "reference": null,
+          "amountCents": 220000
+        }
+      ],
+      "taxCents": 0,
+      "artifacts": [
+        {
+          "id": "artifact-1777077109268-2xd491",
+          "url": "/api/root/invoices/invoice-1777077080329-hb8vlr/pdf",
+          "label": "INV-2026-002 final PDF v1",
+          "metadata": {
+            "finality": "final_invoice_artifact",
+            "byte_length": 955
+          },
+          "createdAt": "2026-04-25T00:31:49.268Z",
+          "dataSource": "local_recovery_store",
+          "artifactType": "pdf",
+          "documentVersion": 1
+        }
+      ],
+      "createdAt": "2026-04-25T00:31:20.329Z",
       "lineItems": [
         {
           "id": "line-cco-strategy",
           "name": "Creative strategy + script",
-          "description": "Brief enrichment, concept, script, and production outline.",
-          "quantity": 1,
-          "unitPriceCents": 180000,
           "taxable": false,
-          "category": "strategy"
+          "category": "strategy",
+          "quantity": 1,
+          "description": "Brief enrichment, concept, script, and production outline.",
+          "unitPriceCents": 180000
         },
         {
           "id": "line-cco-edit",
           "name": "Editorial package",
-          "description": "Edit, review, revisions, and delivery handoff.",
-          "quantity": 1,
-          "unitPriceCents": 260000,
           "taxable": false,
-          "category": "post-production"
+          "category": "post-production",
+          "quantity": 1,
+          "description": "Edit, review, revisions, and delivery handoff.",
+          "unitPriceCents": 260000
         }
       ],
-      "discountCents": 0,
-      "taxCents": 0,
-      "depositAppliedCents": 220000,
-      "subtotalCents": 440000,
-      "totalCents": 220000,
-      "amountPaidCents": 220000,
-      "dueDate": null,
-      "issueStatus": "issued",
-      "paymentStatus": "paid",
-      "documentVersion": 1,
-      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: Inter, Arial, sans-serif; color: #101418; margin: 0; background: #fff; }\n        .doc { max-width: 860px; margin: 0 auto; padding: 40px; }\n        header { display: flex; justify-content: space-between; gap: 28px; border-bottom: 1px solid #d8dee5; padding-bottom: 24px; }\n        h1 { font-size: 34px; margin: 0; letter-spacing: 0.02em; }\n        h2 { font-size: 15px; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: 0.08em; }\n        p { line-height: 1.5; }\n        .muted { color: #5c6773; font-size: 12px; }\n        .pill { display: inline-block; border: 1px solid #cfd7df; border-radius: 999px; padding: 4px 10px; font-size: 11px; text-transform: uppercase; }\n        table { border-collapse: collapse; width: 100%; margin-top: 12px; }\n        th { text-align: left; color: #5c6773; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #d8dee5; padding: 10px 8px; }\n        td { border-bottom: 1px solid #eef1f4; padding: 12px 8px; vertical-align: top; font-size: 13px; }\n        td div { color: #6d7782; font-size: 11px; margin-top: 4px; }\n        .totals { margin-left: auto; margin-top: 20px; max-width: 320px; display: grid; gap: 9px; }\n        .totals div { display: flex; justify-content: space-between; gap: 16px; }\n        .grand { border-top: 1px solid #101418; padding-top: 12px; font-size: 18px; }\n        footer { margin-top: 34px; border-top: 1px solid #d8dee5; padding-top: 16px; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <header>\n          <div>\n            <p class=\"muted\">Issued by</p>\n            <h1>Content Co-op</h1>\n            <p class=\"muted\">Root document engine · local_recovery_store</p>\n          </div>\n          <div>\n            <p class=\"pill\">Invoice</p>\n            <p><strong>INV-2026-002</strong></p>\n            <p class=\"muted\">Version 1 · issued / paid</p>\n          </div>\n        </header>\n        <h2>Recipient</h2>\n        <p><strong>Founder&#039;s Office</strong><br />Signal Studio<br />founder@example.com<br /></p>\n        <h2>Billing Summary</h2>\n        <p>Founder video sprint</p>\n        \n        <table>\n          <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Total</th></tr></thead>\n          <tbody><tr>\n        <td>Creative strategy + script<div>Brief enrichment, concept, script, and production outline.</div></td>\n        <td>1</td>\n        <td>$1,800.00</td>\n        <td>$1,800.00</td>\n      </tr><tr>\n        <td>Editorial package<div>Edit, review, revisions, and delivery handoff.</div></td>\n        <td>1</td>\n        <td>$2,600.00</td>\n        <td>$2,600.00</td>\n      </tr></tbody>\n        </table>\n        <section class=\"totals\">\n          <div><span>Subtotal</span><strong>$4,400.00</strong></div>\n          <div><span>Discount</span><strong>$0.00</strong></div>\n          <div><span>Tax / fees</span><strong>$0.00</strong></div>\n          <div><span>Deposit applied</span><strong>$2,200.00</strong></div>\n          <div class=\"grand\"><span>Total</span><strong>$2,200.00</strong></div>\n        </section>\n        <footer>\n          <h2>Terms</h2>\n          <p>Due date: Not set.</p>\n          <p class=\"muted\">Payment status is projected from verified local/manual records unless Stripe is connected.</p>\n        </footer>\n      </main>\n    </body>\n  </html>",
-      "artifacts": [
-        {
-          "id": "artifact-1777077109268-2xd491",
-          "artifactType": "pdf",
-          "label": "INV-2026-002 final PDF v1",
-          "url": "/api/root/invoices/invoice-1777077080329-hb8vlr/pdf",
-          "documentVersion": 1,
-          "createdAt": "2026-04-25T00:31:49.268Z",
-          "dataSource": "local_recovery_store",
-          "metadata": {
-            "byte_length": 955,
-            "finality": "final_invoice_artifact"
-          }
-        }
-      ],
-      "paymentLinks": [],
-      "payments": [
-        {
-          "id": "payment-1777077131800-rpus8w",
-          "amountCents": 220000,
-          "provider": "manual_verified",
-          "reference": null,
-          "note": "Verified manual payment entered by operator.",
-          "createdAt": "2026-04-25T00:32:11.800Z"
-        }
-      ],
+      "projectId": "brief-cco-local-001",
       "reminders": [],
-      "history": [
-        {
-          "id": "history-1777077131800-1quxbo",
-          "eventType": "invoice.payment_recorded",
-          "summary": "$2,200.00 manually recorded.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-25T00:32:11.800Z",
-          "metadata": {
-            "provider": "manual_verified"
-          }
-        },
-        {
-          "id": "history-1777077121339-hnouor",
-          "eventType": "invoice.issued",
-          "summary": "INV-2026-002 issued after final artifact check.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-25T00:32:01.339Z"
-        },
-        {
-          "id": "history-1777077109268-3749yu",
-          "eventType": "invoice.finalized",
-          "summary": "INV-2026-002 final PDF artifact generated.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-25T00:31:49.268Z"
-        },
-        {
-          "id": "history-1777077080329-krt3ug",
-          "eventType": "invoice.created_from_quote",
-          "summary": "CCO-P-2026-001 converted into invoice authority.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-25T00:31:20.329Z",
-          "metadata": {
-            "quoteId": "proposal-cco-local-001"
-          }
-        }
-      ],
-      "createdAt": "2026-04-25T00:31:20.329Z",
       "updatedAt": "2026-04-25T00:32:11.801Z",
-      "dataSource": "local_recovery_store"
+      "dataSource": "local_recovery_store",
+      "totalCents": 220000,
+      "issueStatus": "issued",
+      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: Inter, Arial, sans-serif; color: #101418; margin: 0; background: #fff; }\n        .doc { max-width: 860px; margin: 0 auto; padding: 40px; }\n        header { display: flex; justify-content: space-between; gap: 28px; border-bottom: 1px solid #d8dee5; padding-bottom: 24px; }\n        h1 { font-size: 34px; margin: 0; letter-spacing: 0.02em; }\n        h2 { font-size: 15px; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: 0.08em; }\n        p { line-height: 1.5; }\n        .muted { color: #5c6773; font-size: 12px; }\n        .pill { display: inline-block; border: 1px solid #cfd7df; border-radius: 999px; padding: 4px 10px; font-size: 11px; text-transform: uppercase; }\n        table { border-collapse: collapse; width: 100%; margin-top: 12px; }\n        th { text-align: left; color: #5c6773; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #d8dee5; padding: 10px 8px; }\n        td { border-bottom: 1px solid #eef1f4; padding: 12px 8px; vertical-align: top; font-size: 13px; }\n        td div { color: #6d7782; font-size: 11px; margin-top: 4px; }\n        .totals { margin-left: auto; margin-top: 20px; max-width: 320px; display: grid; gap: 9px; }\n        .totals div { display: flex; justify-content: space-between; gap: 16px; }\n        .grand { border-top: 1px solid #101418; padding-top: 12px; font-size: 18px; }\n        footer { margin-top: 34px; border-top: 1px solid #d8dee5; padding-top: 16px; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <header>\n          <div>\n            <p class=\"muted\">Issued by</p>\n            <h1>Content Co-op</h1>\n            <p class=\"muted\">Root document engine · local_recovery_store</p>\n          </div>\n          <div>\n            <p class=\"pill\">Invoice</p>\n            <p><strong>INV-2026-002</strong></p>\n            <p class=\"muted\">Version 1 · issued / paid</p>\n          </div>\n        </header>\n        <h2>Recipient</h2>\n        <p><strong>Founder&#039;s Office</strong><br />Signal Studio<br />founder@example.com<br /></p>\n        <h2>Billing Summary</h2>\n        <p>Founder video sprint</p>\n        \n        <table>\n          <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Total</th></tr></thead>\n          <tbody><tr>\n        <td>Creative strategy + script<div>Brief enrichment, concept, script, and production outline.</div></td>\n        <td>1</td>\n        <td>$1,800.00</td>\n        <td>$1,800.00</td>\n      </tr><tr>\n        <td>Editorial package<div>Edit, review, revisions, and delivery handoff.</div></td>\n        <td>1</td>\n        <td>$2,600.00</td>\n        <td>$2,600.00</td>\n      </tr></tbody>\n        </table>\n        <section class=\"totals\">\n          <div><span>Subtotal</span><strong>$4,400.00</strong></div>\n          <div><span>Discount</span><strong>$0.00</strong></div>\n          <div><span>Tax / fees</span><strong>$0.00</strong></div>\n          <div><span>Deposit applied</span><strong>$2,200.00</strong></div>\n          <div class=\"grand\"><span>Total</span><strong>$2,200.00</strong></div>\n        </section>\n        <footer>\n          <h2>Terms</h2>\n          <p>Due date: Not set.</p>\n          <p class=\"muted\">Payment status is projected from verified local/manual records unless Stripe is connected.</p>\n        </footer>\n      </main>\n    </body>\n  </html>",
+      "paymentLinks": [],
+      "discountCents": 0,
+      "invoiceNumber": "INV-2026-002",
+      "paymentStatus": "paid",
+      "subtotalCents": 440000,
+      "companyAccount": "content-co-op",
+      "amountPaidCents": 220000,
+      "documentVersion": 1,
+      "depositAppliedCents": 220000
     },
     {
       "id": "invoice-1777071964600-1qv5yy",
       "kind": "invoice",
-      "invoiceNumber": "INV-2026-001",
-      "companyAccount": "astro-cleaning-services",
+      "jobId": null,
+      "title": "Browser verified cleaning quote",
       "client": {
         "name": "Browser Test Client",
         "email": "browser-test@example.com",
         "phone": "(713) 555-0199",
-        "company": null,
-        "address": "Houston, TX"
+        "address": "Houston, TX",
+        "company": null
       },
       "source": "manual",
+      "dueDate": null,
+      "history": [
+        {
+          "id": "history-1777071997119-7iaai7",
+          "actor": "local-operator",
+          "summary": "$225.00 manually recorded.",
+          "metadata": {
+            "provider": "manual_verified"
+          },
+          "createdAt": "2026-04-24T23:06:37.119Z",
+          "eventType": "invoice.payment_recorded"
+        },
+        {
+          "id": "history-1777071996020-2ithd0",
+          "actor": "local-operator",
+          "summary": "INV-2026-001 issued after final artifact check.",
+          "createdAt": "2026-04-24T23:06:36.020Z",
+          "eventType": "invoice.issued"
+        },
+        {
+          "id": "history-1777071994898-qvm787",
+          "actor": "local-operator",
+          "summary": "INV-2026-001 final PDF artifact generated.",
+          "createdAt": "2026-04-24T23:06:34.898Z",
+          "eventType": "invoice.finalized"
+        },
+        {
+          "id": "history-1777071964600-l5b1m2",
+          "actor": "local-operator",
+          "summary": "ACS-Q-2026-002 converted into invoice authority.",
+          "metadata": {
+            "quoteId": "quote-1777071928741-e08qy3"
+          },
+          "createdAt": "2026-04-24T23:06:04.600Z",
+          "eventType": "invoice.created_from_quote"
+        }
+      ],
       "quoteId": "quote-1777071928741-e08qy3",
-      "projectId": null,
-      "jobId": null,
-      "title": "Browser verified cleaning quote",
+      "payments": [
+        {
+          "id": "payment-1777071997118-evmn6x",
+          "note": "Verified manual payment entered by operator.",
+          "provider": "manual_verified",
+          "createdAt": "2026-04-24T23:06:37.118Z",
+          "reference": null,
+          "amountCents": 22500
+        }
+      ],
+      "taxCents": 0,
+      "artifacts": [
+        {
+          "id": "artifact-1777071994898-0qbbk5",
+          "url": "/api/root/invoices/invoice-1777071964600-1qv5yy/pdf",
+          "label": "INV-2026-001 final PDF v1",
+          "metadata": {
+            "finality": "final_invoice_artifact",
+            "byte_length": 912
+          },
+          "createdAt": "2026-04-24T23:06:34.898Z",
+          "dataSource": "local_recovery_store",
+          "artifactType": "pdf",
+          "documentVersion": 1
+        }
+      ],
+      "createdAt": "2026-04-24T23:06:04.600Z",
       "lineItems": [
         {
           "id": "line-1777071928741-odrpo5",
           "name": "Standard clean",
-          "description": "Kitchen, baths, floors, dusting",
-          "quantity": 1,
-          "unitPriceCents": 22500,
           "taxable": false,
           "category": "service",
-          "metadata": {}
+          "metadata": {},
+          "quantity": 1,
+          "description": "Kitchen, baths, floors, dusting",
+          "unitPriceCents": 22500
         }
       ],
-      "discountCents": 0,
-      "taxCents": 0,
-      "depositAppliedCents": 0,
-      "subtotalCents": 22500,
-      "totalCents": 22500,
-      "amountPaidCents": 22500,
-      "dueDate": null,
-      "issueStatus": "issued",
-      "paymentStatus": "paid",
-      "documentVersion": 1,
-      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: Inter, Arial, sans-serif; color: #101418; margin: 0; background: #fff; }\n        .doc { max-width: 860px; margin: 0 auto; padding: 40px; }\n        header { display: flex; justify-content: space-between; gap: 28px; border-bottom: 1px solid #d8dee5; padding-bottom: 24px; }\n        h1 { font-size: 34px; margin: 0; letter-spacing: 0.02em; }\n        h2 { font-size: 15px; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: 0.08em; }\n        p { line-height: 1.5; }\n        .muted { color: #5c6773; font-size: 12px; }\n        .pill { display: inline-block; border: 1px solid #cfd7df; border-radius: 999px; padding: 4px 10px; font-size: 11px; text-transform: uppercase; }\n        table { border-collapse: collapse; width: 100%; margin-top: 12px; }\n        th { text-align: left; color: #5c6773; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #d8dee5; padding: 10px 8px; }\n        td { border-bottom: 1px solid #eef1f4; padding: 12px 8px; vertical-align: top; font-size: 13px; }\n        td div { color: #6d7782; font-size: 11px; margin-top: 4px; }\n        .totals { margin-left: auto; margin-top: 20px; max-width: 320px; display: grid; gap: 9px; }\n        .totals div { display: flex; justify-content: space-between; gap: 16px; }\n        .grand { border-top: 1px solid #101418; padding-top: 12px; font-size: 18px; }\n        footer { margin-top: 34px; border-top: 1px solid #d8dee5; padding-top: 16px; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <header>\n          <div>\n            <p class=\"muted\">Issued by</p>\n            <h1>Astro Cleaning Services</h1>\n            <p class=\"muted\">Root document engine · local_recovery_store</p>\n          </div>\n          <div>\n            <p class=\"pill\">Invoice</p>\n            <p><strong>INV-2026-001</strong></p>\n            <p class=\"muted\">Version 1 · issued / paid</p>\n          </div>\n        </header>\n        <h2>Recipient</h2>\n        <p><strong>Browser Test Client</strong><br /><br />browser-test@example.com<br />Houston, TX</p>\n        <h2>Billing Summary</h2>\n        <p>Browser verified cleaning quote</p>\n        \n        <table>\n          <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Total</th></tr></thead>\n          <tbody><tr>\n        <td>Standard clean<div>Kitchen, baths, floors, dusting</div></td>\n        <td>1</td>\n        <td>$225.00</td>\n        <td>$225.00</td>\n      </tr></tbody>\n        </table>\n        <section class=\"totals\">\n          <div><span>Subtotal</span><strong>$225.00</strong></div>\n          <div><span>Discount</span><strong>$0.00</strong></div>\n          <div><span>Tax / fees</span><strong>$0.00</strong></div>\n          <div><span>Deposit applied</span><strong>$0.00</strong></div>\n          <div class=\"grand\"><span>Total</span><strong>$225.00</strong></div>\n        </section>\n        <footer>\n          <h2>Terms</h2>\n          <p>Due date: Not set.</p>\n          <p class=\"muted\">Payment status is projected from verified local/manual records unless Stripe is connected.</p>\n        </footer>\n      </main>\n    </body>\n  </html>",
-      "artifacts": [
-        {
-          "id": "artifact-1777071994898-0qbbk5",
-          "artifactType": "pdf",
-          "label": "INV-2026-001 final PDF v1",
-          "url": "/api/root/invoices/invoice-1777071964600-1qv5yy/pdf",
-          "documentVersion": 1,
-          "createdAt": "2026-04-24T23:06:34.898Z",
-          "dataSource": "local_recovery_store",
-          "metadata": {
-            "byte_length": 912,
-            "finality": "final_invoice_artifact"
-          }
-        }
-      ],
-      "paymentLinks": [],
-      "payments": [
-        {
-          "id": "payment-1777071997118-evmn6x",
-          "amountCents": 22500,
-          "provider": "manual_verified",
-          "reference": null,
-          "note": "Verified manual payment entered by operator.",
-          "createdAt": "2026-04-24T23:06:37.118Z"
-        }
-      ],
+      "projectId": null,
       "reminders": [],
-      "history": [
-        {
-          "id": "history-1777071997119-7iaai7",
-          "eventType": "invoice.payment_recorded",
-          "summary": "$225.00 manually recorded.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-24T23:06:37.119Z",
-          "metadata": {
-            "provider": "manual_verified"
-          }
-        },
-        {
-          "id": "history-1777071996020-2ithd0",
-          "eventType": "invoice.issued",
-          "summary": "INV-2026-001 issued after final artifact check.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-24T23:06:36.020Z"
-        },
-        {
-          "id": "history-1777071994898-qvm787",
-          "eventType": "invoice.finalized",
-          "summary": "INV-2026-001 final PDF artifact generated.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-24T23:06:34.898Z"
-        },
-        {
-          "id": "history-1777071964600-l5b1m2",
-          "eventType": "invoice.created_from_quote",
-          "summary": "ACS-Q-2026-002 converted into invoice authority.",
-          "actor": "local-operator",
-          "createdAt": "2026-04-24T23:06:04.600Z",
-          "metadata": {
-            "quoteId": "quote-1777071928741-e08qy3"
-          }
-        }
-      ],
-      "createdAt": "2026-04-24T23:06:04.600Z",
       "updatedAt": "2026-04-24T23:06:37.119Z",
-      "dataSource": "local_recovery_store"
+      "dataSource": "local_recovery_store",
+      "totalCents": 22500,
+      "issueStatus": "issued",
+      "previewHtml": "<!doctype html>\n  <html>\n    <head>\n      <meta charset=\"utf-8\" />\n      <style>\n        body { font-family: Inter, Arial, sans-serif; color: #101418; margin: 0; background: #fff; }\n        .doc { max-width: 860px; margin: 0 auto; padding: 40px; }\n        header { display: flex; justify-content: space-between; gap: 28px; border-bottom: 1px solid #d8dee5; padding-bottom: 24px; }\n        h1 { font-size: 34px; margin: 0; letter-spacing: 0.02em; }\n        h2 { font-size: 15px; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: 0.08em; }\n        p { line-height: 1.5; }\n        .muted { color: #5c6773; font-size: 12px; }\n        .pill { display: inline-block; border: 1px solid #cfd7df; border-radius: 999px; padding: 4px 10px; font-size: 11px; text-transform: uppercase; }\n        table { border-collapse: collapse; width: 100%; margin-top: 12px; }\n        th { text-align: left; color: #5c6773; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #d8dee5; padding: 10px 8px; }\n        td { border-bottom: 1px solid #eef1f4; padding: 12px 8px; vertical-align: top; font-size: 13px; }\n        td div { color: #6d7782; font-size: 11px; margin-top: 4px; }\n        .totals { margin-left: auto; margin-top: 20px; max-width: 320px; display: grid; gap: 9px; }\n        .totals div { display: flex; justify-content: space-between; gap: 16px; }\n        .grand { border-top: 1px solid #101418; padding-top: 12px; font-size: 18px; }\n        footer { margin-top: 34px; border-top: 1px solid #d8dee5; padding-top: 16px; }\n      </style>\n    </head>\n    <body>\n      <main class=\"doc\">\n        <header>\n          <div>\n            <p class=\"muted\">Issued by</p>\n            <h1>Astro Cleaning Services</h1>\n            <p class=\"muted\">Root document engine · local_recovery_store</p>\n          </div>\n          <div>\n            <p class=\"pill\">Invoice</p>\n            <p><strong>INV-2026-001</strong></p>\n            <p class=\"muted\">Version 1 · issued / paid</p>\n          </div>\n        </header>\n        <h2>Recipient</h2>\n        <p><strong>Browser Test Client</strong><br /><br />browser-test@example.com<br />Houston, TX</p>\n        <h2>Billing Summary</h2>\n        <p>Browser verified cleaning quote</p>\n        \n        <table>\n          <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Total</th></tr></thead>\n          <tbody><tr>\n        <td>Standard clean<div>Kitchen, baths, floors, dusting</div></td>\n        <td>1</td>\n        <td>$225.00</td>\n        <td>$225.00</td>\n      </tr></tbody>\n        </table>\n        <section class=\"totals\">\n          <div><span>Subtotal</span><strong>$225.00</strong></div>\n          <div><span>Discount</span><strong>$0.00</strong></div>\n          <div><span>Tax / fees</span><strong>$0.00</strong></div>\n          <div><span>Deposit applied</span><strong>$0.00</strong></div>\n          <div class=\"grand\"><span>Total</span><strong>$225.00</strong></div>\n        </section>\n        <footer>\n          <h2>Terms</h2>\n          <p>Due date: Not set.</p>\n          <p class=\"muted\">Payment status is projected from verified local/manual records unless Stripe is connected.</p>\n        </footer>\n      </main>\n    </body>\n  </html>",
+      "paymentLinks": [],
+      "discountCents": 0,
+      "invoiceNumber": "INV-2026-001",
+      "paymentStatus": "paid",
+      "subtotalCents": 22500,
+      "companyAccount": "astro-cleaning-services",
+      "amountPaidCents": 22500,
+      "documentVersion": 1,
+      "depositAppliedCents": 0
     }
   ],
   "events": [
     {
+      "id": "event-1777442416043-b9yz6t",
+      "summary": "CCO-Q-2026-003 created.",
+      "entityId": "quote-1777442416027-0sp85n",
+      "createdAt": "2026-04-29T06:00:16.043Z",
+      "eventType": "quote.created",
+      "dataSource": "local_recovery_store",
+      "entityType": "quote",
+      "companyAccount": "content-co-op"
+    },
+    {
+      "id": "event-1777442355372-jjlrqu",
+      "summary": "CCO-Q-2026-002 created.",
+      "entityId": "quote-1777442355372-4t0aqj",
+      "createdAt": "2026-04-29T05:59:15.372Z",
+      "eventType": "quote.created",
+      "dataSource": "local_recovery_store",
+      "entityType": "quote",
+      "companyAccount": "content-co-op"
+    },
+    {
+      "id": "event-1777441836773-4f4vd1",
+      "summary": "CCO-Q-2026-001 created.",
+      "entityId": "quote-1777441836773-zdtdt4",
+      "createdAt": "2026-04-29T05:50:36.773Z",
+      "eventType": "quote.created",
+      "dataSource": "local_recovery_store",
+      "entityType": "quote",
+      "companyAccount": "content-co-op"
+    },
+    {
       "id": "event-1777440471171-v3xloc",
-      "eventType": "proposal.pdf_exported",
-      "companyAccount": "content-co-op",
-      "entityType": "proposal",
-      "entityId": "proposal-1777440144257-z85pc9",
       "summary": "CCO-P-2026-002 PDF exported.",
+      "entityId": "proposal-1777440144257-z85pc9",
       "createdAt": "2026-04-29T05:27:51.171Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "proposal.pdf_exported",
+      "dataSource": "local_recovery_store",
+      "entityType": "proposal",
+      "companyAccount": "content-co-op"
     },
     {
       "id": "event-1777440144260-lbf5td",
-      "eventType": "proposal.created",
-      "companyAccount": "content-co-op",
-      "entityType": "proposal",
-      "entityId": "proposal-1777440144257-z85pc9",
       "summary": "CCO-P-2026-002 created.",
+      "entityId": "proposal-1777440144257-z85pc9",
       "createdAt": "2026-04-29T05:22:24.260Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "proposal.created",
+      "dataSource": "local_recovery_store",
+      "entityType": "proposal",
+      "companyAccount": "content-co-op"
     },
     {
       "id": "event-1777366087280-1cxezq",
-      "eventType": "quote.pdf_exported",
-      "companyAccount": "astro-cleaning-services",
-      "entityType": "quote",
-      "entityId": "quote-1777071928741-e08qy3",
       "summary": "ACS-Q-2026-002 PDF exported.",
+      "entityId": "quote-1777071928741-e08qy3",
       "createdAt": "2026-04-28T08:48:07.280Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "quote.pdf_exported",
+      "dataSource": "local_recovery_store",
+      "entityType": "quote",
+      "companyAccount": "astro-cleaning-services"
     },
     {
       "id": "event-1777077131801-zp87w9",
-      "eventType": "invoice.payment_recorded",
-      "companyAccount": "content-co-op",
-      "entityType": "invoice",
-      "entityId": "invoice-1777077080329-hb8vlr",
       "summary": "INV-2026-002 payment recorded.",
+      "entityId": "invoice-1777077080329-hb8vlr",
       "createdAt": "2026-04-25T00:32:11.801Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "invoice.payment_recorded",
+      "dataSource": "local_recovery_store",
+      "entityType": "invoice",
+      "companyAccount": "content-co-op"
     },
     {
       "id": "event-1777077121339-zhdrad",
-      "eventType": "invoice.issued",
-      "companyAccount": "content-co-op",
-      "entityType": "invoice",
-      "entityId": "invoice-1777077080329-hb8vlr",
       "summary": "INV-2026-002 issued.",
+      "entityId": "invoice-1777077080329-hb8vlr",
       "createdAt": "2026-04-25T00:32:01.339Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "invoice.issued",
+      "dataSource": "local_recovery_store",
+      "entityType": "invoice",
+      "companyAccount": "content-co-op"
     },
     {
       "id": "event-1777077109268-0g7ihr",
-      "eventType": "invoice.finalized",
-      "companyAccount": "content-co-op",
-      "entityType": "invoice",
-      "entityId": "invoice-1777077080329-hb8vlr",
       "summary": "INV-2026-002 finalized.",
+      "entityId": "invoice-1777077080329-hb8vlr",
       "createdAt": "2026-04-25T00:31:49.268Z",
-      "dataSource": "local_recovery_store"
-    },
-    {
-      "id": "event-1777077080330-gzwmrp",
-      "eventType": "proposal.converted_to_invoice",
-      "companyAccount": "content-co-op",
-      "entityType": "proposal",
-      "entityId": "proposal-cco-local-001",
-      "summary": "CCO-P-2026-001 converted to invoice.",
-      "createdAt": "2026-04-25T00:31:20.330Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "invoice.finalized",
+      "dataSource": "local_recovery_store",
+      "entityType": "invoice",
+      "companyAccount": "content-co-op"
     },
     {
       "id": "event-1777077080330-9f2vay",
-      "eventType": "invoice.created_from_quote",
-      "companyAccount": "content-co-op",
-      "entityType": "invoice",
-      "entityId": "invoice-1777077080329-hb8vlr",
       "summary": "INV-2026-002 created from CCO-P-2026-001.",
+      "entityId": "invoice-1777077080329-hb8vlr",
       "createdAt": "2026-04-25T00:31:20.330Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "invoice.created_from_quote",
+      "dataSource": "local_recovery_store",
+      "entityType": "invoice",
+      "companyAccount": "content-co-op"
+    },
+    {
+      "id": "event-1777077080330-gzwmrp",
+      "summary": "CCO-P-2026-001 converted to invoice.",
+      "entityId": "proposal-cco-local-001",
+      "createdAt": "2026-04-25T00:31:20.330Z",
+      "eventType": "proposal.converted_to_invoice",
+      "dataSource": "local_recovery_store",
+      "entityType": "proposal",
+      "companyAccount": "content-co-op"
     },
     {
       "id": "event-1777074130444-62ukl1",
-      "eventType": "proposal.client_approved",
-      "companyAccount": "content-co-op",
-      "entityType": "proposal",
-      "entityId": "proposal-cco-local-001",
       "summary": "CCO-P-2026-001 approved by client portal.",
+      "entityId": "proposal-cco-local-001",
       "createdAt": "2026-04-24T23:42:10.444Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "proposal.client_approved",
+      "dataSource": "local_recovery_store",
+      "entityType": "proposal",
+      "companyAccount": "content-co-op"
     },
     {
       "id": "event-1777074085521-z6kmgd",
-      "eventType": "proposal.changes_requested",
-      "companyAccount": "content-co-op",
-      "entityType": "proposal",
-      "entityId": "proposal-cco-local-001",
       "summary": "CCO-P-2026-001 has a client change request.",
+      "entityId": "proposal-cco-local-001",
       "createdAt": "2026-04-24T23:41:25.521Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "proposal.changes_requested",
+      "dataSource": "local_recovery_store",
+      "entityType": "proposal",
+      "companyAccount": "content-co-op"
     },
     {
       "id": "event-1777071997119-izvg0b",
-      "eventType": "invoice.payment_recorded",
-      "companyAccount": "astro-cleaning-services",
-      "entityType": "invoice",
-      "entityId": "invoice-1777071964600-1qv5yy",
       "summary": "INV-2026-001 payment recorded.",
+      "entityId": "invoice-1777071964600-1qv5yy",
       "createdAt": "2026-04-24T23:06:37.119Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "invoice.payment_recorded",
+      "dataSource": "local_recovery_store",
+      "entityType": "invoice",
+      "companyAccount": "astro-cleaning-services"
     },
     {
       "id": "event-1777071996021-9urukm",
-      "eventType": "invoice.issued",
-      "companyAccount": "astro-cleaning-services",
-      "entityType": "invoice",
-      "entityId": "invoice-1777071964600-1qv5yy",
       "summary": "INV-2026-001 issued.",
+      "entityId": "invoice-1777071964600-1qv5yy",
       "createdAt": "2026-04-24T23:06:36.021Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "invoice.issued",
+      "dataSource": "local_recovery_store",
+      "entityType": "invoice",
+      "companyAccount": "astro-cleaning-services"
     },
     {
       "id": "event-1777071994899-n3cfmh",
-      "eventType": "invoice.finalized",
-      "companyAccount": "astro-cleaning-services",
-      "entityType": "invoice",
-      "entityId": "invoice-1777071964600-1qv5yy",
       "summary": "INV-2026-001 finalized.",
+      "entityId": "invoice-1777071964600-1qv5yy",
       "createdAt": "2026-04-24T23:06:34.899Z",
-      "dataSource": "local_recovery_store"
-    },
-    {
-      "id": "event-1777071964601-l7mgfc",
-      "eventType": "quote.converted_to_invoice",
-      "companyAccount": "astro-cleaning-services",
-      "entityType": "quote",
-      "entityId": "quote-1777071928741-e08qy3",
-      "summary": "ACS-Q-2026-002 converted to invoice.",
-      "createdAt": "2026-04-24T23:06:04.601Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "invoice.finalized",
+      "dataSource": "local_recovery_store",
+      "entityType": "invoice",
+      "companyAccount": "astro-cleaning-services"
     },
     {
       "id": "event-1777071964601-wwwofg",
-      "eventType": "invoice.created_from_quote",
-      "companyAccount": "astro-cleaning-services",
-      "entityType": "invoice",
-      "entityId": "invoice-1777071964600-1qv5yy",
       "summary": "INV-2026-001 created from ACS-Q-2026-002.",
+      "entityId": "invoice-1777071964600-1qv5yy",
       "createdAt": "2026-04-24T23:06:04.601Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "invoice.created_from_quote",
+      "dataSource": "local_recovery_store",
+      "entityType": "invoice",
+      "companyAccount": "astro-cleaning-services"
+    },
+    {
+      "id": "event-1777071964601-l7mgfc",
+      "summary": "ACS-Q-2026-002 converted to invoice.",
+      "entityId": "quote-1777071928741-e08qy3",
+      "createdAt": "2026-04-24T23:06:04.601Z",
+      "eventType": "quote.converted_to_invoice",
+      "dataSource": "local_recovery_store",
+      "entityType": "quote",
+      "companyAccount": "astro-cleaning-services"
     },
     {
       "id": "event-1777071951579-f6cs7c",
-      "eventType": "quote.pdf_exported",
-      "companyAccount": "astro-cleaning-services",
-      "entityType": "quote",
-      "entityId": "quote-1777071928741-e08qy3",
       "summary": "ACS-Q-2026-002 PDF exported.",
+      "entityId": "quote-1777071928741-e08qy3",
       "createdAt": "2026-04-24T23:05:51.579Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "quote.pdf_exported",
+      "dataSource": "local_recovery_store",
+      "entityType": "quote",
+      "companyAccount": "astro-cleaning-services"
     },
     {
       "id": "event-1777071950480-yqzcg3",
-      "eventType": "quote.approved",
-      "companyAccount": "astro-cleaning-services",
-      "entityType": "quote",
-      "entityId": "quote-1777071928741-e08qy3",
       "summary": "ACS-Q-2026-002 approved.",
+      "entityId": "quote-1777071928741-e08qy3",
       "createdAt": "2026-04-24T23:05:50.480Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "quote.approved",
+      "dataSource": "local_recovery_store",
+      "entityType": "quote",
+      "companyAccount": "astro-cleaning-services"
     },
     {
       "id": "event-1777071928742-2xi7xm",
-      "eventType": "quote.created",
-      "companyAccount": "astro-cleaning-services",
-      "entityType": "quote",
-      "entityId": "quote-1777071928741-e08qy3",
       "summary": "ACS-Q-2026-002 created.",
+      "entityId": "quote-1777071928741-e08qy3",
       "createdAt": "2026-04-24T23:05:28.742Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "quote.created",
+      "dataSource": "local_recovery_store",
+      "entityType": "quote",
+      "companyAccount": "astro-cleaning-services"
     },
     {
       "id": "event-1777071857131-nt9r1u",
-      "eventType": "quote.pdf_exported",
-      "companyAccount": "astro-cleaning-services",
-      "entityType": "quote",
-      "entityId": "quote-acs-local-001",
       "summary": "ACS-Q-2026-001 PDF exported.",
-      "createdAt": "2026-04-24T23:04:17.131Z",
-      "dataSource": "local_recovery_store"
-    },
-    {
-      "id": "event-1777071857094-orfdxl",
-      "eventType": "quote.created",
-      "companyAccount": "astro-cleaning-services",
-      "entityType": "quote",
       "entityId": "quote-acs-local-001",
-      "summary": "ACS quote seed is available.",
-      "createdAt": "2026-04-24T23:04:17.094Z",
-      "dataSource": "local_recovery_store"
+      "createdAt": "2026-04-24T23:04:17.131Z",
+      "eventType": "quote.pdf_exported",
+      "dataSource": "local_recovery_store",
+      "entityType": "quote",
+      "companyAccount": "astro-cleaning-services"
     },
     {
       "id": "event-1777071857094-yfvp7m",
-      "eventType": "proposal.created",
-      "companyAccount": "content-co-op",
-      "entityType": "proposal",
-      "entityId": "proposal-cco-local-001",
       "summary": "CCO proposal seed is available.",
+      "entityId": "proposal-cco-local-001",
       "createdAt": "2026-04-24T23:04:17.094Z",
-      "dataSource": "local_recovery_store"
+      "eventType": "proposal.created",
+      "dataSource": "local_recovery_store",
+      "entityType": "proposal",
+      "companyAccount": "content-co-op"
+    },
+    {
+      "id": "event-1777071857094-orfdxl",
+      "summary": "ACS quote seed is available.",
+      "entityId": "quote-acs-local-001",
+      "createdAt": "2026-04-24T23:04:17.094Z",
+      "eventType": "quote.created",
+      "dataSource": "local_recovery_store",
+      "entityType": "quote",
+      "companyAccount": "astro-cleaning-services"
     }
   ]
 }

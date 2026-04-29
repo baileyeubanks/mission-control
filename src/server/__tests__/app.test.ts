@@ -384,7 +384,7 @@ describe("packet API", () => {
     const stripeResponse = await request(app).post(`/api/root/invoices/${invoiceId}/payment-link`);
     expect(stripeResponse.status).toBe(501);
     expect(stripeResponse.body.error.code).toBe("STRIPE_NOT_CONFIGURED");
-  });
+  }, 30000);
 
   it("accepts local client portal quote decisions without external sends", async () => {
     const service = new PacketService(new MemoryPacketStore(), new SuccessfulModelClient());

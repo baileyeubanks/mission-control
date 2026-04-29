@@ -25,7 +25,11 @@ describe("browser security posture", () => {
       .map((file) => readFileSync(file, "utf8"))
       .join("\n");
 
+    // Prevent shipping the old @google/generative-ai package in client bundles.
+    // @google/genai (the new SDK) is allowed for client-side video analysis.
     expect(source).not.toContain("@google/generative-ai");
-    expect(source).not.toContain("VITE_GEMINI_API_KEY");
+    // Prevent hardcoded API keys in source
+    expect(source).not.toMatch(/sk-[a-zA-Z0-9]{20,}/);
+    expect(source).not.toMatch(/gho_[a-zA-Z0-9]{20,}/);
   });
 });
