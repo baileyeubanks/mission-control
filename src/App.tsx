@@ -29,6 +29,7 @@ const Packets = lazy(() => import("./pages/Packets").then(m => ({ default: m.Pac
 const OperatingDomain = lazy(() => import("./pages/OperatingDomain").then(m => ({ default: m.OperatingDomain })));
 const Audit = lazy(() => import("./pages/Audit").then(m => ({ default: m.Audit })));
 const CommercialDocuments = lazy(() => import("./pages/CommercialDocuments").then(m => ({ default: m.CommercialDocuments })));
+const Quotes = lazy(() => import("./pages/Quotes").then(m => ({ default: m.Quotes })));
 const Pipeline = lazy(() => import("./pages/Pipeline").then(m => ({ default: m.Pipeline })));
 const Onboarding = lazy(() => import("./pages/Onboarding").then(m => ({ default: m.Onboarding })));
 const ContractorWorkspace = lazy(() => import("./pages/ContractorWorkspace").then(m => ({ default: m.ContractorWorkspace })));
@@ -74,7 +75,7 @@ const adminRoutes = [
   { path: "outbound", element: <Placeholder title="Outbound Communications" /> },
   { path: "contacts", element: <Contacts /> },
   { path: "acs-quote-handoff", element: <AcsQuoteHandoff /> },
-  { path: "quotes", element: <CommercialDocuments mode="quotes" /> },
+  { path: "quotes", element: <Quotes /> },
   { path: "invoices", element: <CommercialDocuments mode="invoices" /> },
   { path: "pipeline", element: <Pipeline /> },
   { path: "finance", element: <Finance /> },
