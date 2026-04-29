@@ -18,6 +18,7 @@ export type RootApprovalStatus = "not_required" | "requested" | "approved" | "re
 export type RootInvoiceIssueStatus = "draft" | "approved_to_issue" | "issued" | "voided" | "archived";
 export type RootInvoicePaymentStatus = "unissued" | "unpaid" | "partially_paid" | "paid" | "overdue" | "void";
 export type RootCommercialSource = "public_intake" | "manual" | "creative_brief" | "booking" | "project" | "local_recovery";
+export type RootInvoiceType = "full" | "deposit" | "balance";
 
 export interface RootBillingContact {
   name: string;
@@ -58,6 +59,22 @@ export interface RootDocumentHistoryEntry {
   metadata?: Record<string, unknown>;
 }
 
+export interface RootCompanyConfig {
+  legalName: string;
+  dba: string;
+  tagline: string;
+  address: string;
+  cityStateZip: string;
+  country: string;
+  email: string;
+  phone: string;
+  zelleEmail: string;
+  website?: string;
+  termsTemplate: string;
+  depositTermsTemplate: string;
+  logoUrl?: string | null;
+}
+
 export interface RootQuoteRecord {
   id: string;
   kind: "quote" | "proposal";
@@ -67,6 +84,7 @@ export interface RootQuoteRecord {
   source: RootCommercialSource;
   sourceEntityId: string | null;
   title: string;
+  reference: string | null;
   scopeSummary: string;
   servicePeriod: string | null;
   projectTimeline: string | null;
@@ -95,7 +113,7 @@ export interface RootQuoteRecord {
 
 export interface RootPaymentLinkRecord {
   id: string;
-  provider: "stripe";
+  provider: "stripe" | "zelle";
   url: string;
   status: "created" | "disabled" | "expired";
   createdAt: string;
@@ -104,7 +122,7 @@ export interface RootPaymentLinkRecord {
 export interface RootPaymentRecord {
   id: string;
   amountCents: number;
-  provider: "stripe" | "manual_verified";
+  provider: "stripe" | "manual_verified" | "zelle";
   reference: string | null;
   note: string;
   createdAt: string;
@@ -121,6 +139,7 @@ export interface RootInvoiceRecord {
   projectId: string | null;
   jobId: string | null;
   title: string;
+  reference: string | null;
   lineItems: RootLineItem[];
   discountCents: number;
   taxCents: number;
@@ -129,6 +148,8 @@ export interface RootInvoiceRecord {
   totalCents: number;
   amountPaidCents: number;
   dueDate: string | null;
+  invoiceType: RootInvoiceType;
+  notes: string | null;
   issueStatus: RootInvoiceIssueStatus;
   paymentStatus: RootInvoicePaymentStatus;
   documentVersion: number;
@@ -181,6 +202,7 @@ export interface RootQuoteInput {
   source?: RootCommercialSource;
   sourceEntityId?: string | null;
   title?: string;
+  reference?: string | null;
   scopeSummary?: string;
   servicePeriod?: string | null;
   projectTimeline?: string | null;
@@ -203,11 +225,14 @@ export interface RootInvoiceInput {
   projectId?: string | null;
   jobId?: string | null;
   title?: string;
+  reference?: string | null;
   lineItems?: Partial<RootLineItem>[];
   discountCents?: number;
   taxCents?: number;
   depositAppliedCents?: number;
   dueDate?: string | null;
+  invoiceType?: RootInvoiceType;
+  notes?: string | null;
 }
 
 export function formatCents(cents: number): string {

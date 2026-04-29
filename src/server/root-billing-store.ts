@@ -12,10 +12,12 @@ import {
   type RootBillingEvent,
   type RootBillingState,
   type RootCommercialSource,
+  type RootCompanyConfig,
   type RootDocumentArtifact,
   type RootDocumentHistoryEntry,
   type RootInvoiceInput,
   type RootInvoiceRecord,
+  type RootInvoiceType,
   type RootLineItem,
   type RootPaymentLinkRecord,
   type RootPaymentRecord,
@@ -254,6 +256,37 @@ function companyLabel(account: CompanyAccountId): string {
   return account === "astro-cleaning-services" ? "Astro Cleaning Services" : "Content Co-op";
 }
 
+function companyConfig(account: CompanyAccountId): RootCompanyConfig {
+  if (account === "astro-cleaning-services") {
+    return {
+      legalName: "Astro Cleaning Services LLC",
+      dba: "Astro Cleaning Services",
+      tagline: "Premium Cleaning Services",
+      address: "123 Main St.",
+      cityStateZip: "Houston, TX 77002",
+      country: "United States",
+      email: "hello@astro-cleaning.com",
+      phone: "(713) 555-0100",
+      zelleEmail: "hello@astro-cleaning.com",
+      termsTemplate: "Payment is due within 14 days of invoice date. Late payments subject to 1.5% monthly service charge.",
+      depositTermsTemplate: "A 50% deposit is required to confirm booking. Deposit is non-refundable within 72 hours of scheduled service.",
+    };
+  }
+  return {
+    legalName: "Eubanks Marketing Inc.",
+    dba: "Content Co-op",
+    tagline: "Creative Production",
+    address: "322 Wilcrest Dr.",
+    cityStateZip: "Houston, TX 77042",
+    country: "United States",
+    email: "bailey@contentco-op.com",
+    phone: "(501) 351-5927",
+    zelleEmail: "bailey@contentco-op.com",
+    termsTemplate: "Payments are to be paid within 30 days of the due date. A late payment charge of 10% will be applied to amounts unpaid after 30 days past due.",
+    depositTermsTemplate: "This deposit secures your confirmed production dates. Cancellations within 72 hours of scheduled dates are subject to a 25% fee.",
+  };
+}
+
 function renderLineItemRows(lineItems: RootLineItem[]): string {
   return lineItems
     .map(
@@ -271,11 +304,10 @@ function renderLineItemRowsPro(lineItems: RootLineItem[]): string {
   return lineItems
     .map(
       (item) => `<tr>
-        <td><strong>${escapeHtml(item.name)}</strong><div class="item-desc">${escapeHtml(item.description)}</div></td>
-        <td>${escapeHtml(item.category)}</td>
-        <td class="td-right">${item.quantity}</td>
-        <td class="td-right">${formatCents(item.unitPriceCents)}</td>
-        <td class="td-right">${formatCents(Math.round(item.quantity * item.unitPriceCents))}</td>
+        <td style="width:52%"><strong style="font-size:13px;color:#18181b;">${escapeHtml(item.name)}</strong>${item.description ? `<div style="color:#52525b;font-size:12px;margin-top:4px;line-height:1.5;">${escapeHtml(item.description)}</div>` : ""}</td>
+        <td style="width:18%;text-align:right;font-size:13px;color:#27272a;">${formatCents(item.unitPriceCents)}</td>
+        <td style="width:12%;text-align:right;font-size:13px;color:#27272a;">${item.quantity}</td>
+        <td style="width:18%;text-align:right;font-size:13px;color:#18181b;font-weight:600;">${formatCents(Math.round(item.quantity * item.unitPriceCents))}</td>
       </tr>`,
     )
     .join("");
@@ -283,142 +315,179 @@ function renderLineItemRowsPro(lineItems: RootLineItem[]): string {
 
 function renderDocumentHtml(document: RootQuoteRecord | RootInvoiceRecord): string {
   const isInvoice = document.kind === "invoice";
+  const isQuote = !isInvoice;
   const title = isInvoice ? "Invoice" : document.kind === "proposal" ? "Proposal" : "Quote";
   const number = isInvoice ? document.invoiceNumber : document.documentNumber;
-  const statusLabel = isInvoice ? `${document.issueStatus} / ${document.paymentStatus}` : `${document.status} / ${document.approvalStatus}`;
-  const notes = isInvoice ? "Payment status is projected from verified local/manual records unless Stripe is connected." : document.clientNotes;
-  const depositLine = isInvoice
-    ? `<div><span>Deposit applied</span><strong>${formatCents(document.depositAppliedCents)}</strong></div>`
-    : `<div><span>Deposit</span><strong>${formatCents(document.depositCents)}</strong></div>`;
-  const company = companyLabel(document.companyAccount);
-  const statusColor = document.kind === "invoice"
-    ? (document.paymentStatus === "paid" ? "#10b981"
-      : document.issueStatus === "approved_to_issue" ? "#3b82f6"
-      : document.issueStatus === "voided" ? "#ef4444"
-      : "#f59e0b")
-    : (document.status === "accepted" || document.status === "invoiced" ? "#10b981"
-      : document.status === "sent" || document.status === "ready_to_send" ? "#3b82f6"
-      : document.status === "declined" || document.status === "expired" ? "#ef4444"
-      : "#f59e0b");
+  const config = companyConfig(document.companyAccount);
+  const invoice = isInvoice ? document as RootInvoiceRecord : null;
+  const quote = isQuote ? document as RootQuoteRecord : null;
+
+  const stripeLink = invoice?.paymentLinks.find((l) => l.provider === "stripe" && l.status === "created")?.url ?? null;
+  const amountPaid = invoice?.amountPaidCents ?? 0;
+  const balanceDue = Math.max((invoice?.totalCents ?? 0) - amountPaid, 0);
+  const fullProjectTotal = isInvoice && invoice?.invoiceType === "deposit"
+    ? Math.round(invoice.totalCents * 2)
+    : null;
+
+  const clientBlock = `
+    <strong style="font-size:14px;color:#18181b;">${escapeHtml(document.client.name)}</strong><br />
+    ${document.client.email ? escapeHtml(document.client.email) + "<br />" : ""}
+    ${document.client.company ? escapeHtml(document.client.company) + "<br />" : ""}
+    ${document.client.phone ? escapeHtml(document.client.phone) + "<br />" : ""}
+    ${document.client.address ? escapeHtml(document.client.address) : ""}
+  `;
+
+  const docDetails = isInvoice
+    ? `
+      <div style="margin-bottom:6px;"><span style="color:#71717a;">Issue Date:</span> <strong>${new Date(document.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</strong></div>
+      ${invoice?.dueDate ? `<div style="margin-bottom:6px;"><span style="color:#71717a;">Due Date:</span> <strong>${new Date(invoice.dueDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</strong></div>` : ""}
+      ${invoice?.reference ? `<div style="margin-bottom:6px;"><span style="color:#71717a;">Ref:</span> <strong>${escapeHtml(invoice.reference)}</strong></div>` : ""}
+    `
+    : `
+      <div style="margin-bottom:6px;"><span style="color:#71717a;">Issued on:</span> <strong>${new Date(document.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</strong></div>
+      ${quote?.expirationDate ? `<div style="margin-bottom:6px;"><span style="color:#71717a;">Expiry Date:</span> <strong>${new Date(quote.expirationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</strong></div>` : ""}
+      ${quote?.reference ? `<div style="margin-bottom:6px;"><span style="color:#71717a;">Ref:</span> <strong>${escapeHtml(quote.reference)}</strong></div>` : ""}
+    `;
+
+  const invoiceTypeHeader = isInvoice && invoice?.invoiceType === "deposit"
+    ? `<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#3b82f6;margin-bottom:4px;">Deposit Invoice — ${Math.round((invoice.totalCents / (fullProjectTotal || invoice.totalCents)) * 100)}% to hold confirmed production dates</div>`
+    : "";
+
+  const paymentBlock = isInvoice && invoice?.issueStatus === "issued"
+    ? `
+      <div style="margin-top:28px;padding-top:20px;border-top:1.5px solid #e4e4e7;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#71717a;margin-bottom:12px;">Pay Online</div>
+        ${stripeLink ? `
+          <div style="font-size:12px;color:#27272a;margin-bottom:8px;">Pay securely via Stripe:</div>
+          <div style="font-size:12px;color:#3b82f6;word-break:break-all;margin-bottom:12px;">${escapeHtml(stripeLink)}</div>
+        ` : `<div style="font-size:12px;color:#71717a;margin-bottom:12px;">Stripe payment link will be generated upon request.</div>`}
+        <div style="font-size:12px;color:#27272a;">Or pay via Zelle to <strong>${escapeHtml(config.zelleEmail)}</strong></div>
+        <div style="font-size:11px;color:#71717a;margin-top:4px;">Reference: ${escapeHtml(invoice?.invoiceNumber || number)}</div>
+      </div>
+    `
+    : "";
+
+  const depositNotes = isInvoice && invoice?.invoiceType === "deposit" && invoice?.notes
+    ? `<div style="margin-top:16px;font-size:12px;color:#52525b;line-height:1.6;">${escapeHtml(invoice.notes)}</div>`
+    : "";
+
+  const termsBody = isInvoice
+    ? (invoice?.notes || config.termsTemplate)
+    : (quote?.terms || config.termsTemplate);
+
+  const thankYou = isQuote
+    ? `<div style="margin-top:24px;font-size:12px;color:#52525b;line-height:1.6;">Thank you for choosing Content Co-Op for your digital content and video needs. We are excited to work with your team & appreciate your business.</div>`
+    : "";
 
   return `<!doctype html>
-  <html>
-    <head>
-      <meta charset="utf-8" />
-      <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #18181b; margin: 0; background: #fafafa; -webkit-font-smoothing: antialiased; }
-        .doc { max-width: 800px; margin: 0 auto; padding: 48px; background: #fff; min-height: 100vh; box-shadow: 0 0 0 1px #e4e4e7; }
-        .topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 40px; }
-        .brand { font-size: 13px; font-weight: 600; color: #18181b; letter-spacing: 0.02em; }
-        .brand-sub { font-size: 11px; color: #a1a1aa; margin-top: 2px; }
-        .doc-type { text-align: right; }
-        .doc-type-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #71717a; }
-        .doc-number { font-size: 22px; font-weight: 700; color: #18181b; margin-top: 4px; }
-        .status-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; color: #fff; background: ${statusColor}; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }
-        .block-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 8px; }
-        .block-value { font-size: 13px; color: #27272a; line-height: 1.6; }
-        .block-value strong { color: #18181b; font-weight: 600; }
-        .scope { background: #fafafa; border-radius: 8px; padding: 16px; margin-bottom: 32px; }
-        .scope-title { font-size: 13px; font-weight: 600; color: #18181b; margin-bottom: 6px; }
-        .scope-body { font-size: 12px; color: #52525b; line-height: 1.6; }
-        table { border-collapse: collapse; width: 100%; margin-top: 4px; }
-        th { text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #a1a1aa; border-bottom: 1.5px solid #e4e4e7; padding: 10px 8px; }
-        td { border-bottom: 1px solid #f4f4f5; padding: 12px 8px; vertical-align: top; font-size: 12px; color: #27272a; }
-        td .item-desc { color: #71717a; font-size: 11px; margin-top: 3px; line-height: 1.4; }
-        .td-right { text-align: right; }
-        .totals-wrap { display: flex; justify-content: flex-end; margin-top: 24px; }
-        .totals { width: 280px; }
-        .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; color: #52525b; }
-        .totals-row.grand { border-top: 1.5px solid #18181b; margin-top: 6px; padding-top: 10px; font-size: 15px; font-weight: 700; color: #18181b; }
-        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e4e4e7; }
-        .footer-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 6px; }
-        .footer-body { font-size: 11px; color: #52525b; line-height: 1.6; }
-        .pay-box { background: #fafafa; border: 1px solid #e4e4e7; border-radius: 8px; padding: 14px; margin-top: 16px; }
-        .pay-box-title { font-size: 11px; font-weight: 600; color: #18181b; margin-bottom: 4px; }
-        .pay-box-body { font-size: 11px; color: #71717a; }
-      </style>
-    </head>
-    <body>
-      <main class="doc">
-        <div class="topbar">
-          <div>
-            <div class="brand">${escapeHtml(company)}</div>
-            <div class="brand-sub">${escapeHtml(document.companyAccount === "content-co-op" ? "Creative Production" : "Premium Cleaning Services")}</div>
-          </div>
-          <div class="doc-type">
-            <div class="doc-type-label">${escapeHtml(title)}</div>
-            <div class="doc-number">${escapeHtml(number)}</div>
-            <div class="status-pill">${escapeHtml(statusLabel.replace(/_/g, " "))}</div>
-          </div>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @page { size: letter; margin: 0.5in; }
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #18181b; margin: 0; background: #fff; -webkit-font-smoothing: antialiased; font-size: 13px; line-height: 1.5; }
+      .doc { max-width: 720px; margin: 0 auto; padding: 36px 48px; background: #fff; }
+      .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+      .company-info { font-size: 12px; color: #27272a; line-height: 1.6; }
+      .company-info .legal-name { font-size: 13px; font-weight: 700; color: #18181b; }
+      .doc-meta { text-align: right; }
+      .doc-meta .doc-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #18181b; }
+      .doc-meta .doc-number { font-size: 20px; font-weight: 700; color: #18181b; margin-top: 2px; }
+      .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 28px; }
+      .block-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 8px; }
+      table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+      th { text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #a1a1aa; border-bottom: 1.5px solid #d4d4d8; padding: 10px 8px; }
+      td { border-bottom: 1px solid #f4f4f5; padding: 14px 8px; vertical-align: top; }
+      .td-right { text-align: right; }
+      .totals { width: 280px; margin-left: auto; margin-top: 20px; }
+      .totals-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; color: #52525b; }
+      .totals-row.grand { border-top: 1.5px solid #18181b; margin-top: 6px; padding-top: 10px; font-size: 15px; font-weight: 700; color: #18181b; }
+      .totals-row.paid { color: #10b981; }
+      .totals-row.due { color: #ef4444; font-weight: 600; }
+      .terms { margin-top: 32px; padding-top: 20px; border-top: 1px solid #e4e4e7; }
+      .terms-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; margin-bottom: 8px; }
+      .terms-body { font-size: 11px; color: #52525b; line-height: 1.7; }
+      .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e4e4e7; font-size: 10px; color: #a1a1aa; text-align: center; }
+    </style>
+  </head>
+  <body>
+    <main class="doc">
+      <div class="header">
+        <div class="company-info">
+          <div class="legal-name">${escapeHtml(config.legalName)} DBA ${escapeHtml(config.dba)}</div>
+          <div>${escapeHtml(config.address)}</div>
+          <div>${escapeHtml(config.cityStateZip)}</div>
+          <div>${escapeHtml(config.country)}</div>
+          <div style="margin-top:6px;">${escapeHtml(config.email)}</div>
+          <div>Phone: ${escapeHtml(config.phone)}</div>
+          ${config.zelleEmail ? `<div>Zelle Payments: ${escapeHtml(config.zelleEmail)}</div>` : ""}
         </div>
+        <div class="doc-meta">
+          <div class="doc-label">${escapeHtml(title)} ${escapeHtml(number)}</div>
+          ${isInvoice ? "" : `<div style="font-size:11px;color:#71717a;margin-top:4px;">${escapeHtml(config.dba)} ${escapeHtml(title)}</div>`}
+        </div>
+      </div>
 
-        <div class="grid-2">
-          <div>
-            <div class="block-label">Bill To</div>
-            <div class="block-value">
-              <strong>${escapeHtml(document.client.name)}</strong><br />
-              ${document.client.company ? escapeHtml(document.client.company) + "<br />" : ""}
-              ${document.client.email ? escapeHtml(document.client.email) + "<br />" : ""}
-              ${document.client.address ? escapeHtml(document.client.address) + "<br />" : ""}
-              ${document.client.phone ? escapeHtml(document.client.phone) : ""}
-            </div>
-          </div>
-          <div>
-            <div class="block-label">Document Details</div>
-            <div class="block-value">
-              Date: ${new Date(document.createdAt).toLocaleDateString()}<br />
-              ${!isInvoice && document.expirationDate ? `Valid until: ${new Date(document.expirationDate).toLocaleDateString()}<br />` : ""}
-              ${isInvoice && document.dueDate ? `Due date: ${new Date(document.dueDate).toLocaleDateString()}<br />` : ""}
-              Version: ${document.documentVersion}
-            </div>
-          </div>
+      <div class="two-col">
+        <div>
+          <div class="block-label">Customer Info</div>
+          <div style="font-size:13px;color:#27272a;line-height:1.6;">${clientBlock}</div>
         </div>
+        <div>
+          <div class="block-label">Document Details</div>
+          <div style="font-size:13px;color:#27272a;line-height:1.6;">${docDetails}</div>
+        </div>
+      </div>
 
-        ${!isInvoice && document.scopeSummary ? `
-        <div class="scope">
-          <div class="scope-title">${escapeHtml(document.title)}</div>
-          <div class="scope-body">${escapeHtml(document.scopeSummary)}</div>
-        </div>
+      ${isQuote && quote?.scopeSummary ? `
+      <div style="margin-bottom:24px;padding:16px;background:#fafafa;border-radius:6px;">
+        <div style="font-size:13px;font-weight:600;color:#18181b;margin-bottom:6px;">${escapeHtml(document.title)}</div>
+        <div style="font-size:12px;color:#52525b;line-height:1.6;">${escapeHtml(quote.scopeSummary)}</div>
+      </div>
+      ` : ""}
+
+      ${isInvoice ? `<div style="margin-bottom:12px;">${invoiceTypeHeader}<div style="font-size:14px;font-weight:600;color:#18181b;">${escapeHtml(document.title)}</div></div>` : ""}
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width:52%">Product or Service</th>
+            <th class="td-right" style="width:18%">Price</th>
+            <th class="td-right" style="width:12%">Quantity</th>
+            <th class="td-right" style="width:18%">Line Total</th>
+          </tr>
+        </thead>
+        <tbody>${renderLineItemRowsPro(document.lineItems)}</tbody>
+      </table>
+
+      <div class="totals">
+        <div class="totals-row"><span>Subtotal</span><span>${formatCents(document.subtotalCents)}</span></div>
+        ${document.discountCents > 0 ? `<div class="totals-row"><span>Discount</span><span>-${formatCents(document.discountCents)}</span></div>` : ""}
+        ${document.taxCents > 0 ? `<div class="totals-row"><span>Tax / fees</span><span>${formatCents(document.taxCents)}</span></div>` : ""}
+        ${isInvoice && (document as RootInvoiceRecord).depositAppliedCents > 0 ? `<div class="totals-row"><span>Deposit applied</span><span>-${formatCents((document as RootInvoiceRecord).depositAppliedCents)}</span></div>` : ""}
+        ${isInvoice && fullProjectTotal ? `<div class="totals-row" style="color:#71717a;font-size:12px;"><span>Full Project Total</span><span>${formatCents(fullProjectTotal)}</span></div>` : ""}
+        <div class="totals-row grand"><span>${isInvoice && invoice?.invoiceType === "deposit" ? "This Invoice (Deposit)" : "Total"}</span><span>${formatCents(document.totalCents)}</span></div>
+        ${isInvoice && amountPaid > 0 ? `
+          <div class="totals-row paid"><span>Amount Paid</span><span>${formatCents(amountPaid)}</span></div>
+          <div class="totals-row due"><span>Balance Due</span><span>${formatCents(balanceDue)}</span></div>
         ` : ""}
+      </div>
 
-        ${isInvoice ? `<div class="scope-title" style="margin-bottom:16px;font-size:14px;">${escapeHtml(document.title)}</div>` : ""}
+      ${paymentBlock}
+      ${depositNotes}
 
-        <table>
-          <thead>
-            <tr>
-              <th style="width:50%">Description</th>
-              <th style="width:15%">Category</th>
-              <th class="td-right" style="width:10%">Qty</th>
-              <th class="td-right" style="width:12%">Rate</th>
-              <th class="td-right" style="width:13%">Amount</th>
-            </tr>
-          </thead>
-          <tbody>${renderLineItemRowsPro(document.lineItems)}</tbody>
-        </table>
+      <div class="terms">
+        <div class="terms-title">Legal Terms</div>
+        <div class="terms-body">${escapeHtml(termsBody)}</div>
+        ${thankYou}
+      </div>
 
-        <div class="totals-wrap">
-          <div class="totals">
-            <div class="totals-row"><span>Subtotal</span><span>${formatCents(document.subtotalCents)}</span></div>
-            <div class="totals-row"><span>Discount</span><span>${formatCents(document.discountCents)}</span></div>
-            <div class="totals-row"><span>Tax / fees</span><span>${formatCents(document.taxCents)}</span></div>
-            ${depositLine}
-            <div class="totals-row grand"><span>Total</span><span>${formatCents(document.totalCents)}</span></div>
-          </div>
-        </div>
-
-        <footer>
-          <div class="footer-title">Terms & Conditions</div>
-          <div class="footer-body">${escapeHtml(isInvoice ? `Payment is due by ${document.dueDate ?? "the date specified above"}. Late payments subject to 1.5% monthly service charge.` : document.terms)}</div>
-          ${notes ? `<div class="footer-body" style="margin-top:8px;color:#a1a1aa;">${escapeHtml(notes)}</div>` : ""}
-          <div class="pay-box">
-            <div class="pay-box-title">How to Pay</div>
-            <div class="pay-box-body">Online payment available via secure checkout. Bank transfer details provided on request. Questions? Reply to this document or contact your account manager.</div>
-          </div>
-        </footer>
-      </main>
-    </body>
-  </html>`;
+      <div class="footer">
+        ${escapeHtml(config.dba)} | ${escapeHtml(config.address)} ${escapeHtml(config.cityStateZip)} | ${escapeHtml(config.email)}
+      </div>
+    </main>
+  </body>
+</html>`;
 }
 
 const CHROME_PATH = process.env.CHROME_PATH || (process.platform === "darwin" ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" : undefined);
@@ -530,6 +599,7 @@ function seedState(): PersistedRootBillingState {
     source: "local_recovery",
     sourceEntityId: "handoff-acs-quote-001",
     title: "Recurring deep clean and first-service reset",
+    reference: null,
     scopeSummary: "Initial deep clean followed by recurring weekly maintenance.",
     servicePeriod: "First visit plus weekly recurring service",
     projectTimeline: null,
@@ -591,6 +661,7 @@ function seedState(): PersistedRootBillingState {
     source: "creative_brief",
     sourceEntityId: "brief-cco-local-001",
     title: "Founder video sprint",
+    reference: null,
     scopeSummary: "Strategy, script, production planning, edit review, and delivery package.",
     servicePeriod: null,
     projectTimeline: "Two-week sprint after brief acceptance.",
@@ -681,6 +752,7 @@ export function createRootQuote(input: RootQuoteInput, recoveryStoreDir?: string
     source: normalizeSource(input.source),
     sourceEntityId: input.sourceEntityId?.trim() || null,
     title: input.title?.trim() || (kind === "proposal" ? "New proposal" : "New quote"),
+    reference: input.reference?.trim() || null,
     scopeSummary: input.scopeSummary?.trim() || "Scope pending operator refinement.",
     servicePeriod: input.servicePeriod?.trim() || null,
     projectTimeline: input.projectTimeline?.trim() || null,
@@ -735,6 +807,7 @@ export function updateRootQuote(id: string, input: RootQuoteInput, recoveryStore
   if (input.expirationDate !== undefined) quote.expirationDate = input.expirationDate?.trim() || null;
   if (input.internalNotes !== undefined) quote.internalNotes = input.internalNotes.trim();
   if (input.clientNotes !== undefined) quote.clientNotes = input.clientNotes.trim();
+  if (input.reference !== undefined) quote.reference = input.reference?.trim() || null;
   quote.documentVersion += 1;
   quote.status = "draft";
   quote.approvalStatus = "not_required";
@@ -863,6 +936,7 @@ export function convertRootQuoteToInvoice(id: string, recoveryStoreDir?: string)
     projectId: quote.companyAccount === "content-co-op" ? quote.sourceEntityId : null,
     jobId: quote.companyAccount === "astro-cleaning-services" ? quote.sourceEntityId : null,
     title: quote.title,
+    reference: quote.reference,
     lineItems: quote.lineItems,
     discountCents: quote.discountCents,
     taxCents: quote.taxCents,
@@ -871,6 +945,8 @@ export function convertRootQuoteToInvoice(id: string, recoveryStoreDir?: string)
     totalCents: 0,
     amountPaidCents: 0,
     dueDate: null,
+    invoiceType: "full",
+    notes: null,
     issueStatus: "draft",
     paymentStatus: "unissued",
     documentVersion: 1,
@@ -911,7 +987,10 @@ export function createRootInvoice(input: RootInvoiceInput, recoveryStoreDir?: st
     projectId: input.projectId?.trim() || null,
     jobId: input.jobId?.trim() || null,
     title: input.title?.trim() || "New invoice",
+    reference: input.reference?.trim() || null,
     lineItems: normalizeLineItems(input.lineItems),
+    invoiceType: (input.invoiceType as RootInvoiceType) || "full",
+    notes: input.notes?.trim() || null,
     discountCents: normalizeCents(input.discountCents),
     taxCents: normalizeCents(input.taxCents),
     depositAppliedCents: normalizeCents(input.depositAppliedCents),
@@ -954,6 +1033,9 @@ export function updateRootInvoice(id: string, input: RootInvoiceInput, recoveryS
   if (input.taxCents !== undefined) invoice.taxCents = normalizeCents(input.taxCents);
   if (input.depositAppliedCents !== undefined) invoice.depositAppliedCents = normalizeCents(input.depositAppliedCents);
   if (input.dueDate !== undefined) invoice.dueDate = input.dueDate?.trim() || null;
+  if (input.invoiceType !== undefined) invoice.invoiceType = (input.invoiceType as RootInvoiceType) || "full";
+  if (input.notes !== undefined) invoice.notes = input.notes?.trim() || null;
+  if (input.reference !== undefined) invoice.reference = input.reference?.trim() || null;
   invoice.documentVersion += 1;
   invoice.history.unshift(history("invoice.updated", `${invoice.invoiceNumber} revised to version ${invoice.documentVersion}.`));
   applyInvoiceComputedFields(invoice);
