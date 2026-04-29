@@ -1,4 +1,5 @@
 import express, { type Express } from "express";
+import cors from "cors";
 import { createServer as createViteServer } from "vite";
 import twilio from "twilio";
 import fs from "node:fs";
@@ -182,6 +183,12 @@ export function createApp(options: AppOptions = {}): Express {
     next();
   });
 
+  // CORS
+  app.use(cors({
+    origin: process.env.APP_URL ? [process.env.APP_URL, process.env.APP_URL.replace(/^https?:\/\//, '')] : true,
+    credentials: true,
+  }));
+
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
 
@@ -194,6 +201,15 @@ export function createApp(options: AppOptions = {}): Express {
       next();
     });
   }
+
+  app.get("/api/version", (_req, res) => {
+    res.json({
+      version: process.env.npm_package_version || "0.0.0",
+      node: process.version,
+      env: process.env.NODE_ENV || "development",
+      commit: process.env.RENDER_GIT_COMMIT || "unknown",
+    });
+  });
 
   app.get("/api/health", async (_req, res) => {
     const supabaseConfigured = hasEnvKey("SUPABASE_URL") && hasEnvKey("SUPABASE_SERVICE_ROLE_KEY");
