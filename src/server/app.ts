@@ -72,6 +72,7 @@ import { SupabasePacketStore } from "./packet-store";
 import { getSupabaseAdminFromEnv } from "./supabase-admin";
 import { authMiddleware, optionalAuthMiddleware, type AuthenticatedRequest } from "./auth-middleware";
 import { createStripeEmbeddedSession, constructStripeEvent } from "./stripe-service";
+import { createClientPortalToken, verifyClientPortalToken } from "./client-portal-store";
 import {
   createBriefSession,
   getBriefSession,
@@ -176,6 +177,30 @@ export function createApp(options: AppOptions = {}): Express {
   const recoveryStoreDir = options.recoveryStoreDir;
 
   // Security headers
+  app.post("/api/client-portal/token", async (req, res) => {
+    const email = typeof req.body?.email === "string" ? req.body.email.toLowerCase().trim() : "";
+    if (!email) return res.status(400).json({ ok: false, error: "Email is required." });
+
+    const state = listRootBillingDocuments(recoveryStoreDir);
+    const hasQuotes = state.quotes.some((q) => q.client.email?.toLowerCase().trim() === email);
+    const hasInvoices = state.invoices.some((i) => i.client.email?.toLowerCase().trim() === email);
+
+    if (!hasQuotes && !hasInvoices) {
+      return res.status(404).json({ ok: false, error: "No documents found for this email." });
+    }
+
+    const result = createClientPortalToken(email, recoveryStoreDir);
+    return res.json({ ok: true, token: result.token, url: result.url, expiresAt: result.expiresAt });
+  });
+
+  app.get("/api/client-portal/verify", (req, res) => {
+    const token = typeof req.query.token === "string" ? req.query.token : "";
+    if (!token) return res.status(400).json({ ok: false, error: "Token is required." });
+    const result = verifyClientPortalToken(token, recoveryStoreDir);
+    if (!result.valid) return res.status(401).json({ ok: false, error: result.error });
+    return res.json({ ok: true, email: result.email });
+  });
+
   app.use((_req, res, next) => {
     res.setHeader("X-Content-Type-Options", "nosniff");
     res.setHeader("X-Frame-Options", "DENY");

@@ -362,6 +362,32 @@ export function Quotes() {
     }
   }
 
+  async function generatePortalLink(email: string | null) {
+    if (!email) {
+      alert("Client has no email address.");
+      return;
+    }
+    setActionLoading("portal-link");
+    try {
+      const res = await authFetch("/api/client-portal/token", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
+      const json = await res.json();
+      if (json.ok) {
+        const fullUrl = `${window.location.origin}${json.url}`;
+        await navigator.clipboard.writeText(fullUrl);
+        alert(`Portal link copied to clipboard. Valid until ${new Date(json.expiresAt).toLocaleDateString()}.`);
+      } else {
+        alert(json.error || "Failed to generate portal link.");
+      }
+    } catch {
+      alert("Failed to generate portal link.");
+    } finally {
+      setActionLoading(null);
+    }
+  }
+
   const exportQuotes = () => {
     const payload = JSON.stringify(
       {
@@ -852,6 +878,12 @@ export function Quotes() {
                   <Download className="mr-1.5 h-3.5 w-3.5" />
                   {actionLoading === "export-pdf" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : "Export PDF"}
                 </Button>
+                {detailQuote.clientEmail && (
+                  <Button size="sm" variant="outline" className="text-xs" onClick={() => generatePortalLink(detailQuote.clientEmail)} disabled={actionLoading === "portal-link"}>
+                    <Mail className="mr-1.5 h-3.5 w-3.5" />
+                    {actionLoading === "portal-link" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : "Portal Link"}
+                  </Button>
+                )}
                 {detailQuote.rawStatus === "draft" && (
                   <Button size="sm" variant="outline" className="text-xs" onClick={() => runAction(detailQuote.id, "approval-request")} disabled={!!actionLoading}>
                     <Mail className="mr-1.5 h-3.5 w-3.5" />

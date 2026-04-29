@@ -46,6 +46,7 @@ const VideoRapidFire = lazy(() => import("./pages/video/VideoRapidFire").then(m 
 const CrewApp = lazy(() => import("./pages/crew/CrewApp").then(m => ({ default: m.CrewApp })));
 const ClientPortal = lazy(() => import("./pages/client/ClientPortal").then(m => ({ default: m.ClientPortal })));
 const ClientPortalV2 = lazy(() => import("./pages/client/ClientPortalV2").then(m => ({ default: m.ClientPortalV2 })));
+const ClientPortalLogin = lazy(() => import("./pages/client/ClientPortalLogin").then(m => ({ default: m.ClientPortalLogin })));
 const ClientDocumentPortal = lazy(() => import("./pages/client/ClientDocumentPortal").then(m => ({ default: m.ClientDocumentPortal })));
 const StripeCheckout = lazy(() => import("./pages/client/StripeCheckout").then(m => ({ default: m.StripeCheckout })));
 const PublicQuoteEngine = lazy(() => import("./pages/PublicQuoteEngine").then(m => ({ default: m.PublicQuoteEngine })));
@@ -226,6 +227,7 @@ export default function App() {
           <Routes>
             {/* Public / Client Routes */}
             <Route path="/c/:token" element={<ClientDocumentPortal companyAccount="astro-cleaning-services" />} />
+            <Route path="/client/login" element={<ClientPortalLogin />} />
             <Route path="/client/acs/:token" element={<ClientDocumentPortal companyAccount="astro-cleaning-services" />} />
             <Route path="/client/cco/:token" element={<ClientPortalV2 />} />
             <Route path="/client/checkout/:invoiceId" element={<StripeCheckout />} />

@@ -12,6 +12,7 @@ import { useAuth } from "@/components/AuthProvider";
 interface Invoice {
   id: string;
   client_name: string;
+  clientEmail?: string | null;
   amount: number;
   status: string;
   issue_date?: string;
@@ -51,6 +52,7 @@ function mapRootInvoiceToUI(inv: Record<string, unknown>): Invoice {
   return {
     id: String(inv.id || ""),
     client_name: String(client.name || "Unknown"),
+    clientEmail: client.email ? String(client.email) : null,
     amount: totalCents / 100,
     status,
     issue_date: inv.createdAt ? String(inv.createdAt) : undefined,
@@ -245,6 +247,32 @@ export function Finance() {
       setPdfUrl(url);
     } catch (err) {
       alert("Failed to load PDF preview.");
+    } finally {
+      setActionLoading(null);
+    }
+  }
+
+  async function generatePortalLink(email: string | null) {
+    if (!email) {
+      alert("Client has no email address.");
+      return;
+    }
+    setActionLoading("portal-link");
+    try {
+      const res = await authFetch("/api/client-portal/token", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
+      const json = await res.json();
+      if (json.ok) {
+        const fullUrl = `${window.location.origin}${json.url}`;
+        await navigator.clipboard.writeText(fullUrl);
+        alert(`Portal link copied to clipboard. Valid until ${new Date(json.expiresAt).toLocaleDateString()}.`);
+      } else {
+        alert(json.error || "Failed to generate portal link.");
+      }
+    } catch {
+      alert("Failed to generate portal link.");
     } finally {
       setActionLoading(null);
     }
@@ -574,6 +602,12 @@ export function Finance() {
                   <FileText className="mr-1.5 h-3.5 w-3.5" />
                   {actionLoading === "pdf" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : "Preview PDF"}
                 </Button>
+                {detailInvoice.clientEmail && (
+                  <Button size="sm" variant="outline" className="text-xs" onClick={() => generatePortalLink(detailInvoice.clientEmail)} disabled={actionLoading === "portal-link"}>
+                    <Mail className="mr-1.5 h-3.5 w-3.5" />
+                    {actionLoading === "portal-link" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : "Portal Link"}
+                  </Button>
+                )}
                 {detailInvoice.issueStatus === "draft" && (
                   <Button size="sm" variant="outline" className="text-xs" onClick={() => runAction(detailInvoice.id, "finalize-artifacts")} disabled={!!actionLoading}>
                     <CheckCircle2 className="mr-1.5 h-3.5 w-3.5" />

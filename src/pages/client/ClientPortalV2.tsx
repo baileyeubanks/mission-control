@@ -52,17 +52,26 @@ export function ClientPortalV2() {
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [changeNote, setChangeNote] = useState("");
   const [showChangeForm, setShowChangeForm] = useState<string | null>(null);
-
-  const clientEmail = token ? decodeURIComponent(token) : "";
+  const [clientEmail, setClientEmail] = useState("");
 
   const fetchData = async () => {
-    if (!clientEmail) return;
+    if (!token) return;
     setLoading(true);
     setError(null);
     try {
+      const verifyRes = await fetch(`/api/client-portal/verify?token=${encodeURIComponent(token)}`);
+      const verifyJson = await verifyRes.json();
+      if (!verifyJson.ok) {
+        setError(verifyJson.error || "Invalid or expired portal link.");
+        setLoading(false);
+        return;
+      }
+      const email = verifyJson.email;
+      setClientEmail(email);
+
       const [quotesRes, invoicesRes] = await Promise.all([
-        fetch(`/api/root/quotes?clientEmail=${encodeURIComponent(clientEmail)}`),
-        fetch(`/api/root/invoices?clientEmail=${encodeURIComponent(clientEmail)}`),
+        fetch(`/api/root/quotes?clientEmail=${encodeURIComponent(email)}`),
+        fetch(`/api/root/invoices?clientEmail=${encodeURIComponent(email)}`),
       ]);
       const quotesPayload = await quotesRes.json();
       const invoicesPayload = await invoicesRes.json();
@@ -79,7 +88,7 @@ export function ClientPortalV2() {
 
   useEffect(() => {
     void fetchData();
-  }, [clientEmail]);
+  }, [token]);
 
   const handleApprove = async (quoteId: string) => {
     setActiveAction(`approve:${quoteId}`);
